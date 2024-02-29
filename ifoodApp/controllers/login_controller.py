@@ -1,5 +1,5 @@
 from rest_framework.response import Response
-from ..models import User
+from ..models import Usuario
 from ..serializers import User_Serializer
 
 def login_user(request):
