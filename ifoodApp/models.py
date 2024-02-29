@@ -12,7 +12,7 @@ class Usuario(AbstractBaseUser):
         max_length=128
     )  # Use um campo apropriado para senhas, como PasswordField em produção
     is_active = models.IntegerField(default=0)
-    USERNAME_FIELD = 'username'
+    
 
     def __str__(self):
         return self.nome
