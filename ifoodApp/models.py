@@ -149,15 +149,18 @@ class Usuario(models.Model):
     usuarioId = models.AutoField(primary_key=True)
     nomeUsu = models.CharField(max_length=255)
     telefoneUsu = models.CharField(max_length=14)
-    cpf = models.CharField(max_length=11)
-    emailUsu = models.EmailField(max_length=255)
+    cpf = models.CharField(max_length=11,unique=True)
+    emailUsu = models.EmailField(max_length=255,unique=True)
     imagemPerfil = models.BinaryField()
     senha = models.CharField(max_length=255)
     contaBancariaId = models.ForeignKey(
         'ContaBancaria', on_delete=models.CASCADE)
     tipoUsuarioId = models.ForeignKey('TipoUsuario', on_delete=models.CASCADE)
     enderecoId = models.ForeignKey('Endereco', on_delete=models.CASCADE)
-
+    USERNAME_FIELD = 'emailUsu'
+    REQUIRED_FIELDS = []
+    is_anonymous = False
+    is_authenticated = False
     def _str_(self):
         return self.nomeUsu
 
