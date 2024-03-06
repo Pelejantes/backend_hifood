@@ -1,11 +1,7 @@
 from rest_framework import serializers
-# from .models import Usuario
-# class User_Serializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Usuario
-#         fields=('__all__')
-from .models import SolicAtend
-class User_Serializer(serializers.ModelSerializer):
+from .models import Usuario
+
+class Usuario_Serializer(serializers.ModelSerializer):
     class Meta:
-        model = SolicAtend
-        fields=('__all__')
+        model = Usuario
+        fields = "__all__"

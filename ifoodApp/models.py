@@ -1,5 +1,5 @@
 from django.db import models
-
+from datetime import datetime
 class SolicAtend(models.Model):
     solicAtendId = models.AutoField(primary_key=True)
     conversaId = models.ForeignKey('Conversa', on_delete=models.CASCADE)
@@ -155,6 +155,8 @@ class Usuario(models.Model):
     senha = models.CharField(max_length=255)
     contaBancariaId = models.ForeignKey(
         'ContaBancaria', on_delete=models.CASCADE)
+    ativo = models.BooleanField(default=False)
+    dataCriacao = models.DateField(default=datetime.now)
     tipoUsuarioId = models.ForeignKey('TipoUsuario', on_delete=models.CASCADE)
     enderecoId = models.ForeignKey('Endereco', on_delete=models.CASCADE)
     USERNAME_FIELD = 'emailUsu'
