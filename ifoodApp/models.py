@@ -155,7 +155,7 @@ class Usuario(models.Model):
     senha = models.CharField(max_length=255)
     contaBancariaId = models.ForeignKey(
         'ContaBancaria', on_delete=models.CASCADE)
-    ativo = models.BooleanField(default=False)
+    ativo = models.BooleanField(default=True)
     dataCriacao = models.DateField(default=datetime.now)
     tipoUsuarioId = models.ForeignKey('TipoUsuario', on_delete=models.CASCADE)
     enderecoId = models.ForeignKey('Endereco', on_delete=models.CASCADE)
