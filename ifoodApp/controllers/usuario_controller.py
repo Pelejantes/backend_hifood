@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view, permission_classes
 # from ..permissions import Professor, Admin, PodeEditarPerfil,Cadastrado,IsProfessorOrAdmin
 from rest_framework.permissions import AllowAny
 from ..models import Usuario
-from ..serializers import Usuario_Serializer,Usuario_Status_Serializer
+from ..serializers import Usuario_Serializer
 
 
 def exibir_usuarios(request):
@@ -34,8 +34,8 @@ def criar_usuario(request):
 def inativar_usuario(request, pk):
     try:
         usuario = Usuario.objects.get(usuarioId=pk)
-        if usuario.is_active == 1:
-            usuario.is_active = 0
+        if usuario.statusAtivo == 1:
+            usuario.statusAtivo = 0
             usuario.save()
             return Response({"message": f"Usuário {pk} inativado com sucesso!"})
         else:
@@ -47,8 +47,8 @@ def inativar_usuario(request, pk):
 def ativar_usuario(request, pk):
     try:
         usuario = Usuario.objects.get(usuarioId=pk)
-        if usuario.is_active == 0:
-            usuario.is_active = 1
+        if usuario.statusAtivo == 0:
+            usuario.statusAtivo = 1
             usuario.save()
             return Response({"message": f"Usuário {pk} ativado com sucesso!"})
         else:
