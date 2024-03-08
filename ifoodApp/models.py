@@ -154,12 +154,12 @@ class Usuario(models.Model):
     cpf = models.CharField(max_length=11, unique=True)
     emailUsu = models.EmailField(max_length=255, unique=True)
     imagemPerfil = models.BinaryField(blank=True, null=True)
-    senha = models.CharField(max_length=255)
     contaBancariaId = models.ForeignKey(
-        'ContaBancaria', on_delete=models.CASCADE)
-    ativo = models.BooleanField(default=True)
+        'ContaBancaria', on_delete=models.CASCADE, blank=True, null=True)
+    statusAtivo = models.BooleanField(default=True)
     dataCriacao = models.DateField(default=datetime.now)
-    tipoUsuarioId = models.ForeignKey('TipoUsuario', on_delete=models.CASCADE)
+    tipoUsuarioId = models.ForeignKey('TipoUsuario', on_delete=models.CASCADE, default=0)
+    codVerif = models.CharField(max_length=6, blank=True, null=True)
     USERNAME_FIELD = 'emailUsu'
     REQUIRED_FIELDS = []
     is_anonymous = False
@@ -241,7 +241,8 @@ class Estabelecimento(models.Model):
     imagemEstab = models.BinaryField()
     cnpj = models.CharField(max_length=14)
     emailEstab = models.CharField(max_length=255)
-    senha = models.CharField(max_length=255)
+    codVerif = models.CharField(max_length=6, blank=True, null=True)
+
 
     def __str__(self):
         return f"Estabelecimento ID: {self.estabelecimentold}, Nome: {self.nomeEstab}"
