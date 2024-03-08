@@ -1,5 +1,7 @@
 from django.db import models
 from datetime import datetime
+
+
 class SolicAtend(models.Model):
     solicAtendId = models.AutoField(primary_key=True)
     conversaId = models.ForeignKey('Conversa', on_delete=models.CASCADE)
@@ -147,24 +149,32 @@ class Cartao(models.Model):
 
 class Usuario(models.Model):
     usuarioId = models.AutoField(primary_key=True)
-    nomeUsu = models.CharField(max_length=255)
-    telefoneUsu = models.CharField(max_length=14)
-    cpf = models.CharField(max_length=11,unique=True)
-    emailUsu = models.EmailField(max_length=255,unique=True)
-    imagemPerfil = models.BinaryField()
+    nomeUsu = models.CharField(max_length=255, blank=True, null=True)
+    telefoneUsu = models.CharField(max_length=14, blank=True, null=True)
+    cpf = models.CharField(max_length=11, unique=True)
+    emailUsu = models.EmailField(max_length=255, unique=True)
+    imagemPerfil = models.BinaryField(blank=True, null=True)
     senha = models.CharField(max_length=255)
     contaBancariaId = models.ForeignKey(
         'ContaBancaria', on_delete=models.CASCADE)
     ativo = models.BooleanField(default=True)
     dataCriacao = models.DateField(default=datetime.now)
     tipoUsuarioId = models.ForeignKey('TipoUsuario', on_delete=models.CASCADE)
-    enderecoId = models.ForeignKey('Endereco', on_delete=models.CASCADE)
     USERNAME_FIELD = 'emailUsu'
     REQUIRED_FIELDS = []
     is_anonymous = False
     is_authenticated = False
+
     def _str_(self):
         return self.nomeUsu
+
+
+class LocalEntrega(models.Model):
+    enderecoId = models.ForeignKey('Endereco', on_delete=models.CASCADE)
+    usuarioId = models.ForeignKey('Usuario', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"LocalEntrega {self.enderecoId} - Usuário: {self.usuarioId}"
 
 
 class Favorito(models.Model):
@@ -288,6 +298,7 @@ class Produto(models.Model):
 
     def _str_(self):
         return f"Produto ID: {self.produtoId}, Nome: {self.nomeProd}"
+
 
 class Categoria(models.Model):
     categoriaId = models.AutoField(primary_key=True)
