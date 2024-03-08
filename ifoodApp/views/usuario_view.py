@@ -30,8 +30,8 @@ def ativar_usuario_view(request, pk):
 
 @api_view(["PUT"])
 # @permission_classes([PodeEditarPerfil])
-def atualizar_usuario_view(request, pk):
-   return usuario_controller.atualizar_usuario(request,pk)
+def editar_usuario_view(request, pk):
+   return usuario_controller.editar_usuario(request,pk)
 
 @api_view(["DELETE"])
 # @permission_classes([Admin])

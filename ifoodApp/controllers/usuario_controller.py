@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view, permission_classes
 # from ..permissions import Professor, Admin, PodeEditarPerfil,Cadastrado,IsProfessorOrAdmin
 from rest_framework.permissions import AllowAny
 from ..models import Usuario
-from ..serializers import Usuario_Serializer
+from ..serializers import Usuario_Serializer,Usuario_Status_Serializer
 
 
 def exibir_usuarios(request):
@@ -14,7 +14,7 @@ def exibir_usuarios(request):
 
 def exibir_usuario(request, pk):
     try:
-        usuario = Usuario.objects.get(id=pk)
+        usuario = Usuario.objects.get(usuarioId=pk)
         serializer = Usuario_Serializer(usuario, many=False)
         return Response(serializer.data)
     except Usuario.DoesNotExist:
@@ -33,7 +33,7 @@ def criar_usuario(request):
 
 def inativar_usuario(request, pk):
     try:
-        usuario = Usuario.objects.get(id=pk)
+        usuario = Usuario.objects.get(usuarioId=pk)
         if usuario.is_active == 1:
             usuario.is_active = 0
             usuario.save()
@@ -46,7 +46,7 @@ def inativar_usuario(request, pk):
 
 def ativar_usuario(request, pk):
     try:
-        usuario = Usuario.objects.get(id=pk)
+        usuario = Usuario.objects.get(usuarioId=pk)
         if usuario.is_active == 0:
             usuario.is_active = 1
             usuario.save()
@@ -57,9 +57,9 @@ def ativar_usuario(request, pk):
         return Response({"message": f"Usuário {pk} não encontrado"}, status=404)  # Retorna uma resposta de erro com status 404
 
 
-def atualizar_usuario(request, pk):
+def editar_usuario(request, pk):
     try:
-        usuario = Usuario.objects.get(id=pk)
+        usuario = Usuario.objects.get(usuarioId=pk)
         serializer = Usuario_Serializer(instance=usuario, data=request.data)
         if serializer.is_valid():
             serializer.save()
