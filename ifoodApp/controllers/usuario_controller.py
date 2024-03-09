@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view, permission_classes
 # from ..permissions import Professor, Admin, PodeEditarPerfil,Cadastrado,IsProfessorOrAdmin
 from rest_framework.permissions import AllowAny
 from ..models import Usuario
-from ..serializers import Usuario_Serializer
+from ..serializers import Usuario_Serializer, Endereco_Serializer, EnderecoEntrega_Serializer
 
 
 def exibir_usuarios(request):
@@ -18,15 +18,56 @@ def exibir_usuario(request, pk):
         serializer = Usuario_Serializer(usuario, many=False)
         return Response(serializer.data)
     except Usuario.DoesNotExist:
-        return Response({"message": f"Usuário {pk} não encontrado"}, status=404)  # Retorna uma resposta de erro com status 404
+        # Retorna uma resposta de erro com status 404
+        return Response({"message": f"Usuário {pk} não encontrado"}, status=404)
+
+
+def criar_usuarioCompleto(request):
+    usuarioSerializer = Usuario_Serializer(data=request.data['usuario'])
+    enderecoSerializer = Endereco_Serializer(data=request.data['endereco'])
+
+    print(request.data['usuario'])
+    print(request.data['endereco'])
+    print(request.data['enderecoEntrega'])
+    dados_validos = True
+    for serializer in [usuarioSerializer, enderecoSerializer]:
+        if not serializer.is_valid():
+            dados_validos = False
+            break
+    # print("dados_validos == True ",dados_validos)
+    if dados_validos == True:
+        # Criar tabelas individuais
+        # ----Criar Table Usuario
+        usuarioInstancia = usuarioSerializer.save()
+        usuarioId = usuarioInstancia.__dict__['usuarioId']
+        # Retornar ID (individual - instancia)
+
+        # ----Criar Table Endereco
+        enderecoInstancia = enderecoSerializer.save()
+        enderecoId = enderecoInstancia.__dict__['enderecoId']
+        # Retornar ID (individual - instancia)
+
+        print("Chegou aqui!!!")
+        # ----Criar Table Endereco Entrega
+        enderecoEntregaData = {
+            "usuarioId": usuarioId,
+            "enderecoId": enderecoId
+        }
+        enderecoEntregaSerializer = EnderecoEntrega_Serializer(data=enderecoEntregaData)
+        if enderecoEntregaSerializer.is_valid():
+            enderecoEntregaSerializer.save()
+
+        return Response({"message": "Usuário Completo criado com sucesso!"}, status=200)
+    else:
+        return Response({"message": "Não foi possível criar o usuário Completo, revise os campos e tente novamente!"}, status=404)
 
 
 def criar_usuario(request):
     serializer = Usuario_Serializer(data=request.data)
     print(request.data)
     if serializer.is_valid():
-        serializer.save()
-        return Response({"message": "Usuário criado com sucesso!"}, status=200)
+        usuario = serializer.save()
+        return Response({"message": "Usuário criado com sucesso!", "usuarioId": usuario.__dict__['usuarioId']}, status=200)
     else:
         return Response({"message": "Não foi possível criar o usuário, revise os campos e tente novamente!"}, status=404)
 
@@ -41,7 +82,8 @@ def inativar_usuario(request, pk):
         else:
             return Response({"message": f"Usuário {pk} já estava inativado!"})
     except Usuario.DoesNotExist:
-        return Response({"message": f"Usuário {pk} não encontrado"}, status=404)  # Retorna uma resposta de erro com status 404
+        # Retorna uma resposta de erro com status 404
+        return Response({"message": f"Usuário {pk} não encontrado"}, status=404)
 
 
 def ativar_usuario(request, pk):
@@ -54,7 +96,8 @@ def ativar_usuario(request, pk):
         else:
             return Response({"message": f"Usuário {pk} já estava ativado!"})
     except Usuario.DoesNotExist:
-        return Response({"message": f"Usuário {pk} não encontrado"}, status=404)  # Retorna uma resposta de erro com status 404
+        # Retorna uma resposta de erro com status 404
+        return Response({"message": f"Usuário {pk} não encontrado"}, status=404)
 
 
 def editar_usuario(request, pk):
@@ -64,9 +107,10 @@ def editar_usuario(request, pk):
         if serializer.is_valid():
             serializer.save()
         return Response({"mensagem": f"Usuário {pk} atualizado com sucesso.", f"reserva{pk}": serializer.data})
-    
+
     except Usuario.DoesNotExist:
-        return Response({"message": f"Usuário {pk} não encontrado"}, status=404)  # Retorna uma resposta de erro com status 404
+        # Retorna uma resposta de erro com status 404
+        return Response({"message": f"Usuário {pk} não encontrado"}, status=404)
 
 
 def deletar_usuario(request, pk):
@@ -75,4 +119,5 @@ def deletar_usuario(request, pk):
         usuario.delete()
         return Response({"message": f"Usuário {pk} deletado com sucesso!"}, status=200)
     except Usuario.DoesNotExist:
-        return Response({"message": f"Usuário {pk} não encontrado"}, status=404)  # Retorna uma resposta de erro com status 404
+        # Retorna uma resposta de erro com status 404
+        return Response({"message": f"Usuário {pk} não encontrado"}, status=404)

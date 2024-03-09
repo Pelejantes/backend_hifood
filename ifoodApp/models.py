@@ -170,12 +170,13 @@ class Usuario(models.Model):
         return self.nomeUsu
 
 
-class LocalEntrega(models.Model):
+class EnderecoEntrega(models.Model):
+    enderecoEntregaId = models.AutoField(primary_key=True)
     enderecoId = models.ForeignKey('Endereco', on_delete=models.CASCADE)
     usuarioId = models.ForeignKey('Usuario', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"LocalEntrega {self.enderecoId} - Usuário: {self.usuarioId}"
+        return f"EnderecoEntrega {self.enderecoId} - Usuário: {self.usuarioId}"
 
 
 class Favorito(models.Model):
@@ -189,14 +190,14 @@ class Favorito(models.Model):
 
 
 class Endereco(models.Model):
-    endercoid = models.AutoField(primary_key=True)
-    logradouro = models.CharField(max_length=255)
-    cep = models.CharField(max_length=8)
-    bairro = models.CharField(max_length=255)
-    cidade = models.CharField(max_length=255)
-    estado = models.CharField(max_length=2)
-    numero = models.IntegerField()
-    complemento = models.CharField(max_length=255)
+    enderecoId = models.AutoField(primary_key=True)
+    logradouro = models.CharField(max_length=255, null=False, default='')
+    cep = models.CharField(max_length=8, null=False, default='')
+    bairro = models.CharField(max_length=255, null=True)
+    cidade = models.CharField(max_length=255, null=True)
+    estado = models.CharField(max_length=2, null=True)
+    numero = models.IntegerField(null=True)
+    complemento = models.CharField(max_length=255, null=True)
 
     def __str__(self):
         return f"Endereço {self.numero} - {self.logradouro}, {self.bairro}, {self.cidade}, {self.estado}"

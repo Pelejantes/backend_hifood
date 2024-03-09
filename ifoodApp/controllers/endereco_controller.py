@@ -18,15 +18,16 @@ def exibir_endereco(request, pk):
         serializer = Endereco_Serializer(endereco, many=False)
         return Response(serializer.data)
     except Endereco.DoesNotExist:
-        return Response({"message": f"Endereço {pk} não encontrado"}, status=404)  # Retorna uma resposta de erro com status 404
+        # Retorna uma resposta de erro com status 404
+        return Response({"message": f"Endereço {pk} não encontrado"}, status=404)
 
 
 def criar_endereco(request):
     serializer = Endereco_Serializer(data=request.data)
     print(request.data)
     if serializer.is_valid():
-        serializer.save()
-        return Response({"message": "Endereço criado com sucesso!"}, status=200)
+        endereco = serializer.save()
+        return Response({"message": "Endereço criado com sucesso!", "enderecoId": endereco.__dict__['enderecoId']}, status=200)
     else:
         return Response({"message": "Não foi possível criar o endereço, revise os campos e tente novamente!"}, status=404)
 
@@ -38,9 +39,10 @@ def editar_endereco(request, pk):
         if serializer.is_valid():
             serializer.save()
         return Response({"mensagem": f"Endereço {pk} atualizado com sucesso.", f"reserva{pk}": serializer.data})
-    
+
     except Endereco.DoesNotExist:
-        return Response({"message": f"Endereço {pk} não encontrado"}, status=404)  # Retorna uma resposta de erro com status 404
+        # Retorna uma resposta de erro com status 404
+        return Response({"message": f"Endereço {pk} não encontrado"}, status=404)
 
 
 def deletar_endereco(request, pk):
@@ -49,4 +51,5 @@ def deletar_endereco(request, pk):
         endereco.delete()
         return Response({"message": f"Endereço {pk} deletado com sucesso!"}, status=200)
     except Endereco.DoesNotExist:
-        return Response({"message": f"Endereço {pk} não encontrado"}, status=404)  # Retorna uma resposta de erro com status 404
+        # Retorna uma resposta de erro com status 404
+        return Response({"message": f"Endereço {pk} não encontrado"}, status=404)
