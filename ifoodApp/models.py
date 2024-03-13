@@ -149,18 +149,18 @@ class Cartao(models.Model):
 
 class Usuario(models.Model):
     usuarioId = models.AutoField(primary_key=True)
-    nomeUsu = models.CharField(max_length=255, null=True)
-    telefoneUsu = models.CharField(max_length=14, null=True)
+    nomeUsu = models.CharField(max_length=255, null=True, default=None)
+    telefoneUsu = models.CharField(max_length=14, null=True, default=None)
     cpf = models.CharField(max_length=11, unique=True)
     emailUsu = models.EmailField(max_length=255, unique=True)
-    imagemPerfil = models.BinaryField(null=True)
+    imagemPerfil = models.BinaryField(null=True, default=None)
     contaBancariaId = models.ForeignKey(
-        'ContaBancaria', on_delete=models.CASCADE, null=True)
+        'ContaBancaria', on_delete=models.CASCADE, null=True, default=None)
     statusAtivo = models.BooleanField(default=True)
     dataCriacao = models.DateField(default=datetime.now)
     tipoUsuarioId = models.ForeignKey(
         'TipoUsuario', on_delete=models.CASCADE, default=0)
-    codVerif = models.CharField(max_length=6, null=True)
+    codVerif = models.CharField(max_length=6, null=True, default=None)
     USERNAME_FIELD = 'emailUsu'
     REQUIRED_FIELDS = []
     is_anonymous = False
@@ -191,13 +191,13 @@ class Favorito(models.Model):
 
 class Endereco(models.Model):
     enderecoId = models.AutoField(primary_key=True)
-    logradouro = models.CharField(max_length=255, null=False, default='')
-    cep = models.CharField(max_length=8, null=False, default='')
-    bairro = models.CharField(max_length=255, null=True)
-    cidade = models.CharField(max_length=255, null=True)
-    estado = models.CharField(max_length=2, null=True)
-    numero = models.IntegerField(null=True)
-    complemento = models.CharField(max_length=255, null=True)
+    logradouro = models.CharField(max_length=255, null=False)
+    cep = models.CharField(max_length=8, null=False)
+    bairro = models.CharField(max_length=255, null=True, default=None)
+    cidade = models.CharField(max_length=255, null=True, default=None)
+    estado = models.CharField(max_length=2, null=True, default=None)
+    numero = models.IntegerField(null=False)
+    complemento = models.CharField(max_length=255, null=True, default=None)
 
     def __str__(self):
         return f"Endereço {self.numero} - {self.logradouro}, {self.bairro}, {self.cidade}, {self.estado}"

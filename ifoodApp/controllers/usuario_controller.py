@@ -26,9 +26,9 @@ def criar_usuarioCompleto(request):
     usuarioSerializer = Usuario_Serializer(data=request.data['usuario'])
     enderecoSerializer = Endereco_Serializer(data=request.data['endereco'])
 
-    print(request.data['usuario'])
-    print(request.data['endereco'])
-    print(request.data['enderecoEntrega'])
+    # print(request.data['usuario'])
+    # print(request.data['endereco'])
+    print(request.data)
     dados_validos = True
     for serializer in [usuarioSerializer, enderecoSerializer]:
         if not serializer.is_valid():
@@ -53,7 +53,8 @@ def criar_usuarioCompleto(request):
             "usuarioId": usuarioId,
             "enderecoId": enderecoId
         }
-        enderecoEntregaSerializer = EnderecoEntrega_Serializer(data=enderecoEntregaData)
+        enderecoEntregaSerializer = EnderecoEntrega_Serializer(
+            data=enderecoEntregaData)
         if enderecoEntregaSerializer.is_valid():
             enderecoEntregaSerializer.save()
 
