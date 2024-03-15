@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 # from ..permissions import Professor, Admin, PodeEditarPerfil,Cadastrado,IsProfessorOrAdmin
 from rest_framework.permissions import AllowAny
-from ..models import Usuario
+from ..models import Usuario, EnderecoEntrega, Endereco
 from ..serializers import Usuario_Serializer, Endereco_Serializer, EnderecoEntrega_Serializer
 
 
@@ -15,8 +15,15 @@ def exibir_usuarios(request):
 def exibir_usuario(request, pk):
     try:
         usuario = Usuario.objects.get(usuarioId=pk)
-        serializer = Usuario_Serializer(usuario, many=False)
-        return Response(serializer.data)
+        enderecoEntrega = EnderecoEntrega.objects.get(usuarioId=pk)
+        endereco = Endereco.objects.get(enderecoId=enderecoEntrega.enderecoId)
+        usuario_serializer = Usuario_Serializer(usuario, many=False)
+        endereco_serializer = Endereco_Serializer(endereco, many=False)
+        response = {
+            "usuario":usuario_serializer,
+            "endereco":endereco_serializer
+        }
+        return Response(response)
     except Usuario.DoesNotExist:
         # Retorna uma resposta de erro com status 404
         return Response({"message": f"Usuário {pk} não encontrado"}, status=404)
@@ -47,7 +54,7 @@ def criar_usuarioCompleto(request):
         enderecoId = enderecoInstancia.__dict__['enderecoId']
         # Retornar ID (individual - instancia)
 
-        print("Chegou aqui!!!")
+        # print("Chegou aqui!!!")
         # ----Criar Table Endereco Entrega
         enderecoEntregaData = {
             "usuarioId": usuarioId,
@@ -104,6 +111,8 @@ def ativar_usuario(request, pk):
 def editar_usuario(request, pk):
     try:
         usuario = Usuario.objects.get(usuarioId=pk)
+        enderecoEntrega = EnderecoEntrega.objects.get(usuarioId=pk)
+        endereco = Endereco.objects.get(enderecoId=enderecoEntrega.enderecoId)
         serializer = Usuario_Serializer(instance=usuario, data=request.data)
         if serializer.is_valid():
             serializer.save()

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import inicio_view, usuario_view, endereco_view, enderecoEntrega_view
+from .views import inicio_view, usuario_view, endereco_view, enderecoEntrega_view, login_view
 
 urlpatterns = [
     # Inicio
@@ -26,5 +26,5 @@ urlpatterns = [
     path("enderecosEntrega/editar/<str:pk>", enderecoEntrega_view.editar_enderecoEntrega_view),
     path("enderecosEntrega/deletar/<str:pk>", enderecoEntrega_view.deletar_enderecoEntrega_view),
     # Login
-    # path('login', login_view.login_user_view),
+    path('login', login_view.login_user_view),
 ]
