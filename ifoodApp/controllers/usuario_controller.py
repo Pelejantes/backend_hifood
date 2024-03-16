@@ -3,7 +3,8 @@ from rest_framework.decorators import api_view, permission_classes
 # from ..permissions import Professor, Admin, PodeEditarPerfil,Cadastrado,IsProfessorOrAdmin
 from rest_framework.permissions import AllowAny
 from ..models import Usuario, EnderecoEntrega, Endereco
-from ..serializers import Usuario_Serializer, Endereco_Serializer, EnderecoEntrega_Serializer
+from ..serializers import Usuario_Serializer, Endereco_Serializer, EnderecoEntrega_Serializer, CodVerif
+from utils.func_gerais import gerar_code
 
 
 def exibir_usuarios(request):
@@ -30,6 +31,7 @@ def exibir_usuario(request, pk):
 
 
 def criar_usuarioCompleto(request):
+    request.data ['usuario']['codVerif'] = gerar_code(6)
     usuarioSerializer = Usuario_Serializer(data=request.data['usuario'])
     enderecoSerializer = Endereco_Serializer(data=request.data['endereco'])
 
@@ -54,7 +56,7 @@ def criar_usuarioCompleto(request):
         enderecoId = enderecoInstancia.__dict__['enderecoId']
         # Retornar ID (individual - instancia)
 
-        # print("Chegou aqui!!!")
+        # print("Chegou aqui!!!") 
         # ----Criar Table Endereco Entrega
         enderecoEntregaData = {
             "usuarioId": usuarioId,
@@ -62,6 +64,8 @@ def criar_usuarioCompleto(request):
         }
         enderecoEntregaSerializer = EnderecoEntrega_Serializer(
             data=enderecoEntregaData)
+
+        print(f"request: {request.data}")
         if enderecoEntregaSerializer.is_valid():
             enderecoEntregaSerializer.save()
 

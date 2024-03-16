@@ -207,7 +207,7 @@ class TipoVeiculo(models.Model):
 class Avaliacao(models.Model):
     avaliacaoId = models.AutoField(primary_key=True)
     tipoAvaliacaoId = models.ForeignKey(
-        'TipoAvaliacao', on_delete=models.CASCADE)
+        'TipoAvaliacao', on_delete=models.CASCADE, null=False, default=0)
     usuarioId = models.ForeignKey('Usuario', on_delete=models.CASCADE)
     qtdEstrelas = models.PositiveSmallIntegerField()
     descricao = models.CharField(max_length=255)
@@ -219,7 +219,7 @@ class Avaliacao(models.Model):
 
 class TipoAvaliacao(models.Model):
     tipoAvaliacaoId = models.AutoField(primary_key=True)
-    nomeTipo = models.CharFieldString(max_length=50)
+    nomeTipo = models.CharField(max_length=50)
 
 
 class Produto(models.Model):
