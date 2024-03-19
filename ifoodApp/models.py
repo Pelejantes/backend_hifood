@@ -129,7 +129,7 @@ class Usuario(models.Model):
 class CodVerif(models.Model):
     CodVerifId = models.AutoField(primary_key=True)
     codigo = models.CharField(max_length=6, null=True, default=None)
-    dataEnvio = models.DateField(default=datetime.now())
+    dataEnvio = models.DateField(default=datetime.now)
 
     def __str__(self):
         return f"codVerifId: {self.codVerifId}"
