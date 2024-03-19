@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny
 from ..models import Usuario, EnderecoEntrega, Endereco
 from ..serializers import Usuario_Serializer, Endereco_Serializer, EnderecoEntrega_Serializer, CodVerif
 from utils.func_gerais import gerar_code
+from rest_framework.serializers import ValidationError
 
 
 def exibir_usuarios(request):
@@ -21,8 +22,8 @@ def exibir_usuario(request, pk):
         usuario_serializer = Usuario_Serializer(usuario, many=False)
         endereco_serializer = Endereco_Serializer(endereco, many=False)
         response = {
-            "usuario":usuario_serializer,
-            "endereco":endereco_serializer
+            "usuario": usuario_serializer,
+            "endereco": endereco_serializer
         }
         return Response(response)
     except Usuario.DoesNotExist:
@@ -31,9 +32,10 @@ def exibir_usuario(request, pk):
 
 
 def criar_usuarioCompleto(request):
-    request.data ['usuario']['codVerif'] = gerar_code(6)
+    request.data['usuario']['codVerif'] = gerar_code(6)
     usuarioSerializer = Usuario_Serializer(data=request.data['usuario'])
     enderecoSerializer = Endereco_Serializer(data=request.data['endereco'])
+    error_messages = []
 
     # print(request.data['usuario'])
     # print(request.data['endereco'])
@@ -42,7 +44,13 @@ def criar_usuarioCompleto(request):
     for serializer in [usuarioSerializer, enderecoSerializer]:
         if not serializer.is_valid():
             dados_validos = False
-            break
+            errors = serializer.errors
+            for field, field_errors in errors.items():
+                for error in field_errors:
+                    if isinstance(error, ValidationError):
+                        error_messages.append(f"{field}: {error.message}")
+                    else:
+                        error_messages.append(f"{field}: {error}")
     # print("dados_validos == True ",dados_validos)
     if dados_validos == True:
         # Criar tabelas individuais
@@ -56,7 +64,7 @@ def criar_usuarioCompleto(request):
         enderecoId = enderecoInstancia.__dict__['enderecoId']
         # Retornar ID (individual - instancia)
 
-        # print("Chegou aqui!!!") 
+        # print("Chegou aqui!!!")
         # ----Criar Table Endereco Entrega
         enderecoEntregaData = {
             "usuarioId": usuarioId,
@@ -71,7 +79,7 @@ def criar_usuarioCompleto(request):
 
         return Response({"message": "Usuário Completo criado com sucesso!"}, status=200)
     else:
-        return Response({"message": "Não foi possível criar o usuário Completo, revise os campos e tente novamente!"}, status=404)
+        return Response({"message": "Não foi possível criar o usuário.", "errors": error_messages}, status=400)
 
 
 def criar_usuario(request):
