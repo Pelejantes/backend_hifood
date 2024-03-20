@@ -56,7 +56,7 @@ def criar_usuarioCompleto(request):
             }
             enderecoEntregaSerializer = EnderecoEntrega_Serializer(
                 data=enderecoEntregaData)
-            
+
             if enderecoEntregaSerializer.is_valid():
                 enderecoEntregaSerializer.save()
         return Response({"message": "Usuário Completo criado com sucesso!"}, status=200)
@@ -115,7 +115,8 @@ def editar_usuario(request, pk):
 
     except Usuario.DoesNotExist:
         # Retorna uma resposta de erro com status 404
-        return Response({"message": f"Usuário {pk} não encontrado"}, status=404)
+        error_messages = listarErros([serializer])
+        return Response({"message": f"Usuário {pk} não encontrado", "errors": error_messages}, status=404)
 
 
 def deletar_usuario(request, pk):

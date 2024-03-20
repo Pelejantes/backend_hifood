@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from ..models import EnderecoEntrega, Endereco
 from ..serializers import EnderecoEntrega_Serializer, Endereco_Serializer
+from utils.func_gerais import gerar_code, listarErros, serializersValidos
 
 
 def exibir_enderecosEntrega(request):
@@ -40,17 +41,38 @@ def criar_enderecoEntrega(request):
 
 
 def editar_enderecoEntrega(request, pk):
-    try:
-        enderecoEntrega = EnderecoEntrega.objects.get(usuarioId=pk)
-        serializer = EnderecoEntrega_Serializer(
-            instance=enderecoEntrega, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-        return Response({"mensagem": f"enderecoEntrega {pk} atualizado com sucesso.", f"reserva{pk}": serializer.data})
+    # try:
+    #     enderecoEntrega = EnderecoEntrega.objects.get(usuarioId=pk)
+    #     serializer = EnderecoEntrega_Serializer(
+    #         instance=enderecoEntrega, data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #     return Response({"mensagem": f"enderecoEntrega {pk} atualizado com sucesso.", f"reserva{pk}": serializer.data})
 
-    except EnderecoEntrega.DoesNotExist:
-        # Retorna uma resposta de erro com status 404
-        return Response({"message": f"enderecoEntrega {pk} não encontrado"}, status=404)
+    # except EnderecoEntrega.DoesNotExist:
+    #     # Retorna uma resposta de erro com status 404
+    #     return Response({"message": f"enderecoEntrega {pk} não encontrado"}, status=404)
+    pass
+    # try:
+    #     todosEnderecosEntrega = EnderecoEntrega.objects.filter(usuarioId=pk)
+    #     response = []
+    #     serializers = []
+    #     # Puxar todos os enderecoId's
+    #     for enderecoEntrega in todosEnderecosEntrega:
+    #         enderecoId = EnderecoEntrega_Serializer(
+    #             enderecoEntrega).data['enderecoId']
+    #         serializers.append(enderecoEntrega)
+    #         # Puxar endereço por seu id
+    #         endereco = Endereco.objects.get(enderecoId=enderecoId)
+    #         # Adicionar á lista do response
+    #         endereco_Serializer = Endereco_Serializer(endereco).data
+    #         serializers.append(endereco_Serializer)
+    #         if endereco_Serializer.is_valid():
+    #             endereco_Serializer.save()
+    #     return Response({"message": f"Endereço(s) do usuario {pk} alterados."}, status=200)
+    # except EnderecoEntrega.DoesNotExist:
+    #     error_messages = listarErros(serializers)
+    #     return Response({"message": f"enderecoEntrega {pk} não encontrado", "errors": error_messages}, status=404)
 
 
 def deletar_enderecoEntrega(request, pk):
