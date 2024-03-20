@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny
 from ..models import Usuario, EnderecoEntrega, Endereco
 from ..serializers import Usuario_Serializer, Endereco_Serializer, EnderecoEntrega_Serializer, CodVerif
 from utils.func_gerais import gerar_code, listarErros, serializersValidos
+import time
 
 
 def exibir_usuarios(request):
@@ -31,23 +32,27 @@ def exibir_usuario(request, pk):
 
 
 def criar_usuarioCompleto(request):
+    # print(f'request: {request.data}')
+    # if 'usuario' in request.data:
+    # body = {"usuario": {props},
+    #         "enderecos": [{props_table_endereco}]}
     usuarioSerializer = Usuario_Serializer(data=request.data['usuario'])
-    enderecoSerializer = Endereco_Serializer(data=request.data['endereco'])
-    serializers = [usuarioSerializer, enderecoSerializer]
+    serializers = [usuarioSerializer]
+    enderecos_serializers = []
+    for endereco in request.data['enderecos']:
+        serializers.append(Endereco_Serializer(data=endereco))
+        enderecos_serializers.append(Endereco_Serializer(data=endereco))
+
     if serializersValidos(serializers):
-        try:    
-            # Criar tabelas individuais
-            # ----Criar Table Usuario
-            usuarioInstancia = usuarioSerializer.save()
-            usuarioId = usuarioInstancia.__dict__['usuarioId']
-            # Retornar ID (individual - instancia)
+        # ----Criar Table Usuario
+        usuarioInstancia = usuarioSerializer.save()
+        usuarioId = usuarioInstancia.__dict__['usuarioId']
 
-            # ----Criar Table Endereco
-            enderecoInstancia = enderecoSerializer.save()
-            enderecoId = enderecoInstancia.__dict__['enderecoId']
-            # Retornar ID (individual - instancia)
-
-            # print("Chegou aqui!!!")
+        # ----Criar Table Endereco
+        for serializer in enderecos_serializers:
+            if serializer.is_valid():
+                enderecoInstancia = serializer.save()
+                enderecoId = enderecoInstancia.__dict__['enderecoId']
             # ----Criar Table Endereco Entrega
             enderecoEntregaData = {
                 "usuarioId": usuarioId,
@@ -55,11 +60,9 @@ def criar_usuarioCompleto(request):
             }
             enderecoEntregaSerializer = EnderecoEntrega_Serializer(
                 data=enderecoEntregaData)
-
             if enderecoEntregaSerializer.is_valid():
                 enderecoEntregaSerializer.save()
-        except AssertionError:
-            return Response({"message": "Usuário Completo criado com sucesso!"}, status=200)
+        return Response({"message": "Usuário Completo criado com sucesso!"}, status=200)
     else:
         error_messages = listarErros(serializers)
         return Response({"message": "Não foi possível criar o usuário.", "errors": error_messages}, status=400)

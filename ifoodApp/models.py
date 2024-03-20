@@ -132,7 +132,7 @@ class CodVerif(models.Model):
     dataEnvio = models.DateField(default=datetime.now)
 
     def __str__(self):
-        return f"codVerifId: {self.codVerifId}"
+        return f"codVerifId: {self.CodVerifId}"
 
 
 class EnderecoEntrega(models.Model):
@@ -168,7 +168,7 @@ class Endereco(models.Model):
     apelido = models.CharField(max_length=255, null=True, default=None)
 
     def __str__(self):
-        return f"Endereço {self.enderecoId} {self.apelido} - {self.logradouro}, {self.numero} {self.complemento} - {self.bairros} - Cep: {self.cep}: - {self.cidade}, {self.estado} - {self.pontoReferencia} - {self.coordenadas}"
+        return f"Endereço {self.enderecoId}"
 
 
 class EntregadorVeic(models.Model):
