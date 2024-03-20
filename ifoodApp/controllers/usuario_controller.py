@@ -32,10 +32,6 @@ def exibir_usuario(request, pk):
 
 
 def criar_usuarioCompleto(request):
-    # print(f'request: {request.data}')
-    # if 'usuario' in request.data:
-    # body = {"usuario": {props},
-    #         "enderecos": [{props_table_endereco}]}
     usuarioSerializer = Usuario_Serializer(data=request.data['usuario'])
     serializers = [usuarioSerializer]
     enderecos_serializers = []
@@ -60,6 +56,7 @@ def criar_usuarioCompleto(request):
             }
             enderecoEntregaSerializer = EnderecoEntrega_Serializer(
                 data=enderecoEntregaData)
+            
             if enderecoEntregaSerializer.is_valid():
                 enderecoEntregaSerializer.save()
         return Response({"message": "Usuário Completo criado com sucesso!"}, status=200)
