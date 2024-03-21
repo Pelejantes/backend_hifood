@@ -32,16 +32,16 @@ def exibir_usuario(request, pk):
 
 
 def criar_usuarioCompleto(request):
-    usuarioSerializer = Usuario_Serializer(data=request.data['usuario'])
-    serializers = [usuarioSerializer]
     enderecos_serializers = []
+    usuario_serializer = Usuario_Serializer(data=request.data['usuario'])
+    serializers = [usuario_serializer]
     for endereco in request.data['enderecos']:
         serializers.append(Endereco_Serializer(data=endereco))
         enderecos_serializers.append(Endereco_Serializer(data=endereco))
 
     if serializersValidos(serializers):
         # ----Criar Table Usuario
-        usuarioInstancia = usuarioSerializer.save()
+        usuarioInstancia = usuario_serializer.save()
         usuarioId = usuarioInstancia.__dict__['usuarioId']
 
         # ----Criar Table Endereco
@@ -105,17 +105,21 @@ def ativar_usuario(request, pk):
 
 def editar_usuario(request, pk):
     try:
-        usuario = Usuario.objects.get(usuarioId=pk)
-        enderecoEntrega = EnderecoEntrega.objects.get(usuarioId=pk)
-        endereco = Endereco.objects.get(enderecoId=enderecoEntrega.enderecoId)
-        serializer = Usuario_Serializer(instance=usuario, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-        return Response({"mensagem": f"Usuário {pk} atualizado com sucesso.", f"reserva{pk}": serializer.data})
+        usuario_model = Usuario.objects.get(usuarioId=pk)
+        usuario_Serializer = Usuario_Serializer(instance=usuario_model, data=request.data['usuario'])
+        if usuario_Serializer.is_valid():
+            usuario_Serializer.save()
+
+        for endereco in request.data['enderecos']:
+            endereco_model = Endereco.objects.get(enderecoId=endereco['enderecoId'])
+            endereco_Serializer = Endereco_Serializer(instance=endereco_model, data=endereco)
+            if endereco_Serializer.is_valid():
+                endereco_Serializer.save()
+        return Response({"mensagem": f"Usuário {pk} atualizado com sucesso.", f"reserva{pk}": usuario_Serializer.data})
 
     except Usuario.DoesNotExist:
         # Retorna uma resposta de erro com status 404
-        error_messages = listarErros([serializer])
+        error_messages = listarErros([usuario_Serializer])
         return Response({"message": f"Usuário {pk} não encontrado", "errors": error_messages}, status=404)
 
 

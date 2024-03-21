@@ -164,7 +164,7 @@ class Endereco(models.Model):
     numero = models.IntegerField(null=False)
     complemento = models.CharField(max_length=255, null=True, default=None)
     pontoReferencia = models.CharField(max_length=255, null=True, default=None)
-    coordenadas = models.CharField(max_length=20, null=True, default=True)
+    coordenadas = models.CharField(max_length=20, null=True, default=None)
     apelido = models.CharField(max_length=255, null=True, default=None)
 
     def __str__(self):
