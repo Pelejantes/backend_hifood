@@ -17,13 +17,17 @@ def exibir_usuarios(request):
 def exibir_usuario(request, pk):
     try:
         usuario = Usuario.objects.get(usuarioId=pk)
-        enderecoEntrega = EnderecoEntrega.objects.get(usuarioId=pk)
-        endereco = Endereco.objects.get(enderecoId=enderecoEntrega.enderecoId)
+        enderecosEntrega = EnderecoEntrega.objects.filter(usuarioId=pk)
+        enderecos = []
+        for enderecoEntrega in enderecosEntrega:
+            # print(f'\n\n|||| {enderecoEntrega.enderecoId_id} ||||\n\n')
+            endereco_model = Endereco.objects.get(enderecoId=enderecoEntrega.enderecoId_id)
+            endereco_serializer = Endereco_Serializer(endereco_model, many=False)
+            enderecos.append(endereco_serializer.data)
         usuario_serializer = Usuario_Serializer(usuario, many=False)
-        endereco_serializer = Endereco_Serializer(endereco, many=False)
         response = {
-            "usuario": usuario_serializer,
-            "endereco": endereco_serializer
+            "usuario": usuario_serializer.data,
+            "enderecos": enderecos
         }
         return Response(response)
     except Usuario.DoesNotExist:
