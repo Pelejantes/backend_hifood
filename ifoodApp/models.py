@@ -116,7 +116,7 @@ class Usuario(models.Model):
     tipoUsuarioId = models.ForeignKey(
         'TipoUsuario', on_delete=models.CASCADE, default=0)
     codVerifId = models.ForeignKey(
-        'CodVerif', on_delete=models.CASCADE)
+        'CodVerif', on_delete=models.CASCADE, null=True, default=None)
     USERNAME_FIELD = 'emailUsu'
     REQUIRED_FIELDS = []
     is_anonymous = False
