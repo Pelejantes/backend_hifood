@@ -7,3 +7,4 @@ requests==2.31.0
 urllib3==1.26.12
 django-cors-headers==4.1.0
 python-dotenv==1.0.1
+twilio==9.0.2
