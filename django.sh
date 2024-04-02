@@ -1,17 +1,13 @@
 #!/bin/sh
 
 # Função para aguardar o Postgres ficar pronto
-# wait_for_db() {
-#   echo "Waiting for Postgres to start..."
-#   until pg_isready -h db -p 5432; do
-#     sleep 0.1
-#   done
-#   echo "Postgres started"
-# }
-
-# Aguarda o Postgres iniciar
-# wait_for_db
-
+while true; do
+    if pg_isready -h db -p 5432; then
+        break
+    fi
+    sleep 1
+done
+sleep(2)
 # Criando Migrações
 echo "Creating Migrations..."
 python manage.py makemigrations ifoodApp
