@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ifoodApp',
     'rest_framework',
-    "corsheaders"
+    'corsheaders'
 ]
 
 
@@ -92,12 +92,12 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('DB_DRIVER',''),
-        'NAME': os.getenv('PG_DB',''),
-        'USER': os.getenv('PG_USER',''),
-        'PASSWORD':os.getenv('PG_PASSWORD',''),
-        'HOST': os.getenv('PG_HOST',''),
-        'PORT': os.getenv('PG_PORT',''),
+        'ENGINE': os.getenv('DB_DRIVER','django.db.backends.postgresql'),
+        'NAME': os.getenv('POSTGRES_DB','postgres'),
+        'USER': os.getenv('POSTGRES_USER','postgres'),
+        'PASSWORD':os.getenv('POSTGRES_PASSWORD','postgres'),
+        'HOST': os.getenv('POSTGRES_HOST','localhost'),
+        'PORT': os.getenv('POSTGRES_PORT','5432'),
     }
 }
 
