@@ -12,7 +12,7 @@ class FormaPag(models.Model):
 
 class Notificacao(models.Model):
     notificacaoId = models.AutoField(primary_key=True)
-    cuponId = models.ForeignKey('Cupon', on_delete=models.CASCADE)
+    cupomId = models.ForeignKey('Cupom', on_delete=models.CASCADE)
     titulo = models.CharField(max_length=50)
     descricao = models.CharField(max_length=255)
     dataRecebimento = models.DateField()
@@ -20,10 +20,14 @@ class Notificacao(models.Model):
     def __str__(self):
         return f"Notificação {self.notificacaoId}"
 
+class CuponsUsuario(models.Model):
+    cuponsUsuarioId = models.AutoField(primary_key=True)
+    usuarioId = models.ForeignKey('Usuario', on_delete=models.CASCADE)
+    cupomId = models.ForeignKey('Cupom', on_delete=models.CASCADE)
 
-class Cupon(models.Model):
-    cuponId = models.AutoField(primary_key=True)
-    regraCuponId = models.ForeignKey('RegraCupon', on_delete=models.CASCADE)
+class Cupom(models.Model):
+    cupomId = models.AutoField(primary_key=True)
+    regraCupomId = models.ForeignKey('RegraCupom', on_delete=models.CASCADE)
     categoriaId = models.ForeignKey('Categoria', on_delete=models.CASCADE)
     valorDesconto = models.FloatField()
     dataValidade = models.DateField()
@@ -31,7 +35,7 @@ class Cupon(models.Model):
     valorMinimo = models.FloatField()
 
     def __str__(self):
-        return f"Cupom {self.cuponId}"
+        return f"Cupom {self.cupomId}"
 
 
 class Pedido(models.Model):
@@ -39,7 +43,7 @@ class Pedido(models.Model):
     usuariold = models.ForeignKey('Usuario', on_delete=models.CASCADE)
     formaPagld = models.ForeignKey(
         'FormaPag', on_delete=models.CASCADE)
-    cuponld = models.ForeignKey('Cupon', on_delete=models.CASCADE)
+    cupomld = models.ForeignKey('Cupom', on_delete=models.CASCADE)
     statusPedido = models.CharField(max_length=50)
     valorTotal = models.FloatField()
     observacao = models.CharField(max_length=255)
@@ -50,7 +54,7 @@ class Pedido(models.Model):
         return f"Pedido {self.pedidoId}"
 
 
-class itemPedido(models.Model):
+class ItemPedido(models.Model):
     itemPedidoId = models.AutoField(primary_key=True)
     produtold = models.ForeignKey('Produto', on_delete=models.CASCADE)
     qtdItens = models.SmallIntegerField()
@@ -79,8 +83,8 @@ class TipoUsuario(models.Model):
         return f"Tipo de Usuário {self.tipoUsuarioId}"
 
 
-class RegraCupon(models.Model):
-    regraCuponId = models.AutoField(primary_key=True)
+class RegraCupom(models.Model):
+    regraCupomId = models.AutoField(primary_key=True)
     descricaoRegra = models.TextField()
 
     def __str__(self):
@@ -241,6 +245,7 @@ class Produto(models.Model):
 class Categoria(models.Model):
     categoriaId = models.AutoField(primary_key=True)
     nomeCategoria = models.CharField(max_length=255)
+    imagem = models.BinaryField(null=True, default=None)
 
     def __str__(self):
         return f'nomeCategoria: {self.nomeCategoria}'
