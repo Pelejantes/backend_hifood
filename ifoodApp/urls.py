@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import inicio_view, usuario_view, endereco_view, enderecoEntrega_view, login_view
+from .views import inicio_view, usuario_view, endereco_view, enderecoEntrega_view, login_view,tipoUsuario_view
 
 urlpatterns = [
     # Inicio
@@ -19,6 +19,12 @@ urlpatterns = [
     path("enderecos/criar", endereco_view.criar_endereco_view),
     path("enderecos/editar/<str:pk>", endereco_view.editar_endereco_view),
     path("enderecos/deletar/<str:pk>", endereco_view.deletar_endereco_view),
+    # Endereco - Privado individualmente alunos e professores
+    path("tipoUsuario", tipoUsuario_view.exibir_tipoUsuarios_view),
+    path("tipoUsuario/ler/<str:pk>", tipoUsuario_view.exibir_tipoUsuario_view),
+    path("tipoUsuario/criar", tipoUsuario_view.criar_tipoUsuario_view),
+    path("tipoUsuario/editar/<str:pk>", tipoUsuario_view.editar_tipoUsuario_view),
+    path("tipoUsuario/deletar/<str:pk>", tipoUsuario_view.deletar_tipoUsuario_view),
     # Endereco Entrega - Privado individualmente alunos e professores
     path("enderecosEntrega", enderecoEntrega_view.exibir_enderecosEntrega_view),
     path("enderecosEntrega/ler/<str:pk>", enderecoEntrega_view.exibir_enderecoEntrega_view),
