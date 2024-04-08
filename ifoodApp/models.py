@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
-
+from utils.func_gerais import gerar_code
+from datetime import timezone
 
 class FormaPag(models.Model):
     formaPag = models.AutoField(primary_key=True)
@@ -132,12 +133,17 @@ class Usuario(models.Model):
 
 class CodVerif(models.Model):
     CodVerifId = models.AutoField(primary_key=True)
-    codigo = models.CharField(max_length=6, null=True, default=None)
-    dataEnvio = models.DateField(default=datetime.now)
+    codigo = models.CharField(max_length=6, null=False, default=gerar_code(6))
+    dataCriacao = models.DateField(default=datetime.now)
+    statusAtivo = models.BooleanField(default=True, null=False)
+    # duracao_expiracao_minutos = models.PositiveIntegerField(default=5)
 
     def __str__(self):
-        return f"codVerifId: {self.CodVerifId}"
-
+        return f"{self.CodVerifId}"
+    
+    # def esta_expirado(self):
+    #         delta = timezone.now() - self.dataCriacao
+    #         return delta.total_seconds() > (self.duracao_expiracao_minutos * 60)
 
 class EnderecoEntrega(models.Model):
     enderecoEntregaId = models.AutoField(primary_key=True)
