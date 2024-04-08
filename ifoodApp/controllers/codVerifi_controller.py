@@ -13,9 +13,9 @@ load_dotenv(dotenv_path)
 
 def enviar_codigo(request):
     # Puxa telefone do request
-    try:
+    if 'telefoneUsu' in request.data:
         telefoneUsu = request.data['telefoneUsu']
-    except AssertionError:
+    else:
         return Response({"mensagem": "Campo de telefone é obrigatório"}, status=status.HTTP_406_NOT_ACCEPTABLE)
     # Puxa usuario pelo telefone
     try:
