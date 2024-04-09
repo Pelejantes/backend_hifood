@@ -20,7 +20,6 @@ def exibir_tipoUsuario(request, pk):
 
 def criar_tipoUsuario(request):
     serializer = TipoUsuario_Serializer(data=request.data)
-    print(request.data)
     if serializer.is_valid():
         tipoUsuario = serializer.save()
         return Response({"message": "Tipo de Usuario criado com sucesso!", "tipoUsuarioId": tipoUsuario.__dict__['tipoUsuarioId']}, status=200)

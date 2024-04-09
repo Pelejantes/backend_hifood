@@ -82,7 +82,6 @@ def criar_usuarioCompleto(request):
 
 def criar_usuario(request):
     serializer = Usuario_Serializer(data=request.data)
-    print(request.data)
     if serializer.is_valid():
         usuario = serializer.save()
         return Response({"message": "Usuário criado com sucesso!", "usuarioId": usuario.__dict__['usuarioId']}, status=200)

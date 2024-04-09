@@ -24,7 +24,6 @@ def exibir_endereco(request, pk):
 
 def criar_endereco(request):
     serializer = Endereco_Serializer(data=request.data)
-    print(request.data)
     if serializer.is_valid():
         endereco = serializer.save()
         return Response({"message": "Endereço criado com sucesso!", "enderecoId": endereco.__dict__['enderecoId']}, status=200)

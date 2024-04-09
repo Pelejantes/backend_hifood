@@ -32,7 +32,6 @@ def exibir_enderecoEntrega(request, pk):
 
 def criar_enderecoEntrega(request):
     serializer = EnderecoEntrega_Serializer(data=request.data)
-    print(request.data)
     if serializer.is_valid():
         enderecoEntrega = serializer.save()
         return Response({"message": "enderecoEntrega criado com sucesso!", "enderecoId": enderecoEntrega.__dict__['enderecoEntregaId']}, status=200)

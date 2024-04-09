@@ -2,21 +2,17 @@ import jwt
 from django.conf import settings
 from datetime import datetime, timedelta
 
+
 def decode_token_jwt(token_jwt):
     secret_key = settings.SIMPLE_JWT["SIGNING_KEY"]
     algorithm = settings.SIMPLE_JWT["ALGORITHM"]
-    payload = jwt.decode(token_jwt, secret_key, algorithms=[algorithm])
-    print(f"\n\n{payload}\n\n")
-    return payload
-    # try:
-    #     payload = jwt.decode(token_jwt, secret_key, algorithms=[algorithm])
-    #     print(f"\n\n{payload}\n\n")
-    #     return payload
-    # except jwt.ExpiredSignatureError:
-    #     print(f"\n\n{payload}\n\n")
-    #     return None
-    # except jwt.DecodeError:
-    #     return None
+    try:
+        payload = jwt.decode(token_jwt, secret_key, algorithms=[algorithm])
+        return payload
+    except jwt.ExpiredSignatureError:
+        return None
+    except jwt.DecodeError:
+        return None
 
 
 def extrair_toker_jwt(header):

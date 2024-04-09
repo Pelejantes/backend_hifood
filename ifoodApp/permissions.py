@@ -6,7 +6,6 @@ class Admin(permissions.BasePermission):
         if hasattr(request, 'auth_payload') and request.auth_payload:
             payload = request.auth_payload
             if payload.get("tipoUsuarioId") == "0":
-                print('CHEGOU AQUI')
                 return True
         return False
 
