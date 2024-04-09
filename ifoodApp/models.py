@@ -81,7 +81,7 @@ class TipoUsuario(models.Model):
     nomeTipoUsuario = models.CharField(max_length=255)
 
     def __str__(self):
-        return f"Tipo de Usuário {self.tipoUsuarioId}"
+        return f"{self.tipoUsuarioId}"
 
 
 class RegraCupom(models.Model):
