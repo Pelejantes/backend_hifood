@@ -133,7 +133,7 @@ class Usuario(models.Model):
 
 class CodVerif(models.Model):
     CodVerifId = models.AutoField(primary_key=True)
-    codigo = models.CharField(max_length=6, null=False, default=gerar_code(6))
+    codigo = models.CharField(max_length=6, null=True)
     dataCriacao = models.DateTimeField(auto_now_add=True)
     statusAtivo = models.BooleanField(default=True, null=False)
     duracao_expiracao_minutos = models.PositiveIntegerField(default=5)

@@ -7,9 +7,11 @@ from ..serializers import CodVerif_Serializer, Usuario_Serializer
 from twilio.rest import Client
 import os
 from dotenv import load_dotenv
-# dotenv_path = "../../dotenv_files/.env"
+
 dotenv_path = "../../dotenv_files/.env"
 load_dotenv(dotenv_path)
+
+economizar_recursos = True
 
 def enviar_codigo(request):
     # Puxa telefone do request
@@ -46,10 +48,11 @@ def enviar_codigo(request):
         auth_token = os.getenv('AUTH_TOKEN')
         client = Client(account_sid, auth_token)
 
-        client.messages.create(
-        from_=f"whatsapp:+{os.getenv('TEL_FROM')}",
-        body=f"Seu código de verificação H!food: *{codigo}*",
-        to=f"whatsapp:+{os.getenv('TEL_TO')}"
+        if(not economizar_recursos):
+            client.messages.create(
+            from_=f"whatsapp:+{os.getenv('TEL_FROM')}",
+            body=f"Seu código de verificação H!food: *{codigo}*",
+            to=f"whatsapp:+{os.getenv('TEL_TO')}"
         )
 
         return Response(

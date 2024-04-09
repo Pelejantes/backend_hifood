@@ -24,9 +24,7 @@ def login_user(request):
         telefoneUsu = request.data['telefoneUsu']
     else:
         return Response({"mensagem": "Campo de telefone é obrigatório"}, status=status.HTTP_406_NOT_ACCEPTABLE)
-    if 'codVerif' in request.data:
-        codVerif = request.data['codVerif']
-    else:
+    if not ('codVerif' in request.data):
         return Response({"mensagem": "Campo de codVerif é obrigatório"}, status=status.HTTP_406_NOT_ACCEPTABLE)
     try:
         usuario = Usuario.objects.get(telefoneUsu=telefoneUsu)
@@ -62,4 +60,4 @@ def login_user(request):
                 {"message": f"Código enviado ao usuário."}, status=200,
             )
         else:
-            return Response({"mensagem": "Serializer Invalido"}, status=status.HTTP_400_BAD_)
+            return Response({"message": "Serializer Invalido"}, status=status.HTTP_400_BAD_)
