@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+from datetime import timedelta
+import rest_framework_simplejwt
 from dotenv import load_dotenv
 dotenv_path = "./dotenv_files/.env"
 load_dotenv(dotenv_path)
@@ -45,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ifoodApp',
     'rest_framework',
+    'rest_framework_simplejwt',
     'corsheaders'
 ]
 
@@ -56,6 +59,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'ifoodApp.middleware.JWTAuthenticationMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
 ]
@@ -118,7 +122,20 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    'ALGORITHM': os.getenv('JWT_ALGORITHM','CHANGE_ME'),
+    'SIGNING_KEY': os.getenv('JWT_SECRET_KEY','CHANGE_ME'),
+}
+AUTHENTICATION_CLASSES = (
+    'rest_framework_simplejwt.authentication.JWTAuthentication',
+)
 AUTH_USER_MODEL = 'ifoodApp.Usuario'
 
 # Internationalization

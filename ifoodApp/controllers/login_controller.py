@@ -2,21 +2,22 @@ from rest_framework.response import Response
 from rest_framework import status
 from ..models import Usuario, CodVerif
 from ..serializers import Usuario_Serializer, CodVerif_Serializer
-# from utils.utils_jwt import gera_token
+from utils.utils_jwt import gerar_token_jwt
 from utils.func_gerais import gerar_code
+
 
 def login_user(request):
     # UsuarioExiste == True
-        # codVerifAtivo == True
-            # Receber o código
-            # Validar credencial
-                # codValido == True
-                    # retornar jwt
-                    # liberar acesso
-                # codValido == False
-                    # retornar 'código inválido'
+    # codVerifAtivo == True
+    # Receber o código
+    # Validar credencial
+    # codValido == True
+    # retornar jwt
+    # liberar acesso
+    # codValido == False
+    # retornar 'código inválido'
     #  UsuarioExiste == False
-        # retornar 'usuario não existe'
+    # retornar 'usuario não existe'
 
     if 'telefoneUsu' in request.data:
         telefoneUsu = request.data['telefoneUsu']
@@ -33,10 +34,12 @@ def login_user(request):
             {"mensagem": "Usuário não encontrado"}, status=status.HTTP_404_NOT_FOUND
         )
     if usuario.codVerifId and "codVerif" in request.data:
-        codVerif_model = CodVerif.objects.get(CodVerifId=f"{usuario.codVerifId}")
+        codVerif_model = CodVerif.objects.get(
+            CodVerifId=f"{usuario.codVerifId}")
         if codVerif_model.codigo == request.data["codVerif"]:
+            token_jwt = gerar_token_jwt(usuario)
             return Response(
-                {"message": f"Código Valido, login aprovado"}, status=200,
+                {"message": f"Código Valido, login aprovado", "token_jwt": token_jwt}, status=200,
             )
         else:
             return Response(
@@ -51,7 +54,6 @@ def login_user(request):
             )
         else:
             return Response({"mensagem": "Serializer Invalido"}, status=status.HTTP_400_BAD_)
-
 
     # Se request não contem codVerif envia código
     # Se request contem codVerif valida e informa o usuario
