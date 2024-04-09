@@ -5,7 +5,7 @@ from ..serializers import Usuario_Serializer, CodVerif_Serializer
 # from utils.utils_jwt import gera_token
 from utils.func_gerais import gerar_code
 
-def login_user(dados):
+def login_user(request):
     # UsuarioExiste == True
         # codVerifAtivo == True
             # Receber o código
@@ -15,40 +15,42 @@ def login_user(dados):
                     # liberar acesso
                 # codValido == False
                     # retornar 'código inválido'
-        # codValidoAtivo == False
-            #  Gerar novo código
-            #  Enviar código via msg
     #  UsuarioExiste == False
         # retornar 'usuario não existe'
 
-    if "telefoneUsu" in dados:
-        telefoneUsu = dados["telefoneUsu"]
-        try:
-            usuario = Usuario.objects.get(telefoneUsu=telefoneUsu)
-        except Usuario.DoesNotExist:
+    if 'telefoneUsu' in request.data:
+        telefoneUsu = request.data['telefoneUsu']
+    else:
+        return Response({"mensagem": "Campo de telefone é obrigatório"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+    if 'codVerif' in request.data:
+        codVerif = request.data['codVerif']
+    else:
+        return Response({"mensagem": "Campo de codVerif é obrigatório"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+    try:
+        usuario = Usuario.objects.get(telefoneUsu=telefoneUsu)
+    except Usuario.DoesNotExist:
+        return Response(
+            {"mensagem": "Usuário não encontrado"}, status=status.HTTP_404_NOT_FOUND
+        )
+    if usuario.codVerifId and "codVerif" in request.data:
+        codVerif_model = CodVerif.objects.get(CodVerifId=f"{usuario.codVerifId}")
+        if codVerif_model.codigo == request.data["codVerif"]:
             return Response(
-                {"mensagem": "Usuário não encontrado"}, status=status.HTTP_404_NOT_FOUND
+                {"message": f"Código Valido, login aprovado"}, status=200,
             )
-        # return Response({f"{usuario.codVerifId}"})
-        if usuario.codVerifId and "codigo" in dados:
-            codVerif_model = CodVerif.objects.get(CodVerifId=f"{usuario.codVerifId}")
-            if codVerif_model.codigo == dados["codigo"]:
-                return Response(
-                    {"message": f"Código Valido, login aprovado"}, status=200,
-                )
-            else:
-                return Response(
-                    {"message": f"Código inválido, login negado"}, status=status.HTTP_401_UNAUTHORIZED,
-                )
         else:
-            codVerif_Serializer = CodVerif_Serializer(data={})
-            if codVerif_Serializer.is_valid():
-                codVerif_Serializer.save()
-                return Response(
-                    {"message": f"Código enviado ao usuário."}, status=200,
-                )
-            else:
-                return Response({"mensagem": "Serializer Invalido"}, status=status.HTTP_400_BAD_)
+            return Response(
+                {"message": f"Código inválido, login negado"}, status=status.HTTP_401_UNAUTHORIZED,
+            )
+    else:
+        codVerif_Serializer = CodVerif_Serializer(data={})
+        if codVerif_Serializer.is_valid():
+            codVerif_Serializer.save()
+            return Response(
+                {"message": f"Código enviado ao usuário."}, status=200,
+            )
+        else:
+            return Response({"mensagem": "Serializer Invalido"}, status=status.HTTP_400_BAD_)
 
 
     # Se request não contem codVerif envia código
