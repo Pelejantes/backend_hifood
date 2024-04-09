@@ -60,3 +60,12 @@ class Estabelecimento(permissions.BasePermission):
             if payload.get("tipoUsuarioId") == "3":
                 return True
         return False
+
+class Logado(permissions.BasePermission):
+    def has_permission(self, request, view):
+        if hasattr(request, 'auth_payload') and request.auth_payload:
+            payload = request.auth_payload
+            if payload.get("tipoUsuarioId"):
+                return True
+        return False
+
