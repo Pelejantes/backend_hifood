@@ -15,14 +15,21 @@ class JWTAuthenticationMiddleware:
         authorization_header = request.META.get("HTTP_AUTHORIZATION")
         if authorization_header:
             token = extrair_toker_jwt(authorization_header)
+            print(f'token: {token}')
             if token:
                 payload = decode_token_jwt(token)
-                request.auth_payload = payload
-                try:
-                    request.usuario = Usuario.objects.get(usuarioId=payload["usuarioId"])
-                except Usuario.DoesNotExist:
+                if payload != None:
+                    request.auth_payload = payload
+                    try:
+                        request.usuario = Usuario.objects.get(
+                            usuarioId=payload["usuarioId"])
+                    except Usuario.DoesNotExist:
+                        return JsonResponse(
+                            {"mensagem": "Usuário não encontrado"}, status=status.HTTP_404_NOT_FOUND
+                        )
+                else:
                     return JsonResponse(
-                        {"mensagem": "Usuário não encontrado"}, status=status.HTTP_404_NOT_FOUND
+                        {"mensagem": "Erro ao decodificar o token, faça login novamente."}, status=status.HTTP_404_NOT_FOUND
                     )
         response = self.get_response(request)
         return response
