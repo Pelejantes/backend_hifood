@@ -40,7 +40,7 @@ def criar_usuarioCompleto(request):
     try:
         enderecos_serializers = []
         if not 'usuario' in request.data:
-            return Response({"message": "Não foi possível criar o usuário.", "errors": ["Nenhum dado de usuário enviado."]}, status=400)
+            return Response({"message": "Não foi possível criar o usuário.", "errors": ["Campo 'usuario' ausente."]}, status=400)
         usuario_serializer = Usuario_Serializer(data=request.data['usuario'])
         serializers = [usuario_serializer]
         if not 'enderecos' in request.data:
@@ -119,6 +119,10 @@ def ativar_usuario(request, pk):
 
 def editar_usuario(request, pk):
     try:
+        if not 'usuario' in request.data:
+                return Response({"message": "Não foi possível criar o usuário.", "errors": ["Campo 'usuario' ausente."]}, status=400)
+        if not 'enderecos' in request.data:
+                return Response({"message": "Não foi possível criar o usuário.", "errors": ["Campo 'enderecos' ausente."]}, status=400)
         usuario_model = Usuario.objects.get(usuarioId=pk)
         usuario_Serializer = Usuario_Serializer(
             instance=usuario_model, data=request.data['usuario'])
