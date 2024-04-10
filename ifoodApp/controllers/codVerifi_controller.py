@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 dotenv_path = "../../dotenv_files/.env"
 load_dotenv(dotenv_path)
 
-economizar_recursos = True
+economizar_recursos = False
 
 def enviar_codigo(request):
     # Puxa telefone do request
