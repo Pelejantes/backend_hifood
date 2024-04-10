@@ -1,5 +1,5 @@
 from rest_framework.decorators import api_view, permission_classes
-# from ..permissions import Professor, Admin, PodeEditarPerfil,Cadastrado,IsProfessorOrAdmin
+from ..permissions import Admin, Logado
 from rest_framework.permissions import AllowAny
 from ..controllers import endereco_controller
 
