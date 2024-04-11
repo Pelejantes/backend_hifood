@@ -1,5 +1,5 @@
 from rest_framework import permissions
-from models import TipoUsuario
+from .models import TipoUsuario
 # RU -> READ / UPDATE
 class RU_Usuario(permissions.BasePermission):
     def has_permission(self, request, view):
