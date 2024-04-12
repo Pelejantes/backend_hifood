@@ -13,12 +13,14 @@ RUN pip install -r requirements.txt
 # Bundle app source
 COPY . .
 
+CMD gunicorn --bind 0.0.0.0:$PORT project.wsgi:application
 
-# Expose port
-EXPOSE 8000
-COPY django.sh /app/
-RUN sed -i 's/\r$//' django.sh
-RUN chmod +x /app/django.sh
 
-# entrypoint to run the django.sh file
-ENTRYPOINT ["/app/django.sh"]
+# # Expose port
+# EXPOSE 8000
+# COPY django.sh /app/
+# RUN sed -i 's/\r$//' django.sh
+# RUN chmod +x /app/django.sh
+
+# # entrypoint to run the django.sh file
+# ENTRYPOINT ["/app/django.sh"]
