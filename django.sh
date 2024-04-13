@@ -22,6 +22,6 @@ echo "===================================="
 
 #  Iniciando Servidor
 echo "Starting Gunicorn..."
-python manage.py runserver 0.0.0.0:$PORT
-# exec gunicorn --bind 0.0.0.0:$PORT project.wsgi:application
+# python manage.py runserver 0.0.0.0:$PORT
+exec gunicorn --bind 0.0.0.0:$PORT project.wsgi:application
 echo "===================================="
