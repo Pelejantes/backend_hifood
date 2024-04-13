@@ -1,14 +1,14 @@
 #!/bin/sh
-sleep 5
+# sleep 5
 # Criando Migrações
-echo "Creating Migrations..."
-python manage.py makemigrations ifoodApp
-echo "===================================="
+# echo "Creating Migrations..."
+# python manage.py makemigrations ifoodApp
+# echo "===================================="
 
-# Iniciando Migrações
-echo "Starting Migrations..."
-python manage.py migrate
-echo "===================================="
+# # Iniciando Migrações
+# echo "Starting Migrations..."
+# python manage.py migrate
+# echo "===================================="
 
 # Chama o comando para criar o usuário administrador
 python manage.py criar_admin
