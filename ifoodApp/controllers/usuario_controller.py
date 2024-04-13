@@ -80,13 +80,15 @@ def criar_usuarioCompleto(request):
         return Response({"message": "Não foi possível criar o usuário.", "errors": error_messages}, status=400)
 
 
-def criar_usuario(data):
+def criar_usuario(request):
+    data=request.data
     serializer = Usuario_Serializer(data=data)
     if serializer.is_valid():
         usuario = serializer.save()
         return Response({"message": "Usuário criado com sucesso!", "usuarioId": usuario.__dict__['usuarioId']}, status=200)
     else:
-        return Response({"message": "Não foi possível criar o usuário, revise os campos e tente novamente!"}, status=404)
+        error_messages = listarErros([serializer])
+        return Response({"message": "Não foi possível criar o usuário, revise os campos e tente novamente!", "errors": error_messages}, status=404)
 
 
 def inativar_usuario(request, pk):
