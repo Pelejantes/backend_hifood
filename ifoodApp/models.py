@@ -143,7 +143,7 @@ class CodVerif(models.Model):
         return f"{self.CodVerifId}"
     
     def save(self, *args, **kwargs):
-        self.dataCriacao = datetime.now()
+        self.dataCriacao = timezone.now()
         self.data_hora_expiracao = self.dataCriacao + timedelta(minutes=5)
         super(CodVerif, self).save(*args, **kwargs)
 
