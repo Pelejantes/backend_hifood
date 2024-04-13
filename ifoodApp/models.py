@@ -146,7 +146,7 @@ class CodVerif(models.Model):
         
         # A data_hora_expiracao é definida com base na dataCriacao e duracao_expiracao_minutos.
         if not self.data_hora_expiracao:
-            self.data_hora_expiracao = self.dataCriacao + timedelta(minutes=self.duracao_expiracao_minutos)
+            self.data_hora_expiracao = timezone.now() + timedelta(minutes=self.duracao_expiracao_minutos)
         
         super(CodVerif, self).save(*args, **kwargs)
 
