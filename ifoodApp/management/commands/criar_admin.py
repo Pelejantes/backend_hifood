@@ -11,20 +11,16 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         # Criar tipo de usuario ADMIn
         criar_tipoUsuario({
-            "data": {
-                "nomeTipoUsuario": "Admin"
-            }
+            "nomeTipoUsuario": "Admin"
         })
         # Criar Usuario ADMIN
         if not Usuario.objects.all():
             criar_usuario({
-                "data": {
-                    "nomeUsu": os.environ.get("DJANGO_SUPERUSER_USERNAME"),
-                    "telefoneUsu": os.environ.get("DJANGO_SUPERUSER_TELEFONE"),
-                    "cpf": os.environ.get("DJANGO_SUPERUSER_CPF"),
-                    "emailUsu": os.environ.get("DJANGO_SUPERUSER_EMAIL"),
-                    "tipoUsuarioId": 0
-                }
+                "nomeUsu": os.environ.get("DJANGO_SUPERUSER_USERNAME"),
+                "telefoneUsu": os.environ.get("DJANGO_SUPERUSER_TELEFONE"),
+                "cpf": os.environ.get("DJANGO_SUPERUSER_CPF"),
+                "emailUsu": os.environ.get("DJANGO_SUPERUSER_EMAIL"),
+                "tipoUsuarioId": 0
             })
             self.stdout.write(self.style.SUCCESS(
                 'Usuário administrador criado com sucesso!'))
