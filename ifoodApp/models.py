@@ -78,7 +78,7 @@ class ContaBancaria(models.Model):
 
 class TipoUsuario(models.Model):
     tipoUsuarioId = models.AutoField(primary_key=True)
-    nomeTipoUsuario = models.CharField(max_length=255)
+    nomeTipoUsuario = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return f"{self.tipoUsuarioId}"
