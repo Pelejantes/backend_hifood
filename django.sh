@@ -14,5 +14,5 @@ echo "===================================="
 python manage.py criar_admin
 
 # # Iniciando Servidor
-echo "Starting Server..."
-python manage.py runserver 0.0.0.0:8000
+# echo "Starting Server..."
+# python manage.py runserver 0.0.0.0:8000
