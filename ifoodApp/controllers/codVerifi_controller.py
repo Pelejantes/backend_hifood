@@ -49,6 +49,7 @@ def enviar_codigo(request):
         client = Client(account_sid, auth_token)
 
         if(not economizar_recursos):
+            print('Enviando código!')
             client.messages.create(
             from_=f"whatsapp:+{os.getenv('TEL_FROM')}",
             body=f"Seu código de verificação H!food: *{codigo}*",
