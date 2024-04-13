@@ -18,8 +18,8 @@ def exibir_tipoUsuario(request, pk):
         return Response({"message": f"Tipo de Usuario {pk} não encontrado"}, status=404)
 
 
-def criar_tipoUsuario(request):
-    serializer = TipoUsuario_Serializer(data=request.data)
+def criar_tipoUsuario(data):
+    serializer = TipoUsuario_Serializer(data=data)
     if serializer.is_valid():
         tipoUsuario = serializer.save()
         return Response({"message": "Tipo de Usuario criado com sucesso!", "tipoUsuarioId": tipoUsuario.__dict__['tipoUsuarioId']}, status=200)

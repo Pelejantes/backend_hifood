@@ -15,7 +15,7 @@ def exibir_tipoUsuario_view(request, pk):
 @api_view(["POST"])
 @permission_classes([Admin])
 def criar_tipoUsuario_view(request):
-   return tipoUsuario_controller.criar_tipoUsuario(request)
+   return tipoUsuario_controller.criar_tipoUsuario(request.data)
 
 @api_view(["PUT"])
 @permission_classes([Admin])
