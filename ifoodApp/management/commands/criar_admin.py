@@ -20,7 +20,7 @@ class Command(BaseCommand):
                 "telefoneUsu": os.environ.get("DJANGO_SUPERUSER_TELEFONE"),
                 "cpf": os.environ.get("DJANGO_SUPERUSER_CPF"),
                 "emailUsu": os.environ.get("DJANGO_SUPERUSER_EMAIL"),
-                "tipoUsuarioId": 0
+                "tipoUsuarioId": str(TipoUsuario.get(nomeTipoUsuario="Admin").tipoUsuarioId)
             })
             self.stdout.write(self.style.SUCCESS(
                 'Usuário administrador criado com sucesso!'))
