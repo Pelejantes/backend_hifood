@@ -143,8 +143,11 @@ class CodVerif(models.Model):
         return f"{self.CodVerifId}"
     
     def save(self, *args, **kwargs):
-        self.dataCriacao = timezone.now()
-        self.data_hora_expiracao = self.dataCriacao + timedelta(minutes=5)
+        
+        # A data_hora_expiracao é definida com base na dataCriacao e duracao_expiracao_minutos.
+        if not self.data_hora_expiracao:
+            self.data_hora_expiracao = self.dataCriacao + timedelta(minutes=self.duracao_expiracao_minutos)
+        
         super(CodVerif, self).save(*args, **kwargs)
 
 class EnderecoEntrega(models.Model):
