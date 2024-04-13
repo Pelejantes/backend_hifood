@@ -13,7 +13,7 @@ def exibir_tipoUsuario_view(request, pk):
    return tipoUsuario_controller.exibir_tipoUsuario(request,pk)
 
 @api_view(["POST"])
-@permission_classes([Admin])
+@permission_classes([AllowAny])
 def criar_tipoUsuario_view(request):
    return tipoUsuario_controller.criar_tipoUsuario(request.data)
 

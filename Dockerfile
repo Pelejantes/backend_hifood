@@ -22,4 +22,4 @@ RUN chmod +x /app/django.sh
 # entrypoint to run the django.sh file
 ENTRYPOINT ["/app/django.sh"]
 
-CMD gunicorn --bind 0.0.0.0:$PORT project.wsgi:application
+# CMD gunicorn --bind 0.0.0.0:$PORT project.wsgi:application
