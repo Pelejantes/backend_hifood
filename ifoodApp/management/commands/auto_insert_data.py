@@ -15,12 +15,12 @@ class Command(BaseCommand):
                 subprocess.run(
                     [
                         'psql',
-                        '-U', os.getenv('POSTGRES_USER'), # Usuário do banco de dados
-                        '-h', os.getenv('POSTGRES_HOST'), # Host do banco de dados
-                        '-p', os.getenv('DB_PORT','5432'), # Porta do banco de dados
+                        '-U', os.getenv('PG_USER'), # Usuário do banco de dados
+                        '-h', os.getenv('PG_HOST'), # Host do banco de dados
+                        '-p', os.getenv('PG_PORT'), # Porta do banco de dados
                         '-a', '-f', sql_file_path
                     ],
-                    env={'PGPASSWORD': os.getenv('POSTGRES_PASSWORD')},
+                    env={'PGPASSWORD': os.getenv('PG_PASSWORD')},
                     check=True
                 )
                 self.stdout.write(self.style.SUCCESS('Dados inseridos com sucesso!'))
