@@ -13,7 +13,7 @@ python manage.py migrate
 echo "===================================="
 
 # Chama o comando para criar dados populados caso true
-if [ "$AUTO_INSERT_DATA" = "true" ]; then
+if [ "$AUTO_INSERT_DATA" = true ]; then
     python manage.py auto_insert_data
     echo "===================================="
 fi
