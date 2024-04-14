@@ -99,7 +99,7 @@ DATABASES = {
         'ENGINE': os.getenv('DB_DRIVER',''),
         'NAME': os.getenv('PG_DB',''),
         'USER': os.getenv('PG_USER',''),
-        'PASSWORD':os.getenv('PG_PASSWORD',''),
+        'PASSWORD':os.getenv('POSTGRES_PASSWORD',''),
         'HOST': os.getenv('PG_HOST',''),
         'PORT': os.getenv('PG_PORT',''),
     }

@@ -25,7 +25,8 @@ def criar_usuarioCompleto_view(request):
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def criar_usuario_view(request):
-    return usuario_controller.criar_usuario(request)
+    data=request.data
+    return usuario_controller.criar_usuario(data)
 
 
 @api_view(["PUT"])

@@ -20,7 +20,7 @@ class Command(BaseCommand):
                         '-p', os.getenv('PG_PORT'), # Porta do banco de dados
                         '-a', '-f', sql_file_path
                     ],
-                    env={'PGPASSWORD': os.getenv('PG_PASSWORD')},
+                    env={'PGPASSWORD': os.getenv('POSTGRES_PASSWORD')},
                     check=True
                 )
                 self.stdout.write(self.style.SUCCESS('Dados inseridos com sucesso!'))
