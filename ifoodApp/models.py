@@ -198,12 +198,12 @@ class EntregadorVeic(models.Model):
 
 class Estabelecimento(models.Model):
     estabelecimentold = models.AutoField(primary_key=True)
-    categoriaId = models.ForeignKey('Categoria', on_delete=models.CASCADE)
-    enderecoId = models.ForeignKey('Endereco', on_delete=models.CASCADE)
-    avaliacaoId = models.ForeignKey('Avaliacao', on_delete=models.CASCADE)
+    categoriaId = models.ForeignKey('Categoria', on_delete=models.CASCADE,null=True, default=None)
+    enderecoId = models.ForeignKey('Endereco', on_delete=models.CASCADE,null=True, default=None)
+    avaliacaoId = models.ForeignKey('Avaliacao', on_delete=models.CASCADE,null=True, default=None)
     nomeEstab = models.CharField(max_length=255)
     telefoneEstab = models.CharField(max_length=14)
-    imagemEstab = models.BinaryField()
+    imagemEstab = models.BinaryField(null=True, default=None)
     cnpj = models.CharField(max_length=14)
     emailEstab = models.CharField(max_length=255)
 

@@ -12,6 +12,12 @@ echo "Starting Migrations..."
 python manage.py migrate
 echo "===================================="
 
+# Chama o comando para criar dados populados caso true
+if [ "$AUTO_INSERT_DATA" = "true" ]; then
+    python manage.py auto_insert_data
+    echo "===================================="
+fi
+
 # Chama o comando para criar o usuário administrador
 python manage.py criar_admin
 echo "===================================="

@@ -10,6 +10,9 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
+# Instala o cliente do PostgreSQL
+RUN apt-get update && apt-get install -y postgresql-client
+
 # Bundle app source
 COPY . .
 
