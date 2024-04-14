@@ -8,6 +8,10 @@ WORKDIR /app
 
 # Install app dependencies
 COPY requirements.txt .
+
+# Copia o script SQL para o diretório /app/scripts dentro do container
+COPY ./ifoodApp/management/scripts/auto_insert_data.sql /app/scripts/
+
 RUN pip install -r requirements.txt
 
 # Instala o cliente do PostgreSQL

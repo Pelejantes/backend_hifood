@@ -10,7 +10,7 @@ class Command(BaseCommand):
         if os.getenv("AUTO_INSERT_DATA"):
             try:
                 # Caminho para o arquivo .sql
-                sql_file_path = os.path.join(settings.BASE_DIR, '../scripts/auto_insert_data.sql')
+                sql_file_path = os.path.join(settings.BASE_DIR, '/app/scripts/auto_insert_data.sql')
                 # Comando para executar o arquivo .sql
                 subprocess.run(
                     [
@@ -20,6 +20,7 @@ class Command(BaseCommand):
                         '-p', os.getenv('DB_PORT','5432'), # Porta do banco de dados
                         '-a', '-f', sql_file_path
                     ],
+                    env={'PGPASSWORD': os.getenv('POSTGRES_PASSWORD')},
                     check=True
                 )
                 self.stdout.write(self.style.SUCCESS('Dados inseridos com sucesso!'))
