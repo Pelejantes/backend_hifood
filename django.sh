@@ -13,7 +13,7 @@ echo "===================================="
 
 # Chama o comando para criar dados populados caso true
 if [ "$AUTO_INSERT_DATA" = true ]; then
-    python manage.py query_auto_insert_data
+    python manage.py python_auto_insert_data
     echo "===================================="
 fi
 
@@ -22,8 +22,8 @@ python manage.py criar_admin
 echo "===================================="
 
 # Coleta todos os arquivos estáticos em um único diretório que o Gunicorn possa acessar.
-python manage.py collectstatic
-echo "===================================="
+# python manage.py collectstatic
+# echo "===================================="
 
 #  Iniciando Servidor
 echo "Iniciando Servidor..."
