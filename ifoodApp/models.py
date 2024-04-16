@@ -254,7 +254,7 @@ class Produto(models.Model):
     nomeProd = models.CharField(max_length=255)
     disponibilidade = models.BooleanField()
     preco = models.FloatField()
-    imagemProd = models.BinaryField()
+    imagemProd = models.BinaryField(null=True, default=None)
     alcoolico = models.BooleanField()
     descricao = models.CharField(max_length=255)
 
