@@ -9,9 +9,6 @@ WORKDIR /app
 # Install app dependencies
 COPY requirements.txt .
 
-# Copia o script SQL para o diretório /app/scripts dentro do container
-COPY ./ifoodApp/management/scripts/auto_insert_data.sql /app/scripts/
-
 # Copia a imagem default para o diretório /app/assets/img dentro do container
 COPY ./ifoodApp/assets/img/imagem_default.png /app/assets/img/
 
