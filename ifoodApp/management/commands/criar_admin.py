@@ -22,8 +22,13 @@ class Command(BaseCommand):
                 "emailUsu": os.environ.get("DJANGO_SUPERUSER_EMAIL"),
                 "tipoUsuarioId": str(TipoUsuario.objects.get(nomeTipoUsuario="Admin").tipoUsuarioId)
             })
-            self.stdout.write(self.style.SUCCESS(
-                'Usuário administrador criado com sucesso!'))
+            if Usuario.objects.get(cpf=os.environ.get("DJANGO_SUPERUSER_CPF")):
+                self.stdout.write(self.style.SUCCESS(
+                    f'USUARIO_ADM_ID_{Usuario.objects.get(cpf=os.environ.get("DJANGO_SUPERUSER_CPF")).usuarioId} criado com sucesso!'))
+            else:
+                self.stdout.write(self.style.SUCCESS(
+                    'Falha ao criar Usuário Administrador Padrão!'))
+
         else:
             self.stdout.write(self.style.WARNING(
                 'Usuário administrador já existe.'))

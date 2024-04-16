@@ -1,7 +1,6 @@
 #!/bin/sh
 set -e
 
-sleep 5
 # Criando Migrações
 echo "Creating Migrations..."
 python manage.py makemigrations ifoodApp
@@ -14,7 +13,7 @@ echo "===================================="
 
 # Chama o comando para criar dados populados caso true
 if [ "$AUTO_INSERT_DATA" = true ]; then
-    python manage.py auto_insert_data
+    python manage.py query_auto_insert_data
     echo "===================================="
 fi
 
@@ -27,7 +26,7 @@ python manage.py collectstatic
 echo "===================================="
 
 #  Iniciando Servidor
-echo "Starting Gunicorn..."
+echo "Iniciando Servidor..."
 # python manage.py runserver 0.0.0.0:$PORT
 exec gunicorn --bind 0.0.0.0:$PORT project.wsgi:application
 echo "===================================="

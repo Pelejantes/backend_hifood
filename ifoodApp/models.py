@@ -1,7 +1,8 @@
 from django.db import models
 from datetime import datetime
 from utils.func_gerais import gerar_code
-from datetime import timedelta,timezone
+from datetime import timedelta, timezone
+
 
 class FormaPag(models.Model):
     formaPag = models.AutoField(primary_key=True)
@@ -21,10 +22,12 @@ class Notificacao(models.Model):
     def __str__(self):
         return f"Notificação {self.notificacaoId}"
 
+
 class CuponsUsuario(models.Model):
     cuponsUsuarioId = models.AutoField(primary_key=True)
     usuarioId = models.ForeignKey('Usuario', on_delete=models.CASCADE)
     cupomId = models.ForeignKey('Cupom', on_delete=models.CASCADE)
+
 
 class Cupom(models.Model):
     cupomId = models.AutoField(primary_key=True)
@@ -141,14 +144,16 @@ class CodVerif(models.Model):
 
     def __str__(self):
         return f"{self.CodVerifId}"
-    
+
     def save(self, *args, **kwargs):
-        
+
         # A data_hora_expiracao é definida com base na data de geração do código e duracao_expiracao_minutos.
         if not self.data_hora_expiracao:
-            self.data_hora_expiracao = timezone.now() + timedelta(minutes=self.duracao_expiracao_minutos)
-        
+            self.data_hora_expiracao = timezone.now(
+            ) + timedelta(minutes=self.duracao_expiracao_minutos)
+
         super(CodVerif, self).save(*args, **kwargs)
+
 
 class EnderecoEntrega(models.Model):
     enderecoEntregaId = models.AutoField(primary_key=True)
@@ -198,25 +203,21 @@ class EntregadorVeic(models.Model):
 
 class Estabelecimento(models.Model):
     estabelecimentold = models.AutoField(primary_key=True)
-    categoriaId = models.ForeignKey('Categoria', on_delete=models.CASCADE,null=True, default=None)
-    enderecoId = models.ForeignKey('Endereco', on_delete=models.CASCADE,null=True, default=None)
-    avaliacaoId = models.ForeignKey('Avaliacao', on_delete=models.CASCADE,null=True, default=None)
+    categoriaId = models.ForeignKey(
+        'Categoria', on_delete=models.CASCADE, null=True, default=None)
+    enderecoId = models.ForeignKey(
+        'Endereco', on_delete=models.CASCADE, null=True, default=None)
+    avaliacaoId = models.ForeignKey(
+        'Avaliacao', on_delete=models.CASCADE, null=True, default=None)
     nomeEstab = models.CharField(max_length=255)
     telefoneEstab = models.CharField(max_length=14)
-    imagemEstab = models.BinaryField(default=b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x08\x02\x00\x00\x00\x90wS\xde\x00\x00\x00\x0bIDATx\x9cc`\x18\x05\x00\x01\x0d\x00\x01\x01x\x9c\xcb\x00\x00\x00\x00IEND\xaeB`\x82')
+    imagemEstab = models.BinaryField(null=True, default=None)
     cnpj = models.CharField(max_length=14)
     emailEstab = models.CharField(max_length=255)
 
     def __str__(self):
         return f"Estabelecimento ID: {self.estabelecimentold}, Nome: {self.nomeEstab}"
-    
-    # def save(self, *args, **kwargs):
-        
-    #     # A data_hora_expiracao é definida com base na data de geração do código e duracao_expiracao_minutos.
-    #     if not self.data_hora_expiracao:
-    #         self.data_hora_expiracao = timezone.now() + timedelta(minutes=self.duracao_expiracao_minutos)
-        
-    #     super(CodVerif, self).save(*args, **kwargs)
+
 
 
 class TipoVeiculo(models.Model):
