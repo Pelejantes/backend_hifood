@@ -37,8 +37,20 @@ DECLARE
 BEGIN
     -- Converte os dados binários da imagem para uma string codificada em base64
     dados_imagem := ENCODE(E'{imagem_hex}', 'base64');
+    
+    -- GERAR TIPO USUARIO ID
+    IF NOT EXISTS (SELECT 1 FROM "public"."ifoodApp_tipousuario" WHERE "nomeTipoUsuario" = 'Admin') THEN
+        INSERT INTO "public"."ifoodApp_tipousuario" ("nomeTipoUsuario") VALUES ('Admin');
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM "public"."ifoodApp_tipousuario" WHERE "nomeTipoUsuario" = 'Comprador') THEN
+        INSERT INTO "public"."ifoodApp_tipousuario" ("nomeTipoUsuario") VALUES ('Comprador');
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM "public"."ifoodApp_tipousuario" WHERE "nomeTipoUsuario" = 'Entregador') THEN
+        INSERT INTO "public"."ifoodApp_tipousuario" ("nomeTipoUsuario") VALUES ('Entregador');
+    END IF;
 
     FOR i IN 1..50 LOOP
+
         -- GERAR ESTABELECIMENTOS
         -- __Gera um CNPJ único
         cnpj_gerado := LPAD((ROUND(RANDOM() * 99999999999999))::text, 14, '0');
