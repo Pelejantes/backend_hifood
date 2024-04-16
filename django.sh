@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e
-
+sleep 5
 # Criando Migrações
 echo "Creating Migrations..."
 python manage.py makemigrations ifoodApp
@@ -27,6 +27,6 @@ echo "===================================="
 
 #  Iniciando Servidor
 echo "Iniciando Servidor..."
-# python manage.py runserver 0.0.0.0:$PORT
-exec gunicorn --bind 0.0.0.0:$PORT project.wsgi:application
+python manage.py runserver 0.0.0.0:$PORT
+# exec gunicorn --bind 0.0.0.0:$PORT project.wsgi:application
 echo "===================================="
