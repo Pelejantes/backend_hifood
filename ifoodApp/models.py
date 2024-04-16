@@ -200,9 +200,8 @@ class EntregadorVeic(models.Model):
     def __str__(self) -> str:
         return f"TipoVeiculo {self.tipoVeiculoId}"
 
-
 class Estabelecimento(models.Model):
-    estabelecimentold = models.AutoField(primary_key=True)
+    estabelecimentoId = models.AutoField(primary_key=True)
     categoriaId = models.ForeignKey(
         'Categoria', on_delete=models.CASCADE, null=True, default=None)
     enderecoId = models.ForeignKey(
@@ -216,7 +215,7 @@ class Estabelecimento(models.Model):
     emailEstab = models.CharField(max_length=255)
 
     def __str__(self):
-        return f"Estabelecimento ID: {self.estabelecimentold}, Nome: {self.nomeEstab}"
+        return f"Estabelecimento ID: {self.estabelecimentoId}, Nome: {self.nomeEstab}"
 
 
 
