@@ -52,7 +52,7 @@ def enviar_codigo(request):
             client.messages.create(
             from_=f"whatsapp:+{os.getenv('TEL_FROM')}",
             body=f"Seu código de verificação H!food: *{codigo}*",
-            to=f"whatsapp:+{os.getenv('TEL_TO')}"
+            to=f"whatsapp:+{telefoneUsu}"
         )
         
         return Response(
