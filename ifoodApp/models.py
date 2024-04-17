@@ -1,7 +1,8 @@
 from django.db import models
 from datetime import datetime
 from utils.func_gerais import gerar_code
-from datetime import timedelta, timezone
+from datetime import datetime, timedelta, timezone
+
 
 
 class FormaPag(models.Model):
@@ -149,8 +150,7 @@ class CodVerif(models.Model):
 
         # A data_hora_expiracao é definida com base na data de geração do código e duracao_expiracao_minutos.
         if not self.data_hora_expiracao:
-            self.data_hora_expiracao = timezone.now(
-            ) + timedelta(minutes=self.duracao_expiracao_minutos)
+            self.data_hora_expiracao = datetime.now() + timedelta(minutes=self.duracao_expiracao_minutos)
 
         super(CodVerif, self).save(*args, **kwargs)
 
