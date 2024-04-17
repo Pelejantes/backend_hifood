@@ -13,7 +13,7 @@ echo "===================================="
 
 # Chama o comando para criar dados populados caso true
 if [ "$AUTO_INSERT_DATA" = true ]; then
-    python manage.py python_auto_insert_data
+    python manage.py auto_insert_data
     echo "===================================="
 fi
 
