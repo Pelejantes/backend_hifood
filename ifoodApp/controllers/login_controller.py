@@ -26,18 +26,20 @@ def login_user(request):
         return Response({"mensagem": "Campo de telefone é obrigatório"}, status=status.HTTP_406_NOT_ACCEPTABLE)
     if not ('codVerif' in request.data):
         return Response({"mensagem": "Campo de codVerif é obrigatório"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+    
     try:
         usuario = Usuario.objects.get(telefoneUsu=telefoneUsu)
     except Usuario.DoesNotExist:
         return Response(
             {"mensagem": "Usuário não encontrado"}, status=status.HTTP_404_NOT_FOUND
         )
-    if usuario.codVerifId and "codVerif" in request.data:
+
+    if usuario.codVerifId:
         codVerif_model = CodVerif.objects.get(
             CodVerifId=f"{usuario.codVerifId}")
-        
+
         horario_expiracao = codVerif_model.data_hora_expiracao
-        horario_atual = datetime.now(timezone.utc)
+        horario_atual = (datetime.now()).replace(tzinfo=timezone.utc)
         
         if horario_atual > horario_expiracao:
             return Response(
@@ -53,11 +55,6 @@ def login_user(request):
                 {"message": f"Código inválido, login negado"}, status=status.HTTP_401_UNAUTHORIZED,
             )
     else:
-        codVerif_Serializer = CodVerif_Serializer(data={})
-        if codVerif_Serializer.is_valid():
-            codVerif_Serializer.save()
-            return Response(
-                {"message": f"Código enviado ao usuário."}, status=200,
-            )
-        else:
-            return Response({"message": "Serializer Invalido"}, status=status.HTTP_400_BAD_)
+        return Response(
+            {"message": f"Usuário {usuario.usuarioId} não possui código ativo, solite um novo."}, status=status.HTTP_401_UNAUTHORIZED,
+        )
