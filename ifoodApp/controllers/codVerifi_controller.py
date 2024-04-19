@@ -13,7 +13,7 @@ from datetime import datetime, timedelta, timezone
 dotenv_path = "../../dotenv_files/.env"
 load_dotenv(dotenv_path)
 
-economizar_recursos = True
+economizar_recursos = os.getenv('ECONOMIZAR_RECURSOS', True)
 
 
 def enviar_codigo(request):
