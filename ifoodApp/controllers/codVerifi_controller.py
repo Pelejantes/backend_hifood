@@ -36,13 +36,13 @@ def enviar_codigo(request):
             CodVerifId=f"{usuario.codVerifId}")
         codVerif_Serializer = CodVerif_Serializer(
             instance=codVerif_model, data={"codigo": codigo})
+        # Definir data de expiração
+        codVerif_model.data_hora_expiracao = datetime.now() + timedelta(minutes=codVerif_model.duracao_expiracao_minutos)
     else:
         # Se existir, usar a mesma para armazenar o novo código
         codVerif_Serializer = CodVerif_Serializer(
             data={"codigo": codigo})
     
-    # Definir data de expiração
-    codVerif_model.data_hora_expiracao = datetime.now() + timedelta(minutes=codVerif_model.duracao_expiracao_minutos)
 
     if serializersValidos([codVerif_Serializer]):
         codVerifInstancia = codVerif_Serializer.save()
