@@ -19,4 +19,4 @@ def exibir_cupom(request, pk):
         return Response(serializer.data)
     except Cupom.DoesNotExist:
         # Retorna uma resposta de erro com status 404
-        return Response({"message": f"Cupom {pk} não encontrado"}, status=404)
+        return Response({"mensagem": f"Cupom {pk} não encontrado"}, status=404)

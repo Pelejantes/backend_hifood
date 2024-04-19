@@ -16,4 +16,4 @@ def exibir_categoria(request, pk):
         return Response(serializer.data)
     except Categoria.DoesNotExist:
         # Retorna uma resposta de erro com status 404
-        return Response({"message": f"Categoria {pk} não encontrado"}, status=404)
+        return Response({"mensagem": f"Categoria {pk} não encontrado"}, status=404)

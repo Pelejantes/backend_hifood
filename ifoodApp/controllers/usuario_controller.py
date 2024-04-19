@@ -33,20 +33,20 @@ def exibir_usuario(request, pk):
         }
         return Response(response)
     except Usuario.DoesNotExist:
-        return Response({"message": f"Usuário {pk} não encontrado"}, status=404)
+        return Response({"mensagem": f"Usuário {pk} não encontrado"}, status=404)
 
 
 def criar_usuarioCompleto(request):
     try:
         enderecos_serializers = []
         if not 'usuario' in request.data:
-            return Response({"message": "Não foi possível criar o usuário.", "errors": ["Campo 'usuario' ausente."]}, status=400)
+            return Response({"mensagem": "Não foi possível criar o usuário.", "errors": ["Campo 'usuario' ausente."]}, status=400)
         usuario_serializer = Usuario_Serializer(data=request.data['usuario'])
         serializers = [usuario_serializer]
         if not 'enderecos' in request.data:
-            return Response({"message": "Não foi possível criar o usuário.", "errors": ["Liste de endereços pendente."]}, status=400)
+            return Response({"mensagem": "Não foi possível criar o usuário.", "errors": ["Liste de endereços pendente."]}, status=400)
         if len(request.data.get('enderecos', [])) == 0:
-            return Response({"message": "Não foi possível criar o usuário.", "errors": ["Nenhum endereço registrado."]}, status=400)
+            return Response({"mensagem": "Não foi possível criar o usuário.", "errors": ["Nenhum endereço registrado."]}, status=400)
         for endereco in request.data['enderecos']:
             serializers.append(Endereco_Serializer(data=endereco))
             enderecos_serializers.append(Endereco_Serializer(data=endereco))
@@ -71,23 +71,23 @@ def criar_usuarioCompleto(request):
 
                 if enderecoEntregaSerializer.is_valid():
                     enderecoEntregaSerializer.save()
-            return Response({"message": "Usuário Completo criado com sucesso!"}, status=200)
+            return Response({"mensagem": "Usuário Completo criado com sucesso!"}, status=200)
         else:
             error_messages = listarErros(serializers)
-            return Response({"message": "Não foi possível criar o usuário.", "errors": error_messages}, status=400)
+            return Response({"mensagem": "Não foi possível criar o usuário.", "errors": error_messages}, status=400)
     except ValidationError as e:
         error_messages = e.messages
-        return Response({"message": "Não foi possível criar o usuário.", "errors": error_messages}, status=400)
+        return Response({"mensagem": "Não foi possível criar o usuário.", "errors": error_messages}, status=400)
 
 
 def criar_usuario(data):
     serializer = Usuario_Serializer(data=data)
     if serializer.is_valid():
         usuario = serializer.save()
-        return Response({"message": "Usuário criado com sucesso!", "usuarioId": usuario.__dict__['usuarioId']}, status=200)
+        return Response({"mensagem": "Usuário criado com sucesso!", "usuarioId": usuario.__dict__['usuarioId']}, status=200)
     else:
         error_messages = listarErros([serializer])
-        return Response({"message": "Não foi possível criar o usuário, revise os campos e tente novamente!", "errors": error_messages}, status=404)
+        return Response({"mensagem": "Não foi possível criar o usuário, revise os campos e tente novamente!", "errors": error_messages}, status=404)
 
 
 def inativar_usuario(request, pk):
@@ -96,12 +96,12 @@ def inativar_usuario(request, pk):
         if usuario.statusAtivo == 1:
             usuario.statusAtivo = 0
             usuario.save()
-            return Response({"message": f"Usuário {pk} inativado com sucesso!"})
+            return Response({"mensagem": f"Usuário {pk} inativado com sucesso!"})
         else:
-            return Response({"message": f"Usuário {pk} já estava inativado!"})
+            return Response({"mensagem": f"Usuário {pk} já estava inativado!"})
     except Usuario.DoesNotExist:
         # Retorna uma resposta de erro com status 404
-        return Response({"message": f"Usuário {pk} não encontrado"}, status=404)
+        return Response({"mensagem": f"Usuário {pk} não encontrado"}, status=404)
 
 
 def ativar_usuario(request, pk):
@@ -110,20 +110,20 @@ def ativar_usuario(request, pk):
         if usuario.statusAtivo == 0:
             usuario.statusAtivo = 1
             usuario.save()
-            return Response({"message": f"Usuário {pk} ativado com sucesso!"})
+            return Response({"mensagem": f"Usuário {pk} ativado com sucesso!"})
         else:
-            return Response({"message": f"Usuário {pk} já estava ativado!"})
+            return Response({"mensagem": f"Usuário {pk} já estava ativado!"})
     except Usuario.DoesNotExist:
         # Retorna uma resposta de erro com status 404
-        return Response({"message": f"Usuário {pk} não encontrado"}, status=404)
+        return Response({"mensagem": f"Usuário {pk} não encontrado"}, status=404)
 
 
 def editar_usuario(request, pk):
     try:
         if not 'usuario' in request.data:
-                return Response({"message": "Não foi possível criar o usuário.", "errors": ["Campo 'usuario' ausente."]}, status=400)
+                return Response({"mensagem": "Não foi possível criar o usuário.", "errors": ["Campo 'usuario' ausente."]}, status=400)
         if not 'enderecos' in request.data:
-                return Response({"message": "Não foi possível criar o usuário.", "errors": ["Campo 'enderecos' ausente."]}, status=400)
+                return Response({"mensagem": "Não foi possível criar o usuário.", "errors": ["Campo 'enderecos' ausente."]}, status=400)
         usuario_model = Usuario.objects.get(usuarioId=pk)
         usuario_Serializer = Usuario_Serializer(
             instance=usuario_model, data=request.data['usuario'])
@@ -142,14 +142,14 @@ def editar_usuario(request, pk):
     except Usuario.DoesNotExist:
         # Retorna uma resposta de erro com status 404
         error_messages = listarErros([usuario_Serializer])
-        return Response({"message": f"Usuário {pk} não encontrado", "errors": error_messages}, status=404)
+        return Response({"mensagem": f"Usuário {pk} não encontrado", "errors": error_messages}, status=404)
 
 
 def deletar_usuario(request, pk):
     try:
         usuario = Usuario.objects.get(id=pk)
         usuario.delete()
-        return Response({"message": f"Usuário {pk} deletado com sucesso!"}, status=200)
+        return Response({"mensagem": f"Usuário {pk} deletado com sucesso!"}, status=200)
     except Usuario.DoesNotExist:
         # Retorna uma resposta de erro com status 404
-        return Response({"message": f"Usuário {pk} não encontrado"}, status=404)
+        return Response({"mensagem": f"Usuário {pk} não encontrado"}, status=404)

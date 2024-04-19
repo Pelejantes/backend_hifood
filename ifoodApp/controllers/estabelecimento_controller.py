@@ -16,4 +16,4 @@ def exibir_estabelecimento(request, pk):
         return Response(serializer.data)
     except Estabelecimento.DoesNotExist:
         # Retorna uma resposta de erro com status 404
-        return Response({"message": f"Estabelecimento {pk} não encontrado"}, status=404)
+        return Response({"mensagem": f"Estabelecimento {pk} não encontrado"}, status=404)

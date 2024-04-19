@@ -19,4 +19,4 @@ def exibir_produto(request, pk):
         return Response(serializer.data)
     except Produto.DoesNotExist:
         # Retorna uma resposta de erro com status 404
-        return Response({"message": f"Produto {pk} não encontrado"}, status=404)
+        return Response({"mensagem": f"Produto {pk} não encontrado"}, status=404)

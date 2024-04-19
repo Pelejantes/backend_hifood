@@ -60,7 +60,7 @@ def enviar_codigo(request):
                 to=f"whatsapp:+{telefoneUsu}")
         
         return Response(
-            {"message": f"Código enviado ao usuário."}, status=200,
+            {"mensagem": f"Código enviado ao usuário."}, status=200,
         )
     else:
         erros = listarErros([codVerif_Serializer])

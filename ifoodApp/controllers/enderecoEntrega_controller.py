@@ -25,18 +25,18 @@ def exibir_enderecoEntrega(request, pk):
             endereco = Endereco.objects.get(enderecoId=enderecoId)
             # Adicionar á lista do response
             response.append(Endereco_Serializer(endereco).data)
-        return Response({"message": response}, status=200)
+        return Response({"mensagem": response}, status=200)
     except EnderecoEntrega.DoesNotExist:
-        return Response({"message": f"enderecoEntrega {pk} não encontrado"}, status=404)
+        return Response({"mensagem": f"enderecoEntrega {pk} não encontrado"}, status=404)
 
 
 def criar_enderecoEntrega(request):
     serializer = EnderecoEntrega_Serializer(data=request.data)
     if serializer.is_valid():
         enderecoEntrega = serializer.save()
-        return Response({"message": "enderecoEntrega criado com sucesso!", "enderecoId": enderecoEntrega.__dict__['enderecoEntregaId']}, status=200)
+        return Response({"mensagem": "enderecoEntrega criado com sucesso!", "enderecoId": enderecoEntrega.__dict__['enderecoEntregaId']}, status=200)
     else:
-        return Response({"message": "Não foi possível criar o endereço, revise os campos e tente novamente!"}, status=404)
+        return Response({"mensagem": "Não foi possível criar o endereço, revise os campos e tente novamente!"}, status=404)
 
 
 def editar_enderecoEntrega(request, pk):
@@ -51,17 +51,17 @@ def editar_enderecoEntrega(request, pk):
             # Validar dados e armazenar
             if serializersValidos([endereco_Serializer]):
                 endereco_Serializer.save()
-        return Response({"message": f"Endereço(s) do usuario {pk} alterados."}, status=200)
+        return Response({"mensagem": f"Endereço(s) do usuario {pk} alterados."}, status=200)
     except EnderecoEntrega.DoesNotExist:
         error_messages = listarErros([endereco_Serializer])
-        return Response({"message": f"enderecoEntrega {pk} não encontrado", "errors": error_messages}, status=404)
+        return Response({"mensagem": f"enderecoEntrega {pk} não encontrado", "errors": error_messages}, status=404)
 
 
 def deletar_enderecoEntrega(request, pk):
     try:
         enderecoEntrega = EnderecoEntrega.objects.get(id=pk)
         enderecoEntrega.delete()
-        return Response({"message": f"enderecoEntrega {pk} deletado com sucesso!"}, status=200)
+        return Response({"mensagem": f"enderecoEntrega {pk} deletado com sucesso!"}, status=200)
     except EnderecoEntrega.DoesNotExist:
         # Retorna uma resposta de erro com status 404
-        return Response({"message": f"enderecoEntrega {pk} não encontrado"}, status=404)
+        return Response({"mensagem": f"enderecoEntrega {pk} não encontrado"}, status=404)

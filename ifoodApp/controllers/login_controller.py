@@ -43,18 +43,18 @@ def login_user(request):
         
         if horario_atual > horario_expiracao:
             return Response(
-                {"message": f"Código expirou, solicite um novo."}, status=status.HTTP_401_UNAUTHORIZED,
+                {"mensagem": f"Código expirou, solicite um novo."}, status=status.HTTP_401_UNAUTHORIZED,
             )
         if codVerif_model.codigo == request.data["codVerif"]:
             token_jwt = gerar_token_jwt(usuario)
             return Response(
-                {"message": f"Código Valido, login aprovado", "token_jwt": token_jwt}, status=200,
+                {"mensagem": f"Código Valido, login aprovado", "token_jwt": token_jwt}, status=200,
             )
         else:
             return Response(
-                {"message": f"Código inválido, login negado"}, status=status.HTTP_401_UNAUTHORIZED,
+                {"mensagem": f"Código inválido, login negado"}, status=status.HTTP_401_UNAUTHORIZED,
             )
     else:
         return Response(
-            {"message": f"Usuário {usuario.usuarioId} não possui código ativo, solite um novo."}, status=status.HTTP_401_UNAUTHORIZED,
+            {"mensagem": f"Usuário {usuario.usuarioId} não possui código ativo, solite um novo."}, status=status.HTTP_401_UNAUTHORIZED,
         )

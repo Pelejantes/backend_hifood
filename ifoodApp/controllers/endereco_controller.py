@@ -19,16 +19,16 @@ def exibir_endereco(request, pk):
         return Response(serializer.data)
     except Endereco.DoesNotExist:
         # Retorna uma resposta de erro com status 404
-        return Response({"message": f"Endereço {pk} não encontrado"}, status=404)
+        return Response({"mensagem": f"Endereço {pk} não encontrado"}, status=404)
 
 
 def criar_endereco(request):
     serializer = Endereco_Serializer(data=request.data)
     if serializer.is_valid():
         endereco = serializer.save()
-        return Response({"message": "Endereço criado com sucesso!", "enderecoId": endereco.__dict__['enderecoId']}, status=200)
+        return Response({"mensagem": "Endereço criado com sucesso!", "enderecoId": endereco.__dict__['enderecoId']}, status=200)
     else:
-        return Response({"message": "Não foi possível criar o endereço, revise os campos e tente novamente!"}, status=404)
+        return Response({"mensagem": "Não foi possível criar o endereço, revise os campos e tente novamente!"}, status=404)
 
 
 def editar_endereco(request, pk):
@@ -41,14 +41,14 @@ def editar_endereco(request, pk):
 
     except Endereco.DoesNotExist:
         # Retorna uma resposta de erro com status 404
-        return Response({"message": f"Endereço {pk} não encontrado"}, status=404)
+        return Response({"mensagem": f"Endereço {pk} não encontrado"}, status=404)
 
 
 def deletar_endereco(request, pk):
     try:
         endereco = Endereco.objects.get(id=pk)
         endereco.delete()
-        return Response({"message": f"Endereço {pk} deletado com sucesso!"}, status=200)
+        return Response({"mensagem": f"Endereço {pk} deletado com sucesso!"}, status=200)
     except Endereco.DoesNotExist:
         # Retorna uma resposta de erro com status 404
-        return Response({"message": f"Endereço {pk} não encontrado"}, status=404)
+        return Response({"mensagem": f"Endereço {pk} não encontrado"}, status=404)
