@@ -7,11 +7,14 @@ from ..serializers import CodVerif_Serializer, Usuario_Serializer
 from twilio.rest import Client
 import os
 from dotenv import load_dotenv
+from datetime import datetime, timedelta, timezone
+
 
 dotenv_path = "../../dotenv_files/.env"
 load_dotenv(dotenv_path)
 
-economizar_recursos = False
+economizar_recursos = True
+
 
 def enviar_codigo(request):
     # Puxa telefone do request
@@ -37,24 +40,26 @@ def enviar_codigo(request):
         # Se existir, usar a mesma para armazenar o novo código
         codVerif_Serializer = CodVerif_Serializer(
             data={"codigo": codigo})
-        
+    
+    # Definir data de expiração
+    codVerif_model.data_hora_expiracao = datetime.now() + timedelta(minutes=codVerif_model.duracao_expiracao_minutos)
+
     if serializersValidos([codVerif_Serializer]):
         codVerifInstancia = codVerif_Serializer.save()
         usuario.codVerifId = codVerifInstancia
         usuario.save()
-        
+
         # Fazer req para a API de Msg via Whatsapp
         account_sid = os.getenv('ACCOUNT_SID')
         auth_token = os.getenv('AUTH_TOKEN')
         client = Client(account_sid, auth_token)
 
-        if(not economizar_recursos):
+        if (not economizar_recursos):
             client.messages.create(
-            from_=f"whatsapp:+{os.getenv('TEL_FROM')}",
-            body=f"Seu código de verificação H!food: *{codigo}*",
-            to=f"whatsapp:+{telefoneUsu}"
-        )
-        
+                from_=f"whatsapp:+{os.getenv('TEL_FROM')}",
+                body=f"Seu código de verificação H!food: *{codigo}*",
+                to=f"whatsapp:+{telefoneUsu}"
+            )
         return Response(
             {"message": f"Código enviado ao usuário."}, status=200,
         )
