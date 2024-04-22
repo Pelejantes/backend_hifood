@@ -120,7 +120,7 @@ class Usuario(models.Model):
     imagemPerfil = models.BinaryField(null=True, default=None)
     contaBancariaId = models.ForeignKey(
         'ContaBancaria', on_delete=models.CASCADE, null=True, default=None)
-    statusAtivo = models.BooleanField(default=True)
+    statusAtivo = models.BooleanField(default=False)
     dataCriacao = models.DateField(default=datetime.now)
     tipoUsuarioId = models.ForeignKey(
         'TipoUsuario', on_delete=models.CASCADE, default=2)
