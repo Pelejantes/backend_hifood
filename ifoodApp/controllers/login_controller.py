@@ -47,6 +47,8 @@ def login_user(request):
             )
         if codVerif_model.codigo == request.data["codVerif"]:
             token_jwt = gerar_token_jwt(usuario)
+            usuario.statusAtivo = True
+            usuario.save()
             return Response(
                 {"mensagem": f"Código Valido, login aprovado", "token_jwt": token_jwt}, status=200,
             )
