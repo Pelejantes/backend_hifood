@@ -19,7 +19,7 @@ class Command(BaseCommand):
                 "nomeUsu": os.environ.get("DJANGO_SUPERUSER_USERNAME"),
                 "telefoneUsu": os.environ.get("DJANGO_SUPERUSER_TELEFONE"),
                 "cpf": os.environ.get("DJANGO_SUPERUSER_CPF"),
-                "emailUsu": os.environ.get("DJANGO_SUPERUSER_EMAIL"),
+                # "emailUsu": os.environ.get("DJANGO_SUPERUSER_EMAIL"),
                 "tipoUsuarioId": str(TipoUsuario.objects.get(nomeTipoUsuario="Admin").tipoUsuarioId)
             })
             if Usuario.objects.get(cpf=os.environ.get("DJANGO_SUPERUSER_CPF")):

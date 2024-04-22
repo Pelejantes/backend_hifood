@@ -114,9 +114,9 @@ class Cartao(models.Model):
 class Usuario(models.Model):
     usuarioId = models.AutoField(primary_key=True)
     nomeUsu = models.CharField(max_length=255, null=True, default=None)
-    telefoneUsu = models.CharField(max_length=14, null=True, default=None)
+    telefoneUsu = models.CharField(max_length=14, null=True, default=None, unique=True)
     cpf = models.CharField(max_length=11, unique=True)
-    emailUsu = models.EmailField(max_length=255, unique=True)
+    # emailUsu = models.EmailField(max_length=255, unique=True)
     imagemPerfil = models.BinaryField(null=True, default=None)
     contaBancariaId = models.ForeignKey(
         'ContaBancaria', on_delete=models.CASCADE, null=True, default=None)
@@ -126,7 +126,7 @@ class Usuario(models.Model):
         'TipoUsuario', on_delete=models.CASCADE, default=0)
     codVerifId = models.ForeignKey(
         'CodVerif', on_delete=models.CASCADE, null=True, default=None)
-    USERNAME_FIELD = 'emailUsu'
+    USERNAME_FIELD = 'telefoneUsu'
     REQUIRED_FIELDS = []
     is_anonymous = False
     is_authenticated = False
