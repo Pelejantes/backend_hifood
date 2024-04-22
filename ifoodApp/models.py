@@ -123,7 +123,7 @@ class Usuario(models.Model):
     statusAtivo = models.BooleanField(default=True)
     dataCriacao = models.DateField(default=datetime.now)
     tipoUsuarioId = models.ForeignKey(
-        'TipoUsuario', on_delete=models.CASCADE, default=0)
+        'TipoUsuario', on_delete=models.CASCADE, default=2)
     codVerifId = models.ForeignKey(
         'CodVerif', on_delete=models.CASCADE, null=True, default=None)
     USERNAME_FIELD = 'telefoneUsu'
