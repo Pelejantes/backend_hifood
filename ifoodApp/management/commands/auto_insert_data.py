@@ -22,13 +22,16 @@ class Command(BaseCommand):
         cur = conn.cursor()
 
         # Ler os dados da imagem e converter para uma representação hexadecimal
-        with open('./ifoodApp/assets/img/imagem_default.png', 'rb') as f:
-            imagem_bytes = f.read()
-        imagem = Binary(imagem_bytes)
-        # print(Binary(imagem))
-        # Decodificar:
-        # imagem_hex = imagem_hex.replace(r'\\x', '')  # Remove o prefixo '\\x' se estiver presente
-        # imagem_bytes = binascii.unhexlify(imagem_hex)
+        with open('./ifoodApp/assets/img/categoria_default.jpg', 'rb') as f:
+            imagemCategoria = f.read()
+        imagemCategoria = Binary(imagemCategoria)
+        with open('./ifoodApp/assets/img/estabelecimento_default.jpg', 'rb') as f:
+            imagemEstab = f.read()
+        imagemEstab = Binary(imagemEstab)
+        with open('./ifoodApp/assets/img/produto_default.jpg', 'rb') as f:
+            imagemProduto = f.read()
+        imagemProduto = Binary(imagemProduto)
+        
 
         # Script SQL para inserir dados
         query = f"""
@@ -37,16 +40,7 @@ DECLARE
     i integer := 1;
     cnpj_gerado char(14);
     telefone_gerado char(10);
-    dados_imagem bytea;
 BEGIN
-
-
-    -- Converte os dados binários da imagem para uma string codificada em base64
-    dados_imagem := {imagem};
-
-    
-
-
     -- GERAR TIPO USUARIO ID
     IF NOT EXISTS (SELECT 1 FROM "public"."ifoodApp_tipousuario" WHERE "nomeTipoUsuario" = 'Admin') THEN
         INSERT INTO "public"."ifoodApp_tipousuario" ("nomeTipoUsuario") VALUES ('Admin');
@@ -66,7 +60,7 @@ BEGIN
     FOR i IN 1..50 LOOP
 
         -- GERAR CATEGORIA
-        INSERT INTO "public"."ifoodApp_categoria" ("nomeCategoria","imagem") VALUES ('Nome_categoria_' || i ,dados_imagem);
+        INSERT INTO "public"."ifoodApp_categoria" ("nomeCategoria","imagem") VALUES ('Nome_categoria_' || i ,{imagemCategoria});
         
         
         -- GERAR ESTABELECIMENTOS
@@ -81,7 +75,7 @@ BEGIN
             telefone_gerado := LPAD((ROUND(RANDOM() * 9999999999))::text, 10, '0');
         END LOOP;
         INSERT INTO "ifoodApp_estabelecimento" ("nomeEstab", "telefoneEstab", "cnpj", "emailEstab", "imagemEstab","categoriaId_id")
-        VALUES ('Estabelecimento_' || i, telefone_gerado, cnpj_gerado, 'estabelecimento_' || i || '@restaurante.com.br', dados_imagem, i);
+        VALUES ('Estabelecimento_' || i, telefone_gerado, cnpj_gerado, 'estabelecimento_' || i || '@restaurante.com.br', {imagemEstab}, i);
         
 
 
@@ -103,7 +97,7 @@ BEGIN
 
         -- GERAR PRODUTO
         INSERT INTO "public"."ifoodApp_produto"("nomeProd", "disponibilidade", "preco", "imagemProd","alcoolico", "descricao", "categoriaId_id", "estabelecimentoId_id") VALUES
-        ( 'Nome_produto_'||i, 'true', 100, dados_imagem,'false', 'Descricao_'||i, i, i);
+        ( 'Nome_produto_'||i, 'true', 100, {imagemProduto},'false', 'Descricao_'||i, i, i);
 
 
 
