@@ -64,21 +64,23 @@ BEGIN
 
     FOR i IN 1..50 LOOP
 
+        -- GERAR CATEGORIA
+        INSERT INTO "public"."ifoodApp_categoria" ("nomeCategoria","imagem") VALUES ('Nome_categoria_' || i ,dados_imagem);
+        
+        
         -- GERAR ESTABELECIMENTOS
         -- __Gera um CNPJ único
         cnpj_gerado := LPAD((ROUND(RANDOM() * 99999999999999))::text, 14, '0');
         WHILE EXISTS (SELECT 1 FROM "ifoodApp_estabelecimento" WHERE "cnpj" = cnpj_gerado) LOOP
             cnpj_gerado := LPAD((ROUND(RANDOM() * 99999999999999))::text, 14, '0');
         END LOOP;
-
-
         -- __Gera um telefone único
         telefone_gerado := LPAD((ROUND(RANDOM() * 9999999999))::text, 10, '0');
         WHILE EXISTS (SELECT 1 FROM "ifoodApp_estabelecimento" WHERE "telefoneEstab" = telefone_gerado) LOOP
             telefone_gerado := LPAD((ROUND(RANDOM() * 9999999999))::text, 10, '0');
         END LOOP;
-        INSERT INTO "ifoodApp_estabelecimento" ("nomeEstab", "telefoneEstab", "cnpj", "emailEstab", "imagemEstab")
-        VALUES ('Estabelecimento_' || i, telefone_gerado, cnpj_gerado, 'estabelecimento_' || i || '@restaurante.com.br', dados_imagem);
+        INSERT INTO "ifoodApp_estabelecimento" ("nomeEstab", "telefoneEstab", "cnpj", "emailEstab", "imagemEstab","categoriaId_id")
+        VALUES ('Estabelecimento_' || i, telefone_gerado, cnpj_gerado, 'estabelecimento_' || i || '@restaurante.com.br', dados_imagem, i);
         
 
 
@@ -86,19 +88,14 @@ BEGIN
         INSERT INTO "public"."ifoodApp_regracupom" ("descricaoRegra") VALUES ('Descrição_Regra_' || i  );
         
 
-
-        -- GERAR CATEGORIA
-        INSERT INTO "public"."ifoodApp_categoria" ("nomeCategoria","imagem") VALUES ('Nome_categoria_' || i ,dados_imagem);
-
         
-
         -- GERAR CUPONS
         INSERT INTO "public"."ifoodApp_cupom" ("valorDesconto", "dataValidade", "limiteUso", "valorMinimo", "categoriaId_id", "regraCupomId_id") VALUES
         (i, NOW(), i, i * i, i, i);
 
         
+        -- GERAR CUPONS_USUARIO
         IF EXISTS (SELECT 1 FROM "public"."ifoodApp_usuario" WHERE "usuarioId" = 1) THEN
-	        -- GERAR CUPONS_USUARIO
         INSERT INTO "public"."ifoodApp_cuponsusuario" ("usuarioId_id", "cupomId_id") VALUES (1, i);
 	    END IF;
         
