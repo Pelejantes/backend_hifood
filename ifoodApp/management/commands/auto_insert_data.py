@@ -56,6 +56,9 @@ BEGIN
     IF NOT EXISTS (SELECT 1 FROM "public"."ifoodApp_tipousuario" WHERE "nomeTipoUsuario" = 'Entregador') THEN
         INSERT INTO "public"."ifoodApp_tipousuario" ("nomeTipoUsuario") VALUES ('Entregador');
     END IF;
+    IF NOT EXISTS (SELECT 1 FROM "public"."ifoodApp_tipousuario" WHERE "nomeTipoUsuario" = 'Estabelecimento') THEN
+        INSERT INTO "public"."ifoodApp_tipousuario" ("nomeTipoUsuario") VALUES ('Estabelecimento');
+    END IF;
 
 
 

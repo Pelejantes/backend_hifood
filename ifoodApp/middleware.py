@@ -15,7 +15,6 @@ class JWTAuthenticationMiddleware:
         authorization_header = request.META.get("HTTP_AUTHORIZATION")
         if authorization_header:
             token = extrair_toker_jwt(authorization_header)
-            print(f'token: {token}')
             if token:
                 payload = decode_token_jwt(token)
                 if payload != None:

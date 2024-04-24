@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import inicio_view, usuario_view, endereco_view, enderecoEntrega_view, login_view, tipoUsuario_view, codVerif_view, estabelecimento_view, cupom_view, categoria_view, produto_view
+from .views import inicio_view, usuario_view, endereco_view, enderecoEntrega_view, login_view, tipoUsuario_view, codVerif_view, estabelecimento_view, cupom_view, categoria_view, produto_view, cuponsUsuario_view
 
 urlpatterns = [
     # Inicio
@@ -44,6 +44,10 @@ urlpatterns = [
     path("cupons", cupom_view.exibir_cupons_view),
     path("cupons/ler/<str:pk>",
          cupom_view.exibir_cupom_view),
+    # CuponsUsuario
+    path("cuponsUsuario", cuponsUsuario_view.exibir_cuponsUsuario_view),
+    path("cuponsUsuario/ler/<str:pk>",
+         cuponsUsuario_view.exibir_cupomUsuario_view),
     # Categorias
     path("categorias", categoria_view.exibir_categorias_view),
     path("categorias/ler/<str:pk>",
