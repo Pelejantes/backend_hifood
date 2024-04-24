@@ -24,8 +24,8 @@ class Command(BaseCommand):
         # Ler os dados da imagem e converter para uma representação hexadecimal
         with open('./ifoodApp/assets/img/imagem_default.png', 'rb') as f:
             imagem_bytes = f.read()
-        imagem_hex = r'\\x' + binascii.hexlify(imagem_bytes).decode('utf-8')
-
+        imagem = Binary(imagem_bytes)
+        # print(Binary(imagem))
         # Decodificar:
         # imagem_hex = imagem_hex.replace(r'\\x', '')  # Remove o prefixo '\\x' se estiver presente
         # imagem_bytes = binascii.unhexlify(imagem_hex)
@@ -42,7 +42,8 @@ BEGIN
 
 
     -- Converte os dados binários da imagem para uma string codificada em base64
-    dados_imagem := ENCODE(E'{imagem_hex}', 'base64');
+    dados_imagem := {imagem};
+
     
 
 
