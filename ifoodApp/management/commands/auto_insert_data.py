@@ -26,6 +26,10 @@ class Command(BaseCommand):
             imagem_bytes = f.read()
         imagem_hex = r'\\x' + binascii.hexlify(imagem_bytes).decode('utf-8')
 
+        # Decodificar:
+        # imagem_hex = imagem_hex.replace(r'\\x', '')  # Remove o prefixo '\\x' se estiver presente
+        # imagem_bytes = binascii.unhexlify(imagem_hex)
+
         # Script SQL para inserir dados
         query = f"""
         DO $$
@@ -35,9 +39,13 @@ DECLARE
     telefone_gerado char(10);
     dados_imagem bytea;
 BEGIN
+
+
     -- Converte os dados binários da imagem para uma string codificada em base64
     dados_imagem := ENCODE(E'{imagem_hex}', 'base64');
     
+
+
     -- GERAR TIPO USUARIO ID
     IF NOT EXISTS (SELECT 1 FROM "public"."ifoodApp_tipousuario" WHERE "nomeTipoUsuario" = 'Admin') THEN
         INSERT INTO "public"."ifoodApp_tipousuario" ("nomeTipoUsuario") VALUES ('Admin');
@@ -49,6 +57,8 @@ BEGIN
         INSERT INTO "public"."ifoodApp_tipousuario" ("nomeTipoUsuario") VALUES ('Entregador');
     END IF;
 
+
+
     FOR i IN 1..50 LOOP
 
         -- GERAR ESTABELECIMENTOS
@@ -57,6 +67,8 @@ BEGIN
         WHILE EXISTS (SELECT 1 FROM "ifoodApp_estabelecimento" WHERE "cnpj" = cnpj_gerado) LOOP
             cnpj_gerado := LPAD((ROUND(RANDOM() * 99999999999999))::text, 14, '0');
         END LOOP;
+
+
         -- __Gera um telefone único
         telefone_gerado := LPAD((ROUND(RANDOM() * 9999999999))::text, 10, '0');
         WHILE EXISTS (SELECT 1 FROM "ifoodApp_estabelecimento" WHERE "telefoneEstab" = telefone_gerado) LOOP
@@ -65,19 +77,35 @@ BEGIN
         INSERT INTO "ifoodApp_estabelecimento" ("nomeEstab", "telefoneEstab", "cnpj", "emailEstab", "imagemEstab")
         VALUES ('Estabelecimento_' || i, telefone_gerado, cnpj_gerado, 'estabelecimento_' || i || '@restaurante.com.br', dados_imagem);
         
+
+
         -- GERAR REGRACUPOM
         INSERT INTO "public"."ifoodApp_regracupom" ("descricaoRegra") VALUES ('Descrição_Regra_' || i  );
         
+
+
         -- GERAR CATEGORIA
         INSERT INTO "public"."ifoodApp_categoria" ("nomeCategoria","imagem") VALUES ('Nome_categoria_' || i ,dados_imagem);
+
+        
 
         -- GERAR CUPONS
         INSERT INTO "public"."ifoodApp_cupom" ("valorDesconto", "dataValidade", "limiteUso", "valorMinimo", "categoriaId_id", "regraCupomId_id") VALUES
         (i, NOW(), i, i * i, i, i);
 
+        
+        IF EXISTS (SELECT 1 FROM "public"."ifoodApp_usuario" WHERE "usuarioId" = 1) THEN
+	        -- GERAR CUPONS_USUARIO
+        INSERT INTO "public"."ifoodApp_cuponsusuario" ("usuarioId_id", "cupomId_id") VALUES (1, i);
+	    END IF;
+        
+
         -- GERAR PRODUTO
         INSERT INTO "public"."ifoodApp_produto"("nomeProd", "disponibilidade", "preco", "imagemProd","alcoolico", "descricao", "categoriaId_id", "estabelecimentoId_id") VALUES
         ( 'Nome_produto_'||i, 'true', 100, dados_imagem,'false', 'Descricao_'||i, i, i);
+
+
+
     END LOOP;
     
 END $$;
