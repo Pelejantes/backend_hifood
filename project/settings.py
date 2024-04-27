@@ -68,7 +68,8 @@ CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5500",
-    "http://localhost:8080"
+    "http://localhost:8080",
+    "https://frontendhifood-production.up.railway.app"
 ]
 ROOT_URLCONF = 'project.urls'
 
