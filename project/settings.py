@@ -71,7 +71,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://frontendhifood-production.up.railway.app"
 ]
 
-CORS_ALLOW_ALL_ORIGINS = bool(os.getenv('CORS_ALLOW_ALL_ORIGINS', False))
+CORS_ALLOW_ALL_ORIGINS = bool(int(os.getenv('CORS_ALLOW_ALL_ORIGINS', 0)))
 
 ROOT_URLCONF = 'project.urls'
 

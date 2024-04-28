@@ -15,7 +15,7 @@ load_dotenv(dotenv_path)
 
 
 def enviar_codigo(request):
-    economizar_recursos = os.getenv('ECONOMIZAR_RECURSOS', True)
+    economizar_recursos = bool(int(os.getenv('ECONOMIZAR_RECURSOS', True)))
     # Puxa telefone do request
     if 'telefoneUsu' in request.data:
         telefoneUsu = request.data['telefoneUsu']
@@ -52,8 +52,7 @@ def enviar_codigo(request):
         account_sid = os.getenv('ACCOUNT_SID')
         auth_token = os.getenv('AUTH_TOKEN')
         client = Client(account_sid, auth_token)
-
-        if (economizar_recursos != False):
+        if (economizar_recursos == False):
             client.messages.create(
                 from_=f"whatsapp:+{os.getenv('TEL_FROM')}",
                 body=f"Seu código de verificação H!food: *{codigo}*",
