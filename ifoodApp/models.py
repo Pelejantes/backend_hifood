@@ -45,14 +45,14 @@ class Cupom(models.Model):
 
 class Pedido(models.Model):
     pedidoId = models.AutoField(primary_key=True)
-    usuariold = models.ForeignKey('Usuario', on_delete=models.CASCADE)
+    usuariold = models.ForeignKey('Usuario', on_delete=models.CASCADE, null=False)
     formaPagld = models.ForeignKey(
         'FormaPag', on_delete=models.CASCADE)
     cupomld = models.ForeignKey('Cupom', on_delete=models.CASCADE)
-    statusPedido = models.CharField(max_length=50)
+    statusAtivo = models.BooleanField(default=True)
     valorTotal = models.FloatField()
     observacao = models.CharField(max_length=255)
-    dataPedido = models.DateField()
+    dataPedido = models.DateField(default=datetime.now())
     gorjeta = models.SmallIntegerField()
 
     def __str__(self):
