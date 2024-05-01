@@ -4,7 +4,6 @@ from utils.func_gerais import gerar_code
 from datetime import datetime, timedelta, timezone
 
 
-
 class FormaPag(models.Model):
     formaPag = models.AutoField(primary_key=True)
     nomeFormaPag = models.IntegerField()
@@ -45,15 +44,15 @@ class Cupom(models.Model):
 
 class Pedido(models.Model):
     pedidoId = models.AutoField(primary_key=True)
-    usuariold = models.ForeignKey('Usuario', on_delete=models.CASCADE, null=False)
+    usuariold = models.ForeignKey(
+        'Usuario', on_delete=models.CASCADE, null=False)
     formaPagld = models.ForeignKey(
-        'FormaPag', on_delete=models.CASCADE)
-    cupomld = models.ForeignKey('Cupom', on_delete=models.CASCADE)
-    statusAtivo = models.BooleanField(default=True)
-    valorTotal = models.FloatField()
-    observacao = models.CharField(max_length=255)
+        'FormaPag', on_delete=models.CASCADE, null=True)
+    cupomld = models.ForeignKey('Cupom', on_delete=models.CASCADE, null=True)
+    statusAtivo = models.BooleanField(default=True, null=True)
+    valorTotal = models.FloatField(null=True)
     dataPedido = models.DateField(default=datetime.now())
-    gorjeta = models.SmallIntegerField()
+    gorjeta = models.SmallIntegerField(null=True)
 
     def __str__(self):
         return f"Pedido {self.pedidoId}"
@@ -62,6 +61,7 @@ class Pedido(models.Model):
 class ItemPedido(models.Model):
     itemPedidoId = models.AutoField(primary_key=True)
     produtold = models.ForeignKey('Produto', on_delete=models.CASCADE)
+    observacao = models.CharField(max_length=255, null=True)
     qtdItens = models.SmallIntegerField()
     pedidoId = models.ForeignKey(
         'Pedido', on_delete=models.CASCADE)
@@ -114,7 +114,8 @@ class Cartao(models.Model):
 class Usuario(models.Model):
     usuarioId = models.AutoField(primary_key=True)
     nomeUsu = models.CharField(max_length=255, null=True, default=None)
-    telefoneUsu = models.CharField(max_length=14, null=True, default=None, unique=True)
+    telefoneUsu = models.CharField(
+        max_length=14, null=True, default=None, unique=True)
     cpf = models.CharField(max_length=11, unique=True)
     # emailUsu = models.EmailField(max_length=255, unique=True)
     imagemPerfil = models.BinaryField(null=True, default=None)
@@ -150,7 +151,8 @@ class CodVerif(models.Model):
 
         # A data_hora_expiracao é definida com base na data de geração do código e duracao_expiracao_minutos.
         if not self.data_hora_expiracao:
-            self.data_hora_expiracao = datetime.now() + timedelta(minutes=self.duracao_expiracao_minutos)
+            self.data_hora_expiracao = datetime.now(
+            ) + timedelta(minutes=self.duracao_expiracao_minutos)
 
         super(CodVerif, self).save(*args, **kwargs)
 
@@ -200,6 +202,7 @@ class EntregadorVeic(models.Model):
     def __str__(self) -> str:
         return f"TipoVeiculo {self.tipoVeiculoId}"
 
+
 class Estabelecimento(models.Model):
     estabelecimentoId = models.AutoField(primary_key=True)
     categoriaId = models.ForeignKey(
@@ -216,7 +219,6 @@ class Estabelecimento(models.Model):
 
     def __str__(self):
         return f"Estabelecimento ID: {self.estabelecimentoId}, Nome: {self.nomeEstab}"
-
 
 
 class TipoVeiculo(models.Model):
