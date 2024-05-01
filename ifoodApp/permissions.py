@@ -10,32 +10,34 @@ class Logado(permissions.BasePermission):
 
 class RU_Usuario(permissions.BasePermission):
     def has_permission(self, request, view):
-        tipo_usuario_id = request.auth_payload.get(
-            "tipoUsuarioId") if hasattr(request, 'auth_payload') else None
-        try:
-            nomeTipoUsuario = TipoUsuario.get(
-                tipoUsuarioId=tipo_usuario_id).nomeTipoUsuario
-        except AssertionError:
-            return "Tipo de Usuario não foi registrado."
-        usuarioId = request.auth_payload.get("usuarioId") if hasattr(
-            request, 'auth_payload') else None
-        url_pk = view.kwargs.get('pk')
+        if hasattr(request, 'auth_payload'):
+            tipo_usuario_id = request.auth_payload.get(
+                "tipoUsuarioId")
+            try:
+                nomeTipoUsuario = TipoUsuario.objects.get(
+                    tipoUsuarioId=tipo_usuario_id).nomeTipoUsuario.lower()
+            except AssertionError:
+                return "Tipo de Usuario não foi registrado."
+            usuarioId = request.auth_payload.get("usuarioId") if hasattr(
+                request, 'auth_payload') else None
+            url_pk = view.kwargs.get('pk')
 
-        if nomeTipoUsuario == "Admin".lower():
-            return True  # Admin tem acesso a todas as informações
+            if nomeTipoUsuario == "Admin".lower():
+                return True  # Admin tem acesso a todas as informações
 
-        # Usuários que só podem interagir com os próprios dados.
-        if nomeTipoUsuario == "Comprador".lower() and url_pk == usuarioId:
-            return True
+            # Usuários que só podem interagir com os próprios dados.
+            if nomeTipoUsuario == "Comprador".lower() and url_pk == usuarioId:
+                return True
 
-        if nomeTipoUsuario == "Entregador".lower() and url_pk == usuarioId:
-            return True
+            if nomeTipoUsuario == "Entregador".lower() and url_pk == usuarioId:
+                return True
 
-        if nomeTipoUsuario == "Estabelecimento".lower() and url_pk == usuarioId:
-            return True
-
-        # Se não for nenhum dos casos acima, negar acesso
-        return False
+            if nomeTipoUsuario == "Estabelecimento".lower() and url_pk == usuarioId:
+                return True
+            # Se não for nenhum dos casos acima, negar acesso
+            return False
+        else:
+            return False
 
 
 class R_CuponsUsuario(permissions.BasePermission):
@@ -47,10 +49,10 @@ class R_CuponsUsuario(permissions.BasePermission):
                 cuponsUsuarioId=cupomUsuarioId)
         else:
             return f"Cupom {cupomUsuarioId} do usuário não encontrado."
-        
+
         usuarioId = request.auth_payload.get("usuarioId") if hasattr(
             request, 'auth_payload') else None
-        
+
         try:
             if usuarioId:
                 if cupomUsuario.usuarioId.usuarioId == int(usuarioId):
