@@ -41,7 +41,7 @@ DECLARE
     cnpj_gerado char(14);
     telefone_gerado char(10);
 BEGIN
-    -- GERAR TIPO USUARIO ID
+    -- GERAR TIPO USUARIO
     IF NOT EXISTS (SELECT 1 FROM "public"."ifoodApp_tipousuario" WHERE "nomeTipoUsuario" = 'Admin') THEN
         INSERT INTO "public"."ifoodApp_tipousuario" ("nomeTipoUsuario") VALUES ('Admin');
     END IF;
@@ -55,6 +55,17 @@ BEGIN
         INSERT INTO "public"."ifoodApp_tipousuario" ("nomeTipoUsuario") VALUES ('Estabelecimento');
     END IF;
 
+
+    -- GERAR TIPO FORMA PAGAMENTO
+    IF NOT EXISTS (SELECT 1 FROM "public"."ifoodApp_formapag" WHERE "nomeFormaPag" = 'Pix') THEN
+        INSERT INTO "public"."ifoodApp_formapag" ("nomeFormaPag") VALUES ('Pix');
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM "public"."ifoodApp_formapag" WHERE "nomeFormaPag" = 'Débito') THEN
+        INSERT INTO "public"."ifoodApp_formapag" ("nomeFormaPag") VALUES ('Débito');
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM "public"."ifoodApp_formapag" WHERE "nomeFormaPag" = 'Crédito') THEN
+        INSERT INTO "public"."ifoodApp_formapag" ("nomeFormaPag") VALUES ('Crédito');
+    END IF;
 
 
     FOR i IN 1..50 LOOP

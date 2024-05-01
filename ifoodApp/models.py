@@ -6,7 +6,7 @@ from datetime import datetime, timedelta, timezone
 
 class FormaPag(models.Model):
     formaPag = models.AutoField(primary_key=True)
-    nomeFormaPag = models.IntegerField()
+    nomeFormaPag = models.CharField(max_length=255)
 
     def __str__(self):
         return f"Solicitação de Atendimento {self.solicAtendId}"
