@@ -15,3 +15,7 @@ def exibir_produtos_view(request):
 def exibir_produto_view(request, pk):
     return produto_controller.exibir_produto(request, pk)
 
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def exibir_produtosEstab_view(request, pk):
+    return produto_controller.exibir_produtosEstab(request, pk)

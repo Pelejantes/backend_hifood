@@ -71,6 +71,8 @@ urlpatterns = [
     path("produtos", produto_view.exibir_produtos_view),
     path("produtos/ler/<str:pk>",
          produto_view.exibir_produto_view),
+    path("produtosEstab/<str:pk>",
+         produto_view.exibir_produtosEstab_view),
 
     # Codigo de Verificação
     path('codVerif', codVerif_view.enviar_codigo_view),

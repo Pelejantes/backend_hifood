@@ -20,3 +20,12 @@ def exibir_produto(request, pk):
     except Produto.DoesNotExist:
         # Retorna uma resposta de erro com status 404
         return Response({"mensagem": f"Produto {pk} não encontrado"}, status=404)
+
+def exibir_produtosEstab(request, pk):
+    try:
+        produto = Produto.objects.filter(estabelecimentoId=pk)
+        serializer = Produto_Serializer(produto, many=True)
+        return Response(serializer.data)
+    except Produto.DoesNotExist:
+        # Retorna uma resposta de erro com status 404
+        return Response({"mensagem": f"Produto {pk} não encontrado"}, status=404)
