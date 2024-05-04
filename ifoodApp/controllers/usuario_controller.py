@@ -15,23 +15,20 @@ def exibir_usuarios(request):
     return Response(serializer.data)
 
 
+def exibir_usuario_por_telefone(request, pk):
+    try:
+        usuario = Usuario.objects.get(telefoneUsu=pk)
+        usuario_serializer = Usuario_Serializer(usuario, many=False)
+        return Response(usuario_serializer.data)
+    except Usuario.DoesNotExist:
+        return Response({"mensagem": f"Usuário {pk} não encontrado"}, status=404)
+
+
 def exibir_usuario(request, pk):
     try:
         usuario = Usuario.objects.get(usuarioId=pk)
-        enderecosEntrega = EnderecoEntrega.objects.filter(usuarioId=pk)
-        enderecos = []
-        for enderecoEntrega in enderecosEntrega:
-            endereco_model = Endereco.objects.get(
-                enderecoId=enderecoEntrega.enderecoId_id)
-            endereco_serializer = Endereco_Serializer(
-                endereco_model, many=False)
-            enderecos.append(endereco_serializer.data)
         usuario_serializer = Usuario_Serializer(usuario, many=False)
-        response = {
-            "usuario": usuario_serializer.data,
-            "enderecos": enderecos
-        }
-        return Response(response)
+        return Response(usuario_serializer.data)
     except Usuario.DoesNotExist:
         return Response({"mensagem": f"Usuário {pk} não encontrado"}, status=404)
 
@@ -121,9 +118,9 @@ def ativar_usuario(request, pk):
 def editar_usuario(request, pk):
     try:
         if not 'usuario' in request.data:
-                return Response({"mensagem": "Não foi possível criar o usuário.", "errors": ["Campo 'usuario' ausente."]}, status=400)
+            return Response({"mensagem": "Não foi possível criar o usuário.", "errors": ["Campo 'usuario' ausente."]}, status=400)
         if not 'enderecos' in request.data:
-                return Response({"mensagem": "Não foi possível criar o usuário.", "errors": ["Campo 'enderecos' ausente."]}, status=400)
+            return Response({"mensagem": "Não foi possível criar o usuário.", "errors": ["Campo 'enderecos' ausente."]}, status=400)
         usuario_model = Usuario.objects.get(usuarioId=pk)
         usuario_Serializer = Usuario_Serializer(
             instance=usuario_model, data=request.data['usuario'])

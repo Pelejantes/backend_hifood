@@ -12,6 +12,12 @@ def exibir_usuarios_view(request):
 
 @api_view(["GET"])
 @permission_classes([RU_Usuario])
+def exibir_usuario_por_telefone_view(request, pk):
+    return usuario_controller.exibir_usuario_por_telefone(request, pk)
+
+
+@api_view(["GET"])
+@permission_classes([RU_Usuario])
 def exibir_usuario_view(request, pk):
     return usuario_controller.exibir_usuario(request, pk)
 
@@ -25,7 +31,7 @@ def criar_usuarioCompleto_view(request):
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def criar_usuario_view(request):
-    data=request.data
+    data = request.data
     return usuario_controller.criar_usuario(data)
 
 

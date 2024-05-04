@@ -7,6 +7,7 @@ urlpatterns = [
     # Usuario- Privado individualmente alunos e professores
     path("usuarios", usuario_view.exibir_usuarios_view),
     path("usuarios/ler/<str:pk>", usuario_view.exibir_usuario_view),
+    path("usuarios/ler/telefone/<str:pk>", usuario_view.exibir_usuario_por_telefone_view),
     path("usuarios/criar/completo", usuario_view.criar_usuarioCompleto_view),
     path("usuarios/criar", usuario_view.criar_usuario_view),
     path("usuarios/editar/<str:pk>", usuario_view.editar_usuario_view),
