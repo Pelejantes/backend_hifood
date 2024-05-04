@@ -26,7 +26,7 @@ def enviar_codigo(request):
         usuario = Usuario.objects.get(telefoneUsu=telefoneUsu)
     except Usuario.DoesNotExist:
         return Response(
-            {"mensagem": "Usuário não encontrado"}, status=status.HTTP_404_NOT_FOUND
+            {"mensagem": "Erro enviar cod, Usuário não encontrado"}, status=status.HTTP_404_NOT_FOUND
         )
     codigo = gerar_code(6)
     # Se codVerifId não existir, criar nova table

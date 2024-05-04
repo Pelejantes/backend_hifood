@@ -20,19 +20,24 @@ class RU_Usuario(permissions.BasePermission):
                 return "Tipo de Usuario não foi registrado."
             usuarioId = request.auth_payload.get("usuarioId") if hasattr(
                 request, 'auth_payload') else None
+            telefoneUsu = request.auth_payload.get("telefoneUsu") if hasattr(
+                request, 'auth_payload') else None
+            
             url_pk = view.kwargs.get('pk')
 
             if nomeTipoUsuario == "Admin".lower():
                 return True  # Admin tem acesso a todas as informações
-
+            url = request.build_absolute_uri()
+            print(telefoneUsu)
+            dadoValidador = telefoneUsu if 'usuarios/ler/telefone' in url else usuarioId
             # Usuários que só podem interagir com os próprios dados.
-            if nomeTipoUsuario == "Comprador".lower() and url_pk == usuarioId:
+            if nomeTipoUsuario == "Comprador".lower() and url_pk == dadoValidador:
                 return True
 
-            if nomeTipoUsuario == "Entregador".lower() and url_pk == usuarioId:
+            if nomeTipoUsuario == "Entregador".lower() and url_pk == dadoValidador:
                 return True
 
-            if nomeTipoUsuario == "Estabelecimento".lower() and url_pk == usuarioId:
+            if nomeTipoUsuario == "Estabelecimento".lower() and url_pk == dadoValidador:
                 return True
             # Se não for nenhum dos casos acima, negar acesso
             return False

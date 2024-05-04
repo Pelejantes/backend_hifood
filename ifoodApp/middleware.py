@@ -24,7 +24,7 @@ class JWTAuthenticationMiddleware:
                             usuarioId=payload["usuarioId"])
                     except Usuario.DoesNotExist:
                         return JsonResponse(
-                            {"mensagem": "Usuário não encontrado"}, status=status.HTTP_404_NOT_FOUND
+                            {"mensagem": "Erro ao puxar usuario do TOKEN_JWT, Usuário não encontrado"}, status=status.HTTP_404_NOT_FOUND
                         )
                 else:
                     return JsonResponse(

@@ -31,7 +31,7 @@ def login_user(request):
         usuario = Usuario.objects.get(telefoneUsu=telefoneUsu)
     except Usuario.DoesNotExist:
         return Response(
-            {"mensagem": "Usuário não encontrado"}, status=status.HTTP_404_NOT_FOUND
+            {"mensagem": "Erro Login, Usuário não encontrado"}, status=status.HTTP_404_NOT_FOUND
         )
 
     if usuario.codVerifId:

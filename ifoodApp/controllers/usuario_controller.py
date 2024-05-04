@@ -21,7 +21,7 @@ def exibir_usuario_por_telefone(request, pk):
         usuario_serializer = Usuario_Serializer(usuario, many=False)
         return Response(usuario_serializer.data)
     except Usuario.DoesNotExist:
-        return Response({"mensagem": f"Usuário {pk} não encontrado"}, status=404)
+        return Response({"mensagem": f"Usuário de telefone {pk} não encontrado"}, status=404)
 
 
 def exibir_usuario(request, pk):
@@ -30,7 +30,7 @@ def exibir_usuario(request, pk):
         usuario_serializer = Usuario_Serializer(usuario, many=False)
         return Response(usuario_serializer.data)
     except Usuario.DoesNotExist:
-        return Response({"mensagem": f"Usuário {pk} não encontrado"}, status=404)
+        return Response({"mensagem": f"Usuário de id {pk} não encontrado"}, status=404)
 
 
 def criar_usuarioCompleto(request):

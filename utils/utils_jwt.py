@@ -26,6 +26,7 @@ def gerar_token_jwt(usuario):
     # Defina as informações que deseja incluir no payload (carga útil) do JWT
     payload = {
         'usuarioId': f"{usuario.usuarioId}",
+        'telefoneUsu': f"{usuario.telefoneUsu}",
         'nomeUsu': f"{usuario.nomeUsu}",
         'tipoUsuarioId': f"{usuario.tipoUsuarioId}",
         'exp': exp_timestamp
