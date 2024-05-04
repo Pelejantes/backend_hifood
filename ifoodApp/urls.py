@@ -7,7 +7,7 @@ urlpatterns = [
     # Usuario- Privado individualmente alunos e professores
     path("usuarios", usuario_view.exibir_usuarios_view),
     path("usuarios/ler/<str:pk>", usuario_view.exibir_usuario_view),
-    path("usuarios/ler/telefone/<str:pk>", usuario_view.exibir_usuario_por_telefone_view),
+    path("telefoneUsu/ler/<str:pk>", usuario_view.exibir_usuario_por_telefone_view),
     path("usuarios/criar/completo", usuario_view.criar_usuarioCompleto_view),
     path("usuarios/criar", usuario_view.criar_usuario_view),
     path("usuarios/editar/<str:pk>", usuario_view.editar_usuario_view),
@@ -28,10 +28,10 @@ urlpatterns = [
     path("pedidos/deletar/<str:pk>", pedido_view.deletar_pedido_view),
     # ItemPedido - Privado individualmente alunos e professores
     path("itensPedidos", itemPedido_view.exibir_itensPedidos_view),
-    path("itensPedidos/ler/<str:pk>", itemPedido_view.exibir_itemPedido_view),
+#     path("itensPedidos/ler/<str:pk>", itemPedido_view.exibir_itemPedido_view),
     path("itensPedidos/criar", itemPedido_view.criar_itemPedido_view),
-    path("itensPedidos/editar/<str:pk>", itemPedido_view.editar_itemPedido_view),
-    path("itensPedidos/deletar/<str:pk>", itemPedido_view.deletar_itemPedido_view),
+#     path("itensPedidos/editar/<str:pk>", itemPedido_view.editar_itemPedido_view),
+#     path("itensPedidos/deletar/<str:pk>", itemPedido_view.deletar_itemPedido_view),
     # FormaPagamento - 
     path("formaPagamento", formaPagamento_view.exibir_formasPagamento_view),
     path("formaPagamento/ler/<str:pk>", formaPagamento_view.exibir_formaPagamento_view),

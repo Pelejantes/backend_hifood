@@ -22,14 +22,13 @@ class RU_Usuario(permissions.BasePermission):
                 request, 'auth_payload') else None
             telefoneUsu = request.auth_payload.get("telefoneUsu") if hasattr(
                 request, 'auth_payload') else None
-            
+
             url_pk = view.kwargs.get('pk')
 
             if nomeTipoUsuario == "Admin".lower():
                 return True  # Admin tem acesso a todas as informações
             url = request.build_absolute_uri()
-            print(telefoneUsu)
-            dadoValidador = telefoneUsu if 'usuarios/ler/telefone' in url else usuarioId
+            dadoValidador = telefoneUsu if 'telefoneUsu/ler' in url else usuarioId
             # Usuários que só podem interagir com os próprios dados.
             if nomeTipoUsuario == "Comprador".lower() and url_pk == dadoValidador:
                 return True
@@ -106,6 +105,7 @@ class Estabelecimento(permissions.BasePermission):
 class Logado(permissions.BasePermission):
     def has_permission(self, request, view):
         if hasattr(request, 'auth_payload') and request.auth_payload:
+            print('Chegou aqui, auth_payload')
             payload = request.auth_payload
             if payload.get("tipoUsuarioId"):
                 return True
