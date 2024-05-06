@@ -36,7 +36,8 @@ def criar_enderecoEntrega(request):
         enderecoEntrega = serializer.save()
         return Response({"mensagem": "enderecoEntrega criado com sucesso!", "enderecoId": enderecoEntrega.__dict__['enderecoEntregaId']}, status=200)
     else:
-        return Response({"mensagem": "Não foi possível criar o endereço, revise os campos e tente novamente!"}, status=404)
+        error_messages = listarErros([serializer])
+        return Response({"mensagem": "Não foi possível criar o endereço, revise os campos e tente novamente!", "errors": error_messages}, status=400)
 
 
 def editar_enderecoEntrega(request, pk):

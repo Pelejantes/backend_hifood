@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from ..models import Endereco
 from ..serializers import Endereco_Serializer
+from utils.func_gerais import gerar_code, listarErros, serializersValidos
 
 
 def exibir_enderecos(request):
@@ -28,7 +29,8 @@ def criar_endereco(request):
         endereco = serializer.save()
         return Response({"mensagem": "Endereço criado com sucesso!", "enderecoId": endereco.__dict__['enderecoId']}, status=200)
     else:
-        return Response({"mensagem": "Não foi possível criar o endereço, revise os campos e tente novamente!"}, status=404)
+        error_messages = listarErros([serializer])
+        return Response({"mensagem": "Não foi possível criar o endereço.", "errors": error_messages}, status=400)
 
 
 def editar_endereco(request, pk):
@@ -41,7 +43,8 @@ def editar_endereco(request, pk):
 
     except Endereco.DoesNotExist:
         # Retorna uma resposta de erro com status 404
-        return Response({"mensagem": f"Endereço {pk} não encontrado"}, status=404)
+        error_messages = listarErros([serializer])
+        return Response({"mensagem": f"Endereço {pk} não encontrado", "errors": error_messages}, status=400)
 
 
 def deletar_endereco(request, pk):
