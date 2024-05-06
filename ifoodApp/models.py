@@ -44,7 +44,7 @@ class Cupom(models.Model):
 
 class Pedido(models.Model):
     pedidoId = models.AutoField(primary_key=True)
-    usuariold = models.ForeignKey(
+    usuarioId = models.ForeignKey(
         'Usuario', on_delete=models.CASCADE, null=False)
     formaPagld = models.ForeignKey(
         'FormaPag', on_delete=models.CASCADE, null=True)

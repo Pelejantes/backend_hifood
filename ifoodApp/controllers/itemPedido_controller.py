@@ -21,25 +21,45 @@ def exibir_itemPedido(request, pk):
 
 
 def criar_itemPedido(request):
+    # Esta função cria um novo item em um pedido existente.
+    # Verifica se o último pedido está ativo, se não, cria um novo pedido.
+    # Em seguida, cria um novo item no pedido e retorna o ID do item.
     data = request.data or {}
-
-    print(data)
+    # Inicializa data como os dados da requisição, ou um dicionário vazio se não houver dados.
     ultimoPedido = Pedido.objects.last()
-    # print(ultimoPedido.__dict__['statusAtivo'])
-    if ultimoPedido != None:
-        if not ultimoPedido.__dict__['statusAtivo']:
-            pedido_serializer = Pedido_Serializer(
-                data={'usuarioId': request.usuario.__dict__['usuarioId']})
-            if pedido_serializer.is_valid():
-                print('VALIDO')
-                ultimoPedido = pedido_serializer.save()
+    # Obtém o último pedido no banco de dados.
+    if ultimoPedido == None:
+        # Se não houver pedidos, cria um novo.
+        data = {'usuarioId': request.usuario.__dict__['usuarioId']}
+        # Inicializa os dados do pedido com o ID do usuário.
+        pedido_serializer = Pedido_Serializer(data=data)
+        # Cria um serializador para os dados do pedido.
+        if pedido_serializer.is_valid():
+            # Se o serializador é válido, salva o pedido.
+            ultimoPedido = pedido_serializer.save()
+
+    if not ultimoPedido.__dict__['statusAtivo']:
+        # Se o último pedido não está ativo, cria um novo.
+        pedido_serializer = Pedido_Serializer(data={'usuarioId': request.usuario.__dict__['usuarioId']})
+        # Cria um serializador para os dados do pedido.
+        if serializersValidos([pedido_serializer]):
+            # Se o serializador é válido, salva o pedido.
+            ultimoPedido = pedido_serializer.save()
+        else:
+            # Se o serializador não é válido, retorna uma mensagem de erro.
+            error_messages = listarErros([pedido_serializer])
+            return Response({"mensagem": "Não foi possível criar o itemPedido.", "errors": error_messages}, status=400)
 
     data['pedidoId'] = ultimoPedido.__dict__['pedidoId']
+    # Adiciona o ID do pedido aos dados.
     itemPedido_serializer = ItemPedido_Serializer(data=data)
+    # Cria um serializador para os dados do item.
     if itemPedido_serializer.is_valid():
+        # Se o serializador é válido, salva o item.
         itemPedido = itemPedido_serializer.save()
         return Response({"mensagem": "ItemPedido criado com sucesso!", "itemPedidoId": itemPedido.__dict__['itemPedidoId']}, status=200)
     else:
+        # Se o serializador não é válido, retorna uma mensagem de erro.
         error_messages = listarErros([itemPedido_serializer])
         return Response({"mensagem": "Não foi possível criar o itemPedido, revise os campos e tente novamente!", "erros": error_messages}, status=404)
 

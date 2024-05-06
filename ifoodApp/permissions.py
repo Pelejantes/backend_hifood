@@ -105,7 +105,6 @@ class Estabelecimento(permissions.BasePermission):
 class Logado(permissions.BasePermission):
     def has_permission(self, request, view):
         if hasattr(request, 'auth_payload') and request.auth_payload:
-            print('Chegou aqui, auth_payload')
             payload = request.auth_payload
             if payload.get("tipoUsuarioId"):
                 return True
