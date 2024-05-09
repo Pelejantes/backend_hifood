@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 # from ..permissions import Professor, Admin, PodeEditarPerfil,Cadastrado,IsProfessorOrAdmin
 from rest_framework.permissions import AllowAny
-from ..models import Endereco
+from ..models import Endereco, EnderecoEntrega
 from ..serializers import Endereco_Serializer
 from utils.func_gerais import gerar_code, listarErros, serializersValidos
 
@@ -11,6 +11,13 @@ def exibir_enderecos(request):
     enderecos = Endereco.objects.all()
     serializer = Endereco_Serializer(enderecos, many=True)
     return Response(serializer.data)
+
+def exibir_enderecosUsuario(request, pk):
+        enderecos = []
+        enderecoEntregaModel = EnderecoEntrega.objects.filter(usuarioId=pk)
+        for enderecoEntrega in enderecoEntregaModel:
+            enderecos.append(Endereco.objects.get(enderecoId=enderecoEntrega.enderecoId))
+        return enderecos
 
 
 def exibir_endereco(request, pk):
