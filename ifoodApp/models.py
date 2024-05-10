@@ -99,6 +99,8 @@ class RegraCupom(models.Model):
 class Cartao(models.Model):
     cartaold = models.AutoField(primary_key=True)
     usuarioId = models.ForeignKey('Usuario', on_delete=models.CASCADE)
+    formaPagId = models.ForeignKey(
+        'formaPag', on_delete=models.CASCADE)
     nomeBandeira = models.CharField(max_length=255)
     numCartao = models.CharField(max_length=16)
     validade = models.DateField()
