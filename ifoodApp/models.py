@@ -50,7 +50,6 @@ class Pedido(models.Model):
         'FormaPag', on_delete=models.CASCADE, null=True)
     cupomld = models.ForeignKey('Cupom', on_delete=models.CASCADE, null=True)
     statusAtivo = models.BooleanField(default=True, null=True)
-    valorTotal = models.FloatField(null=True)
     dataPedido = models.DateField(default=datetime.now())
     gorjeta = models.SmallIntegerField(null=True)
 
