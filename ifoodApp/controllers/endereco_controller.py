@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view, permission_classes
 # from ..permissions import Professor, Admin, PodeEditarPerfil,Cadastrado,IsProfessorOrAdmin
 from rest_framework.permissions import AllowAny
 from ..models import Endereco, EnderecoEntrega
-from ..serializers import Endereco_Serializer
+from ..serializers import Endereco_Serializer, EnderecoEntrega_Serializer
 from utils.func_gerais import gerar_code, listarErros, serializersValidos
 
 
@@ -12,12 +12,17 @@ def exibir_enderecos(request):
     serializer = Endereco_Serializer(enderecos, many=True)
     return Response(serializer.data)
 
+
 def exibir_enderecosUsuario(request, pk):
-        enderecos = []
-        enderecoEntregaModel = EnderecoEntrega.objects.filter(usuarioId=pk)
-        for enderecoEntrega in enderecoEntregaModel:
-            enderecos.append(Endereco.objects.get(enderecoId=enderecoEntrega.enderecoId))
-        return enderecos
+    # pk == usuarioId
+    enderecos = []
+    enderecoEntregaModel = EnderecoEntrega.objects.filter(usuarioId=pk)
+    for enderecoEntrega in enderecoEntregaModel:
+        enderecoId = enderecoEntrega.enderecoId.enderecoId
+        enderecoModel = Endereco.objects.get(enderecoId=enderecoId)
+        endereco = Endereco_Serializer(enderecoModel).data
+        enderecos.append(endereco)
+    return Response(enderecos)
 
 
 def exibir_endereco(request, pk):
@@ -28,6 +33,29 @@ def exibir_endereco(request, pk):
     except Endereco.DoesNotExist:
         # Retorna uma resposta de erro com status 404
         return Response({"mensagem": f"Endereço {pk} não encontrado"}, status=404)
+
+
+def criar_enderecoUsuario(request, pk):
+    # pk == id_usuario
+    enderecoSerializer = Endereco_Serializer(data=request.data)
+    if serializersValidos([enderecoSerializer]):
+        endereco = enderecoSerializer.save()
+        enderecoEntrega = {
+            'usuarioId': pk,
+            'enderecoId': endereco.__dict__['enderecoId']
+        }
+        enderecoEntregaSerializer = EnderecoEntrega_Serializer(
+            data=enderecoEntrega)
+        if serializersValidos([enderecoEntregaSerializer]):
+            enderecoEntregaSerializer.save()
+            return Response({"mensagem": f"Endereço do usuario id_{pk} criado com sucesso!", "enderecoId": endereco.__dict__['enderecoId']}, status=200)
+        else:
+            error_messages = listarErros([enderecoEntregaSerializer])
+            return Response({"mensagem": "Não foi possível criar o endereço.", "errors": error_messages}, status=400)
+
+    else:
+        error_messages = listarErros([enderecoSerializer])
+        return Response({"mensagem": "Não foi possível criar o endereço.", "errors": error_messages}, status=400)
 
 
 def criar_endereco(request):

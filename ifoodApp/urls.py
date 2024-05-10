@@ -19,6 +19,7 @@ urlpatterns = [
     path("enderecos/usuario/<str:pk>",endereco_view.exibir_enderecosUsuario_view),
     path("enderecos/ler/<str:pk>", endereco_view.exibir_endereco_view),
     path("enderecos/criar", endereco_view.criar_endereco_view),
+    path("enderecos/usuario/criar/<str:pk>", endereco_view.criar_enderecoUsuario_view),
     path("enderecos/editar/<str:pk>", endereco_view.editar_endereco_view),
     path("enderecos/deletar/<str:pk>", endereco_view.deletar_endereco_view),
     # Pedido - Privado individualmente alunos e professores
