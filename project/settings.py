@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY","CHANGE_ME")
+SECRET_KEY = os.getenv("SECRET_KEY", "CHANGE_ME")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.getenv("DEBUG", 0)))
@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'ifoodApp',
     'rest_framework',
     'rest_framework_simplejwt',
-    'corsheaders'
+    'corsheaders',
+    'fernet_fields'
 ]
 
 
@@ -99,12 +100,12 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('DB_DRIVER',''),
-        'NAME': os.getenv('PG_DB',''),
-        'USER': os.getenv('PG_USER',''),
-        'PASSWORD':os.getenv('POSTGRES_PASSWORD',''),
-        'HOST': os.getenv('PG_HOST',''),
-        'PORT': os.getenv('PG_PORT',''),
+        'ENGINE': os.getenv('DB_DRIVER', ''),
+        'NAME': os.getenv('PG_DB', ''),
+        'USER': os.getenv('PG_USER', ''),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
+        'HOST': os.getenv('PG_HOST', ''),
+        'PORT': os.getenv('PG_PORT', ''),
     }
 }
 
@@ -125,6 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -133,8 +135,8 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
-    'ALGORITHM': os.getenv('JWT_ALGORITHM','CHANGE_ME'),
-    'SIGNING_KEY': os.getenv('JWT_SECRET_KEY','CHANGE_ME'),
+    'ALGORITHM': os.getenv('JWT_ALGORITHM', 'CHANGE_ME'),
+    'SIGNING_KEY': os.getenv('JWT_SECRET_KEY', 'CHANGE_ME'),
 }
 AUTHENTICATION_CLASSES = (
     'rest_framework_simplejwt.authentication.JWTAuthentication',

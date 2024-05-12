@@ -9,6 +9,8 @@ urllib3==1.26.12
 django-cors-headers==4.1.0
 python-dotenv==1.0.1
 twilio==9.0.2
+gunicorn==21.2.0
+django-fernet-fields==0.6
 """
 
 # Função para escrever as dependências em um arquivo .txt

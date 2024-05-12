@@ -2,7 +2,7 @@ from django.db import models
 from datetime import datetime
 from utils.func_gerais import gerar_code
 from datetime import datetime, timedelta, timezone
-
+from fernet_fields import EncryptedTextField
 
 class FormaPag(models.Model):
     formaPag = models.AutoField(primary_key=True)
@@ -71,9 +71,9 @@ class ItemPedido(models.Model):
 
 class ContaBancaria(models.Model):
     contaBancariaId = models.AutoField(primary_key=True)
-    digitAgencia = models.CharField(max_length=2)
-    numConta = models.IntegerField()
-    nomeBanco = models.CharField(max_length=255)
+    digitAgencia = EncryptedTextField(max_length=2)
+    numConta = EncryptedTextField()
+    nomeBanco = EncryptedTextField(max_length=255)
 
     def __str__(self):
         return f"Conta Bancária {self.contaBancariaId}"
@@ -101,13 +101,13 @@ class Cartao(models.Model):
     formaPagId = models.ForeignKey(
         'formaPag', on_delete=models.CASCADE)
     nomeBandeira = models.CharField(max_length=255)
-    numCartao = models.CharField(max_length=16)
-    validade = models.DateField()
-    cvv = models.CharField(max_length=3)
-    nomeTitular = models.CharField(max_length=255)
-    cpfCnpj = models.CharField(max_length=14)
+    numCartao = EncryptedTextField(max_length=16)
+    validade = EncryptedTextField()
+    cvv = EncryptedTextField(max_length=3)
+    nomeTitular = EncryptedTextField(max_length=255)
+    cpfCnpj = EncryptedTextField(max_length=14)
     apelidoCartao = models.CharField(max_length=255)
-
+    
     def __str__(self):
         return f"Cartão {self.numCartao} - Titular: {self.nomeTitular}"
 
@@ -139,7 +139,7 @@ class Usuario(models.Model):
 
 class CodVerif(models.Model):
     CodVerifId = models.AutoField(primary_key=True)
-    codigo = models.CharField(max_length=6, null=True)
+    codigo = EncryptedTextField(max_length=6, null=True)
     dataCriacao = models.DateTimeField(auto_now_add=True)
     statusAtivo = models.BooleanField(default=True, null=False)
     duracao_expiracao_minutos = models.PositiveIntegerField(default=5)
