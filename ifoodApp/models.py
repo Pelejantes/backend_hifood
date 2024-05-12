@@ -228,6 +228,7 @@ class Estabelecimento(models.Model):
     nomeEstab = models.CharField(max_length=255)
     telefoneEstab = models.CharField(max_length=14)
     imagemEstab = models.BinaryField(null=True, default=None)
+    imagemBanner = models.BinaryField(null=True, default=None)
     cnpj = models.CharField(max_length=14)
     emailEstab = models.CharField(max_length=255)
 

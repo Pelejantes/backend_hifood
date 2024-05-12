@@ -25,13 +25,18 @@ class Command(BaseCommand):
         with open('./ifoodApp/assets/img/categoria_default.jpg', 'rb') as f:
             imagemCategoria = f.read()
         imagemCategoria = Binary(imagemCategoria)
+
         with open('./ifoodApp/assets/img/estabelecimento_default.jpg', 'rb') as f:
             imagemEstab = f.read()
         imagemEstab = Binary(imagemEstab)
+
+        with open('./ifoodApp/assets/img/banner_estab_default.svg', 'rb') as f:
+            imagemBanner = f.read()
+        imagemBanner = Binary(imagemBanner)
+        
         with open('./ifoodApp/assets/img/produto_default.jpg', 'rb') as f:
             imagemProduto = f.read()
         imagemProduto = Binary(imagemProduto)
-        
 
         # Script SQL para inserir dados
         query = f"""
@@ -50,9 +55,6 @@ BEGIN
     END IF;
     IF NOT EXISTS (SELECT 1 FROM "public"."ifoodApp_tipousuario" WHERE "nomeTipoUsuario" = 'Entregador') THEN
         INSERT INTO "public"."ifoodApp_tipousuario" ("nomeTipoUsuario") VALUES ('Entregador');
-    END IF;
-    IF NOT EXISTS (SELECT 1 FROM "public"."ifoodApp_tipousuario" WHERE "nomeTipoUsuario" = 'Estabelecimento') THEN
-        INSERT INTO "public"."ifoodApp_tipousuario" ("nomeTipoUsuario") VALUES ('Estabelecimento');
     END IF;
 
 
@@ -100,8 +102,8 @@ BEGIN
         WHILE EXISTS (SELECT 1 FROM "ifoodApp_estabelecimento" WHERE "telefoneEstab" = telefone_gerado) LOOP
             telefone_gerado := LPAD((ROUND(RANDOM() * 9999999999))::text, 10, '0');
         END LOOP;
-        INSERT INTO "ifoodApp_estabelecimento" ("nomeEstab", "telefoneEstab", "cnpj", "emailEstab", "imagemEstab","categoriaId_id")
-        VALUES ('Estabelecimento_' || i, telefone_gerado, cnpj_gerado, 'estabelecimento_' || i || '@restaurante.com.br', {imagemEstab}, i);
+        INSERT INTO "ifoodApp_estabelecimento" ("nomeEstab", "telefoneEstab", "cnpj", "emailEstab", "imagemEstab","imagemBanner","categoriaId_id")
+        VALUES ('Estabelecimento_' || i, telefone_gerado, cnpj_gerado, 'estabelecimento_' || i || '@restaurante.com.br', {imagemEstab},{imagemBanner}, i);
         
 
 
