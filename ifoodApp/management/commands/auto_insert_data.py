@@ -68,6 +68,21 @@ BEGIN
     END IF;
 
 
+    -- GERAR ETAPA PEDIDO
+    IF NOT EXISTS (SELECT 1 FROM "public"."ifoodApp_etapapedido" WHERE "etapaPedido" = 'Aguardando Pagamento') THEN
+        INSERT INTO "public"."ifoodApp_etapapedido" ("etapaPedido") VALUES ('Aguardando Pagamento');
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM "public"."ifoodApp_etapapedido" WHERE "etapaPedido" = 'Preparando Pedido') THEN
+        INSERT INTO "public"."ifoodApp_etapapedido" ("etapaPedido") VALUES ('Preparando Pedido');
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM "public"."ifoodApp_etapapedido" WHERE "etapaPedido" = 'Em Rota de Entrega') THEN
+        INSERT INTO "public"."ifoodApp_etapapedido" ("etapaPedido") VALUES ('Em Rota de Entrega');
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM "public"."ifoodApp_etapapedido" WHERE "etapaPedido" = 'Entregue') THEN
+        INSERT INTO "public"."ifoodApp_etapapedido" ("etapaPedido") VALUES ('Entregue');
+    END IF;
+
+
     FOR i IN 1..50 LOOP
 
         -- GERAR CATEGORIA

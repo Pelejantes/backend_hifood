@@ -4,6 +4,7 @@ from utils.func_gerais import gerar_code
 from datetime import datetime, timedelta, timezone
 from fernet_fields import EncryptedTextField
 
+
 class FormaPag(models.Model):
     formaPag = models.AutoField(primary_key=True)
     nomeFormaPag = models.CharField(max_length=255)
@@ -48,6 +49,8 @@ class Pedido(models.Model):
         'Usuario', on_delete=models.CASCADE, null=False)
     formaPagld = models.ForeignKey(
         'FormaPag', on_delete=models.CASCADE, null=True)
+    etapaPedidold = models.ForeignKey(
+        'EtapaPedido', on_delete=models.CASCADE, default=1)
     cupomld = models.ForeignKey('Cupom', on_delete=models.CASCADE, null=True)
     statusAtivo = models.BooleanField(default=True, null=True)
     dataPedido = models.DateField(default=datetime.now())
@@ -107,9 +110,19 @@ class Cartao(models.Model):
     nomeTitular = EncryptedTextField(max_length=255)
     cpfCnpj = EncryptedTextField(max_length=14)
     apelidoCartao = models.CharField(max_length=255)
-    
+
     def __str__(self):
         return f"Cartão {self.numCartao} - Titular: {self.nomeTitular}"
+
+# Aguardando Pagamento: Nesse estágio, o pedido foi feito pelo cliente, mas o pagamento ainda não foi confirmado. O iFood aguarda a confirmação do pagamento para prosseguir.
+# Preparando Pedido: Após o pagamento ser confirmado, o restaurante recebe o pedido e começa a preparar a refeição. Esse estágio envolve a cozinha e a equipe do restaurante.
+# Em Rota de Entrega: Quando o pedido está pronto, o entregador é acionado e parte para a entrega. Nesse momento, o cliente pode acompanhar o trajeto do entregador pelo aplicativo.
+# Entregue: O pedido foi entregue com sucesso ao cliente. Nesse estágio, o cliente pode avaliar a experiência e dar feedback sobre o serviço.
+
+
+class etapaPedido(models.Model):
+    etapaPedidoId = models.AutoField(primary_key=True)
+    etapaPedido = models.CharField(max_length=50)
 
 
 class Usuario(models.Model):
