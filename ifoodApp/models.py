@@ -10,7 +10,7 @@ class FormaPag(models.Model):
     nomeFormaPag = models.CharField(max_length=255)
 
     def __str__(self):
-        return f"Solicitação de Atendimento {self.solicAtendId}"
+        return f"formaPag {self.nomeFormaPag}"
 
 
 class Notificacao(models.Model):
@@ -120,7 +120,7 @@ class Cartao(models.Model):
 # Entregue: O pedido foi entregue com sucesso ao cliente. Nesse estágio, o cliente pode avaliar a experiência e dar feedback sobre o serviço.
 
 
-class etapaPedido(models.Model):
+class EtapaPedido(models.Model):
     etapaPedidoId = models.AutoField(primary_key=True)
     etapaPedido = models.CharField(max_length=50)
 

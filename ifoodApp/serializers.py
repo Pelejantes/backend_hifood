@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Usuario, Endereco, EnderecoEntrega, CodVerif, TipoUsuario, Estabelecimento, Cupom, CuponsUsuario, Categoria, Produto, Pedido, ItemPedido, FormaPag, Cartao
+from .models import Usuario, Endereco, EnderecoEntrega, CodVerif, TipoUsuario, Estabelecimento, Cupom, CuponsUsuario, Categoria, Produto, Pedido, ItemPedido, FormaPag, Cartao, EtapaPedido
 
 
 class Usuario_Serializer(serializers.ModelSerializer):
@@ -17,6 +17,12 @@ class Endereco_Serializer(serializers.ModelSerializer):
 class Pedido_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Pedido
+        fields = "__all__"
+
+
+class EtapaPedido_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = EtapaPedido
         fields = "__all__"
 
 
