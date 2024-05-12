@@ -24,6 +24,7 @@ urlpatterns = [
     path("enderecos/deletar/<str:pk>", endereco_view.deletar_endereco_view),
     # Cartões - Privado individualmente alunos e professores
     path("cartoes", cartao_view.exibir_cartoes_view),
+    path("cartoes/usuario/<str:pk>", cartao_view.exibir_cartoesUsuario_view),
     path("cartoes/ler/<str:pk>", cartao_view.exibir_cartao_view),
     path("cartoes/criar", cartao_view.criar_cartao_view),
     path("cartoes/editar/<str:pk>", cartao_view.editar_cartao_view),

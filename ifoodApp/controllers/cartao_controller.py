@@ -5,8 +5,14 @@ from utils.func_gerais import listarErros, serializersValidos
 
 
 def exibir_cartoes(request):
-    cartaos = Cartao.objects.all()
-    serializer = Cartao_Serializer(cartaos, many=True)
+    cartoes = Cartao.objects.filter(usuarioId=pk)
+    serializer = Cartao_Serializer(cartoes, many=True)
+    return Response(serializer.data)
+
+
+def exibir_cartoesUsuario(request,pk):
+    cartoes = Cartao.objects.all()
+    serializer = Cartao_Serializer(cartoes, many=True)
     return Response(serializer.data)
 
 
@@ -29,7 +35,7 @@ def criar_cartao(request):
         return Response({"mensagem": "Cartao criado com sucesso!", "cartaoId": cartao.__dict__['cartaoId']}, status=200)
     else:
         error_messages = listarErros([serializer])
-        return Response({"mensagem": "Não foi possível criar o cartao, revise os campos e tente novamente!","erros":error_messages}, status=404)
+        return Response({"mensagem": "Não foi possível criar o cartao, revise os campos e tente novamente!", "erros": error_messages}, status=404)
 
 
 def editar_cartao(request, pk):

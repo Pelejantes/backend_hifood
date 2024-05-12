@@ -9,6 +9,11 @@ def exibir_cartoes_view(request):
    return cartao_controller.exibir_cartoes(request)
 
 @api_view(["GET"])
+@permission_classes([Admin])
+def exibir_cartoesUsuario_view(request,pk):
+   return cartao_controller.exibir_cartoesUsuario(request,pk)
+
+@api_view(["GET"])
 @permission_classes([AllowAny])
 def exibir_cartao_view(request, pk):
    return cartao_controller.exibir_cartao(request,pk)
