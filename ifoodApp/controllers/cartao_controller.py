@@ -5,13 +5,13 @@ from utils.func_gerais import listarErros, serializersValidos
 
 
 def exibir_cartoes(request):
-    cartoes = Cartao.objects.filter(usuarioId=pk)
+    cartoes = Cartao.objects.all()
     serializer = Cartao_Serializer(cartoes, many=True)
     return Response(serializer.data)
 
 
 def exibir_cartoesUsuario(request,pk):
-    cartoes = Cartao.objects.all()
+    cartoes = Cartao.objects.filter(usuarioId=pk)
     serializer = Cartao_Serializer(cartoes, many=True)
     return Response(serializer.data)
 
