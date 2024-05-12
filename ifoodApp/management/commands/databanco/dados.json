@@ -1,0 +1,549 @@
+{
+    "restaurantes": [
+        {
+            "nomeRestaurante": "Mcdonalds",
+            "categoria": "Hamburgueria",
+            "avaliacao": 4.1,
+            "logotipo": "./assets/logotipomcdonalds.png",
+            "imgBanner": "./assets/bannermcdonalds.avif"
+        },
+        {
+            "nomeRestaurante": "Pizza Hut",
+            "categoria": "Pizzaria",
+            "avaliacao": 4.6,
+            "logotipo": "./assets/logotipopizzahut.png",
+            "imgBanner": "./assets/bannerpizzahut.avif"
+        },
+        {
+            "nomeRestaurante": "Outback",
+            "categoria": "Hamburgueria",
+            "avaliacao": 4.7,
+            "logotipo": "./assets/logotipooutback.avif",
+            "imgBanner": "./assets/banneroutback.avif"
+        },
+        {
+            "nomeRestaurante": "Lig-Lig",
+            "categoria": "Comida Chinesa",
+            "avaliacao": 4.8,
+            "logotipo": "./assets/logotipoliglig.avif",
+            "imgBanner": "./assets/bannerliglig.avif"
+        },
+        {
+            "nomeRestaurante": "Taco Bell",
+            "categoria": "Comida Mexicana",
+            "avaliacao": 4.5,
+            "logotipo": "./assets/logotipotacobell.avif",
+            "imgBanner": "./assets/bannertacobell.avif"
+        },
+        {
+            "nomeRestaurante": "Pecorino",
+            "categoria": "Comida Italiana",
+            "avaliacao": 4.3,
+            "logotipo": "./assets/logotipopecorino.avif",
+            "imgBanner": "./assets/bannerpecorino.avif"
+        },
+        {
+            "nomeRestaurante": "Baruk",
+            "categoria": "Comida Árabe",
+            "avaliacao": 4.7,
+            "logotipo": "./assets/logotipobaruk.avif",
+            "imgBanner": "./assets/bannerbaruk.avif"
+        },
+        {
+            "nomeRestaurante": "Nanica ",
+            "categoria": "Doce",
+            "avaliacao": 4.9,
+            "logotipo": "./assets/logotiponanica.avif",
+            "imgBanner": "./assets/bannernanica.avif"
+        },
+        {
+            "nomeRestaurante": "Madrasi",
+            "categoria": "Comida Indiana",
+            "avaliacao": 4.6,
+            "logotipo": "./assets/logotipoindiano.avif",
+            "imgBanner": "./asset/bannerindidiano.avif"
+        },
+        {
+            "nomeRestaurante": "Benjamin a Padaria",
+            "categoria": "Padaria",
+            "avaliacao": 4.6,
+            "logotipo": "./assets/logotipobenjamin.avif",
+            "imgBanner": "./asset/bannerbenjamin.avif"
+        },
+        {
+            "nomeRestaurante": "Montana Churrascaria ",
+            "categoria": "Churrascaria",
+            "avaliacao": 4.7,
+            "logotipo": "./assets/logotipomontana.avif",
+            "imgBanner": "./asset/bannermontana.avif"
+        },
+        {
+            "nomeRestaurante": "Koonan Sushi",
+            "categoria": "Comida Japonesa",
+            "avaliacao": 4.7,
+            "logotipo": "./assets/logotipokoonan.avif",
+            "imgBanner": "./assets/bannerkoonan.avif"
+        },
+        {
+            "nomeRestaurante": "Ragazzo",
+            "categoria": "Salgado",
+            "avaliacao": 4.5,
+            "logotipo": "./assets/logotiporagazzo.avif",
+            "imgBanner": "./assets/bannerragazzo.avif"
+        },
+        {
+            "nomeRestaurante": "KFC",
+            "categoria": "Hamburgueria",
+            "avaliacao": 4.6,
+            "logotipo": "./assets/logotipokfc.avif",
+            "imgBanner": "./assets/bannerkfc.avif"
+        },
+        {
+            "nomeRestaurante": "Burguer King",
+            "categoria": "Hamburgueria",
+            "avaliacao": 4.3,
+            "logotipo": "./assets/logotipoburguerking.avif",
+            "imgBanner": "./assets/bannerburguerking.avif"
+        }
+
+    ],
+    "produto": [
+        {
+            "nomeFornecedor": "Mcdonalds",
+            "nomeProduto": "BIG TASTY TURBO QUEIJO",
+            "preco": 40.90,
+            "descricaoProduto": "Um hambúrguer (100% carne bovina), queijo processado sabor emental, queijo processado sabor cheddar, molho com queijo mussarela, tomate, alface americana, cebola, molho Tasty e pão com gergelim",
+            "imgProduto": "./assets/hamburguer1.avif"
+        },
+        {
+            "nomeFornecedor": "Mcdonalds",
+            "nomeProduto": "MCCRISPY CHICKEN LEGEND",
+            "preco": 40.90,
+            "descricaoProduto": "O novo Mccrispy Chicken Legend tem o sabor e os ingredientes que você ama. Ele é composto por pão tipo brioche com batata, carne 100% de peito de frango, temperada e empanada, molho do Cbo, cebola crispy, bacon em fatias, alface americana e queijo sabor cheddar",
+            "imgProduto": "./assets/hamburguer2.avif"
+
+        },
+        {
+            "nomeFornecedor": "Mcdonalds",
+            "nomeProduto": "MCFRITAS CHEDDAR BACON",
+            "preco": 18.90,
+            "descricaoProduto": "As deliciosas batatas com molho cheddar e pedacinhos de bacon",
+            "imgProduto": "./assets/batatacheddar.avif"
+
+        },
+
+        {
+            "nomeFornecedor": "PizzaHut",
+            "nomeProduto": "BREADSTICKS PEPPERONI",
+            "preco": 21.90,
+            "descricaoProduto": "Palitos de massa Pan recheados. Macios por dentro, crocantes por fora",
+            "imgProduto": "./assets/paoPizzaHut.avif"
+
+        },
+        {
+            "nomeFornecedor": "PizzaHut",
+            "nomeProduto": "PIZZA GRANDE",
+            "preco": 105.90,
+            "descricaoProduto": "Cortada em 8 Fatias (tamanho da pizza não é alterado, apenas o número de fatias)",
+            "imgProduto": "./assets/pizza1.avif"
+
+        },
+        {
+            "nomeFornecedor": "PizzaHut",
+            "nomeProduto": "COMBO 2 PIZZAS INDIVIDUAIS",
+            "preco": 39.90,
+            "descricaoProduto": "Escolha 2 pizzas individuais em um combo exclusivo. *Preço válido para os sabores Pepperoni, Marguerita e Frango & Requeijão.",
+            "imgProduto": "./assets/pizza2.avif"
+
+        },
+        
+        {
+            "nomeFornecedor": "Outback",
+            "nomeProduto": "RIBS ON THE BARBIE",
+            "preco": 97.90,
+            "descricaoProduto": "Nossa costela suína preparada em chama aberta como manda a tradição australiana, vem com as saborosas cinnamon apples.",
+            "imgProduto": "./assets/costela.avif"
+
+        },
+        {
+            "nomeFornecedor": "Outback",
+            "nomeProduto": "JACKET POTATO",
+            "preco": 28.90,
+            "descricaoProduto": "Batata assada recheada com queijo cremoso, manteiga, mix de queijos, bacon e cebolinha. Porção individual.",
+            "imgProduto": "./assets/batataoutback.avif"
+
+        },
+        {
+            "nomeFornecedor": "Outback",
+            "nomeProduto": "ARROZ TASMÂNIA",
+            "preco": 28.90,
+            "descricaoProduto": "Arroz preparado com lâminas de amêndoas, champignon, toque de limão, cebolinha e pimentão vermelho. Porção individual.",
+            "imgProduto": "./assets/arroz.avif"
+
+        },
+        
+        {
+            "nomeFornecedor": "Lig-Lig",
+            "nomeProduto": "GUIOZA TRADICIONAL",
+            "preco": 28.00,
+            "descricaoProduto": "Pastéis orientais, recheados com carne bovina. Acompanha molho tradicional.",
+            "imgProduto": "./assets/guioza.avif"
+
+        },
+        {
+            "nomeFornecedor": "Lig-Lig",
+            "nomeProduto": "YAKISOBA TRADICIONAL",
+            "preco": 45.50,
+            "descricaoProduto": "Macarrão frito com carne bovina, frango, repolho, brócolis, couve-flor, cenoura e cogumelos.",
+            "imgProduto": "./assets/yakisoba.avif"
+
+        },
+        {
+            "nomeFornecedor": "Lig-Lig",
+            "nomeProduto": "ROLINHO PRIMAVERA",
+            "preco": 8.60,
+            "descricaoProduto": "Rolinho de massa crocante recheado com carne bovina, cenoura, repolho e cebolinha. Acompanha molho agridoce.",
+            "imgProduto": "./assets/rolinho.avif"
+
+        },
+        
+        {
+            "nomeFornecedor": "Taco Bell",
+            "nomeProduto": "CRUNCHY TACO DE CALABRESA",
+            "preco": 21.90,
+            "descricaoProduto": "Taco de milho, calabresa fatiada, cebola e tomate picadinhos, molho de pimenta, sour cream, queijo prato e molho jalapeño.",
+            "imgProduto": "./assets/taco.avif"
+
+        },
+        {
+            "nomeFornecedor": "Taco Bell",
+            "nomeProduto": "BURRITO DE CALABRESA",
+            "preco": 33.90,
+            "descricaoProduto": "Burrito com tortilla de trigo, arroz, calabresa fatiada, mix de queijos, cebola picadinha, sour cream e delicioso molho jalapeño.",
+            "imgProduto": "./assets/burrito.avif"
+
+        },
+        {
+            "nomeFornecedor": "Taco Bell",
+            "nomeProduto": "RQUESADILLA DE CALABRESA",
+            "preco": 38.90,
+            "descricaoProduto": "Quesadilla com tortilla de trigo, calabresa fatiada, molho jalapeño, cebola picadinha e mix de queijo.",
+            "imgProduto": "./assets/quesadilla.avif"
+
+        },
+        
+        {
+            "nomeFornecedor": "Pecorino",
+            "nomeProduto": "GNOCCHI AL RAGU DI FILETTO FAMIGLIA",
+            "preco": 135.00,
+            "descricaoProduto": "Nhoque com molho de tomates italianos com tirinhas grelhadas de filé mignon.",
+            "imgProduto": "./assets/ragu.avif"
+
+        },
+        {
+            "nomeFornecedor": "Pecorino",
+            "nomeProduto": "PENNE AL LIMONE FAMIGLIA",
+            "preco": 122.00,
+            "descricaoProduto": "Penne com molho de limão siciliano e presunto cru. ",
+            "imgProduto": "./assets/penne.avif"
+
+        },
+        {
+            "nomeFornecedor": "Pecorino",
+            "nomeProduto": "SPAGHETTI MEZZO A MEZZO FAMIGLIA",
+            "preco": 99.00,
+            "descricaoProduto": "Espaguete com pesto de manjericão e molho de tomates, meio a meio.",
+            "imgProduto": "./assets/spaghetti.avif"
+
+        },
+        
+        {
+            "nomeFornecedor": "Baruk",
+            "nomeProduto": "ESFIHA FECHADA DE ESCAROLA",
+            "preco": 10.90,
+            "descricaoProduto": "Escarola refogada com cebola e melaço de romã,uva passa e nozes",
+            "imgProduto": "./assets/esfiha.avif"
+
+        },
+        {
+            "nomeFornecedor": "Baruk",
+            "nomeProduto": "TRIO PASTAS ÁRABE",
+            "preco": 58.00,
+            "descricaoProduto": "Uma trilogia de pastas árabes autênticas, cuidadosamente preparadas para agradar o seu paladar, acompanhadas por 8 pães sírios frescos. Esta experiência gastronômica oferece uma combinação perfeita de texturas e aromas.Hommus, babaganuch, coalhada seca e 8un pão sírio - 200 gramas de cada pasta.",
+            "imgProduto": "./assets/pastas.avif"
+
+        },
+        {
+            "nomeFornecedor": "Baruk",
+            "nomeProduto": "BEIRUTE DE ROSBIFE",
+            "preco": 52.90,
+            "descricaoProduto": "Rosbife queijo prato, tomate e orégano e maionese no pão sírio.",
+            "imgProduto": "./assets/beirute.avif"
+
+        },
+        
+        {
+            "nomeFornecedor": "Nanica",
+            "nomeProduto": "TOP 3 TORTAS",
+            "preco": 60.90,
+            "descricaoProduto": "Combo com 1 fatia de Banoffee tradicional, 1 fatia de Nutella e 1 fatia de Monoffee.",
+            "imgProduto": "./assets/3tortas.avif"
+
+        },
+        {
+            "nomeFornecedor": "Nanica",
+            "nomeProduto": "MONOFFEE",
+            "preco": 28.90,
+            "descricaoProduto": "Massa de bolacha de chocolate, leite condensado, morango, chantilly e suspiros",
+            "imgProduto": "./assets/monoffee.avif"
+
+        },
+        {
+            "nomeFornecedor": "Nanica",
+            "nomeProduto": "UVOFFEE",
+            "preco": 26.90,
+            "descricaoProduto": "Massa de bolacha ao leite, leite condensado, chantilly, uvas e amêndoas",
+            "imgProduto": "./assets/uvoffee.avif"
+
+        },
+        
+        {
+            "nomeFornecedor": "Madrisi",
+            "nomeProduto": "CHICKEN TIKKA MASALA",
+            "preco": 56.90,
+            "descricaoProduto": "Cubos defumados e suculentos de peito de frango marinados em uma mistura única de especiarias, assados à carvão e finalizado em um molho condimentado cuidadosamente preparado com tomates frescos, cebola, pimentão e especiarias. (Embalagem de 500ml)",
+            "imgProduto": "./assets/tikka.avif"
+
+        },
+        {
+            "nomeFornecedor": "Madrisi",
+            "nomeProduto": "NADAN KOZHI CURRY (CURRY DE FRANGO MALABAR)",
+            "preco": 52.90,
+            "descricaoProduto": "Cubos de peito de frango suculentos marinados e cuidadosamente refogados à perfeição em mix de especiarias do Sul da Índia até ficarem macios. Perfeito para comer com nossos pães, arrozes e outros acompanhamentos exclusivos do Madrasi.",
+            "imgProduto": "./assets/kozhi.avif"
+
+        },
+        {
+            "nomeFornecedor": "Madrisi",
+            "nomeProduto": "MALAI KOFTA",
+            "preco": 48.90,
+            "descricaoProduto": "Almôndegas vegetarianas temperadas e recheadas com ricota amassada. As almôndegas (koftas) são levemente fritas e depois cozidas suavemente em um molho liso e cremoso feito com tomates frescos, castanhas de caju, especiarias e um toque de creme de leite. (Embalagem de 500ml)",
+            "imgProduto": "./assets/malai.avif"
+
+        },
+        
+        {
+            "nomeFornecedor": "Benjamin a Padaria",
+            "nomeProduto": "CROISSANT FRANCÊS COM SALMÃO DEFUMADO E GELEIA DE MORANGO",
+            "preco": 39.00,
+            "descricaoProduto": "Delicioso sanduiche feito no nosso croissant francês, 50g de salmão defumado fatiado, rúcula fresquinha, e finalizado com geleia de morangos Benjamin. Experimente já!",
+            "imgProduto": "./assets/croissant.avif"
+
+        },
+        {
+            "nomeFornecedor": "Benjamin a Padaria",
+            "nomeProduto": "PÃO DE QUEIJO",
+            "preco": 11.90,
+            "descricaoProduto": "Pão de queijo feito com massa tradicional brasileira de polvilho e queijo meia cura. Para finalizar, ele é empanado em queijo parmesão - aproximadamente 80g",
+            "imgProduto": "./assets/paoQueijo.avif"
+
+        },
+        {
+            "nomeFornecedor": "Benjamin a Padaria",
+            "nomeProduto": "PÃO ITALIANO",
+            "preco": 22.90,
+            "descricaoProduto": "Pão Italiano Filão perfeito para acompanhar patês, geleias e fazer torradas. De fermentação natural e lenta e casca dura, no formato alongado. | Unidade – 360g.",
+            "imgProduto": "./assets/paoItaliano.avif"
+
+        },
+        
+        {
+            "nomeFornecedor": "Montana Churrascaria",
+            "nomeProduto": "FRALDINHA",
+            "preco": 52.90,
+            "descricaoProduto": "220g (in natura) de sabor suave, fibra macia e baixa concentração de gordura. É uma ótima opção para quem quer saborear um bom grelhado.",
+            "imgProduto": "./assets/fraldinha.avif"
+
+        },
+        {
+            "nomeFornecedor": "Montana Churrascaria",
+            "nomeProduto": "PICANHA",
+            "preco": 69.90,
+            "descricaoProduto": "O famoso corte brasileiro que dispensa comentários. A textura marmorizada combina com a capa de gordura. Deixando a picanha irresistível em qualquer situação.",
+            "imgProduto": "./assets/picanha.avif"
+
+        },
+        {
+            "nomeFornecedor": "Montana Churrascaria",
+            "nomeProduto": "FRANGO BARBECUE",
+            "preco": 46.90,
+            "descricaoProduto": "O tradicional Filé de Frango com o também tradicional molho Barbecue. Experimente esta combinação de sabores. Dá um toque especial ao prato.",
+            "imgProduto": "./assets/frango.avif"
+
+        },
+        
+        {
+            "nomeFornecedor": "Koonan Sushi",
+            "nomeProduto": "TEMAKI DE SALMÃO COM MAIONESE",
+            "preco": 29.90,
+            "descricaoProduto": "Temaki de Salmão com Maionese'. Este prato, o apresenta 150g de salmão fresco e suculento, cuidadosamente batido e misturado com a cremosidade da maionese. A cebolinha adiciona um toque agradavelmente picante, enquanto o arroz, cozinhado, traz equilíbrio e textura à combinação.",
+            "imgProduto": "./assets/temaki.avif"
+
+        },
+        {
+            "nomeFornecedor": "Koonan Sushi",
+            "nomeProduto": "SHIMEJI",
+            "preco": 39.90,
+            "descricaoProduto": "Suntuosa porção de 250g de Shimeji, criteriosamente preparada e regada com a mais pura manteiga, realçando o sabor único deste cogumelo. Acentua-se a experiência gastronômica com o toque de shoyo, trazendo um equilíbrio perfeito entre o salgado e o umami. Finalizado com cebolinha fresca.",
+            "imgProduto": "./assets/shimeji.avif"
+
+        },
+        {
+            "nomeFornecedor": "Koonan Sushi",
+            "nomeProduto": "HOT HOLL (8 UNI)",
+            "preco": 22.90,
+            "descricaoProduto": "Descubra a delícia do nosso Hot Holl, um prato exuberante da categoria Esta porção cuidadosamente preparada apresenta oito unidades de rolinhos crocantes, irresistivelmente dourados e recheados com ingredientes selecionados. Realçada ainda mais pelo nosso molho tarê, uma receita exclusiva que traz um toque adocicado e ao mesmo tempo um leve sabor. É a perfeita combinação da culinária oriental com um leve toque gourmet. Um prato que não só alimenta, mas também encanta",
+            "imgProduto": "./assets/hotholl.avif"
+
+        },
+        
+        {
+            "nomeFornecedor": "Ragazzo",
+            "nomeProduto": "COXINHA DE CALABRESA",
+            "preco": 3.90,
+            "descricaoProduto": "Massa crocante por fora, cremosa por dentro, recheada com pedaços de calabresa",
+            "imgProduto": "./assets/coxinhacalabresa.avif"
+
+        },
+        {
+            "nomeFornecedor": "Ragazzo",
+            "nomeProduto": "KIBECOXINHA COM CREMELY",
+            "preco": 3.90,
+            "descricaoProduto": "É novidade que vocês pediram? Então não perca nosso novo lançamento: Massa de Kibe com delicioso recheio cremoso de cremely no formato da nossa amada coxinha Ragazzo.",
+            "imgProduto": "./assets/kibecoxinha.avif"
+
+        },
+        {
+            "nomeFornecedor": "Ragazzo",
+            "nomeProduto": "COXINHA DE 4 QUEIJOS",
+            "preco": 4.99,
+            "descricaoProduto": "Recheada com mussarela, provolone, gorgonzola e cremely.",
+            "imgProduto": "./assets/coxinhaqueijo.avif"
+
+        },
+        
+        {
+            "nomeFornecedor": "KFC",
+            "nomeProduto": "MEGA BALDE",
+            "preco": 74.90,
+            "descricaoProduto": "14 Tiras de Frango (sem osso)",
+            "imgProduto": "./assets/balde.avif"
+
+        },
+        {
+            "nomeFornecedor": "KFC",
+            "nomeProduto": "SANDUÍCHE KENTUCKY CHICKEN BBO",
+            "preco": 39.90,
+            "descricaoProduto": "Sanduiche com Filé de peito de frango extracrocante 120g, queijo tipo cheddar fatiado, bacon fatiado em dobro, cebola crispy e molho barbecue no pão brioche",
+            "imgProduto": "./assets/hamburguerfrango.avif"
+
+        },
+        {
+            "nomeFornecedor": "KFC",
+            "nomeProduto": "BIG BOX - KENTUCKY CHICKEN SANDWICH",
+            "preco": 54.90,
+            "descricaoProduto": "Sanduiche com Filé de peito de frango extracrocante 120g, picles e maionese defumada no pão brioche. Acompanha Batata Grande, Bebida e 2 Tiras ou 2 pedaços (com osso)",
+            "imgProduto": "./assets/bigbox.avif"
+
+        },
+        
+        {
+            "nomeFornecedor": "Burguer King",
+            "nomeProduto": "COMBO WHOPPER BACON CATUPIRY",
+            "preco": 47.90,
+            "descricaoProduto": "Descubra o novo Whopper Bacon Catupiry, com hambúrguer de carne 100% bovina grelhado no fogo como churrasco, bacon crocante, Catupiry, cebola crispy, tomate em fatias e maionese, é a prova de que opostos se atraem.",
+            "imgProduto": "./assets/combo.avif"
+
+        },
+        {
+            "nomeFornecedor": "Burguer King",
+            "nomeProduto": "MEGA STACKER RODEIO",
+            "preco": 42.90,
+            "descricaoProduto": "O delicioso Mega Stacker 2.0 na versão rodeio. Pão fofinho com gergelim, onion rings crocantes, 3 fatias de bacon, molho barbecue, 2 hambúrgueres suculentos 100% bovinos grelhados no fogo como churrasco, fatias de queijo cheddar e nosso exclusivo molho Stacker.",
+            "imgProduto": "./assets/rodeio.avif"
+
+        },
+        {
+            "nomeFornecedor": "Burguer King",
+            "nomeProduto": "COMBO CHICKEN DUPLO",
+            "preco": 34.90,
+            "descricaoProduto": "2 frangos crocantes, queijo derretido, salada fresca (alface) e maionese Bk. Acompanha batata frita e bebida.",
+            "imgProduto": "./assets/chicken.avif"
+
+        }
+    ],
+
+    "categoria": [
+
+        {
+            "nomecategoria": "Hamburgueria",
+            "imgcategoria": "./assets/categoriahamburguer.avif"
+        },
+        {
+            "nomecategoria": "Pizzaria",
+            "imgcategoria": "./assets/categoriapizza.avif"
+        },
+        {
+            "nomecategoria": "Comida Chinesa",
+            "imgcategoria": "./assets/categoriachinesa.avif"
+        },
+        {
+            "nomecategoria": "Comida Mexicana",
+            "imgcategoria": "./assets/categoriamexicana.avif"
+    
+        },
+        {
+            "nomecategoria": "Comida Italiana",
+            "imgcategoria": "./assets/categoriaitaliana.avif"
+    
+        },
+        {
+            "nomecategoria": "Comida Árabe",
+            "imgcategoria": "./assets/categoriaarabe.avif"
+    
+        },
+        {
+            "nomecategoria": "Doce",
+            "imgcategoria": "./assets/categoriadoce.avif"
+    
+        },
+        {
+            "nomecategoria": "Comida Indiana",
+            "imgcategoria": "./assets/categoriaindiana.avif"
+    
+        },
+        {
+            "nomecategoria": "Padaria",
+            "imgcategoria": "./assets/categoriapadaria.avif"
+    
+        },
+        {
+            "nomecategoria": "Churracaria",
+            "imgcategoria": "./assets/categoriachurrasco.avif"
+    
+        },
+        {
+            "nomecategoria": "Comida Japonesa",
+            "imgcategoria": "./assets/categoriajaponesa.avif"
+    
+        },
+        {
+            "nomecategoria": "Salgado",
+            "imgcategoria": "./assets/categoriasalgado.avif"
+    
+        }
+    ]
+}
+
+
+
