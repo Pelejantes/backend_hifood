@@ -48,11 +48,11 @@ class Pedido(models.Model):
     usuarioId = models.ForeignKey(
         'Usuario', on_delete=models.CASCADE, null=False)
     formaPagld = models.ForeignKey(
-        'FormaPag', on_delete=models.CASCADE, null=True)
+        'FormaPag', on_delete=models.CASCADE, null=False)
     etapaPedidold = models.ForeignKey(
         'EtapaPedido', on_delete=models.CASCADE, default=1)
     cupomld = models.ForeignKey('Cupom', on_delete=models.CASCADE, null=True)
-    statusAtivo = models.BooleanField(default=True, null=True)
+    statusAtivo = models.BooleanField(default=True)
     dataPedido = models.DateField(default=datetime.now())
     gorjeta = models.SmallIntegerField(null=True)
 
