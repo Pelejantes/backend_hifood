@@ -1,20 +1,20 @@
 from rest_framework.response import Response
-from ..models import ItemPedido
-from ..serializers import ItemPedido_Serializer
+from ..models import FormaPag
+from ..serializers import FormaPag_Serializer
 from utils.func_gerais import listarErros, serializersValidos
 
 
 def exibir_formasPagamento(request):
-    itemPedidos = ItemPedido.objects.all()
-    serializer = ItemPedido_Serializer(itemPedidos, many=True)
+    formaPags = FormaPag.objects.all()
+    serializer = FormaPag_Serializer(formaPags, many=True)
     return Response(serializer.data)
 
 
 def exibir_formaPagamento(request, pk):
     try:
-        itemPedido = ItemPedido.objects.get(itemPedidoId=pk)
-        serializer = ItemPedido_Serializer(itemPedido, many=False)
+        formaPag = FormaPag.objects.get(formaPagId=pk)
+        serializer = FormaPag_Serializer(formaPag, many=False)
         return Response(serializer.data)
-    except ItemPedido.DoesNotExist:
+    except FormaPag.DoesNotExist:
         # Retorna uma resposta de erro com status 404
-        return Response({"mensagem": f"ItemPedido {pk} não encontrado"}, status=404)
+        return Response({"mensagem": f"FormaPag {pk} não encontrado"}, status=404)

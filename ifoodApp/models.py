@@ -6,7 +6,7 @@ from fernet_fields import EncryptedTextField
 
 
 class FormaPag(models.Model):
-    formaPag = models.AutoField(primary_key=True)
+    formaPagId = models.AutoField(primary_key=True)
     nomeFormaPag = models.CharField(max_length=255)
 
     def __str__(self):
