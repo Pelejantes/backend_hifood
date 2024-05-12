@@ -96,7 +96,7 @@ class RegraCupom(models.Model):
 
 
 class Cartao(models.Model):
-    cartaold = models.AutoField(primary_key=True)
+    cartaoId = models.AutoField(primary_key=True)
     usuarioId = models.ForeignKey('Usuario', on_delete=models.CASCADE)
     formaPagId = models.ForeignKey(
         'formaPag', on_delete=models.CASCADE)

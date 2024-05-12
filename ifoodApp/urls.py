@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import inicio_view, usuario_view, endereco_view, enderecoEntrega_view, login_view, tipoUsuario_view, codVerif_view, estabelecimento_view, cupom_view, categoria_view, produto_view, cuponsUsuario_view, pedido_view, itemPedido_view, formaPagamento_view
+from .views import inicio_view, usuario_view, endereco_view, enderecoEntrega_view, login_view, tipoUsuario_view, codVerif_view, estabelecimento_view, cupom_view, categoria_view, produto_view, cuponsUsuario_view, pedido_view, itemPedido_view, formaPagamento_view, cartao_view
 
 urlpatterns = [
     # Inicio
@@ -22,6 +22,12 @@ urlpatterns = [
     path("enderecos/usuario/criar/<str:pk>", endereco_view.criar_enderecoUsuario_view),
     path("enderecos/editar/<str:pk>", endereco_view.editar_endereco_view),
     path("enderecos/deletar/<str:pk>", endereco_view.deletar_endereco_view),
+    # Cartões - Privado individualmente alunos e professores
+    path("cartoes", cartao_view.exibir_cartoes_view),
+    path("cartoes/ler/<str:pk>", cartao_view.exibir_cartao_view),
+    path("cartoes/criar", cartao_view.criar_cartao_view),
+    path("cartoes/editar/<str:pk>", cartao_view.editar_cartao_view),
+    path("cartoes/deletar/<str:pk>", cartao_view.deletar_cartao_view),
     # Pedido - Privado individualmente alunos e professores
     path("pedidos", pedido_view.exibir_pedidos_view),
     path("pedidos/ler/<str:pk>", pedido_view.exibir_pedido_view),
