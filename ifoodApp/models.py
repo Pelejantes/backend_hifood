@@ -272,7 +272,7 @@ class Produto(models.Model):
     preco = models.FloatField()
     imagemProd = models.BinaryField(null=True, default=None)
     alcoolico = models.BooleanField()
-    descricao = models.CharField(max_length=255)
+    descricao = models.TextField()
 
     def _str_(self):
         return f"Produto ID: {self.produtoId}, Nome: {self.nomeProd}"

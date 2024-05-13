@@ -5,32 +5,19 @@ import psycopg2
 import json
 # Conectar ao banco de dados
 conn = psycopg2.connect(
-    dbname=os.getenv('PG_DB'),
-    user=os.getenv('PG_USER'),
-    password=os.getenv('POSTGRES_PASSWORD'),
-    host=os.getenv('PG_HOST'),
-    port=os.getenv('PG_PORT', '5432')
+    dbname="postgres",
+    user="postgres",
+    password="postgres",
+    host="localhost",
+    port="5432"
 )
 
 # Abrir um cursor para executar consultas
 cur = conn.cursor()
 
 # Ler os dados da imagem e converter para uma representação hexadecimal
-with open('./ifoodApp/assets/img/categoria_default.jpg', 'rb') as f:
-    imagemCategoria = f.read()
-imagemCategoria = Binary(imagemCategoria)
 
-with open('./ifoodApp/assets/img/estabelecimento_default.jpg', 'rb') as f:
-    imagemEstab = f.read()
-imagemEstab = Binary(imagemEstab)
 
-with open('./ifoodApp/assets/img/banner_estab_default.svg', 'rb') as f:
-    imagemBanner = f.read()
-imagemBanner = Binary(imagemBanner)
-
-with open('./ifoodApp/assets/img/produto_default.jpg', 'rb') as f:
-    imagemProduto = f.read()
-imagemProduto = Binary(imagemProduto)
 path_json = './ifoodApp/management/commands/databanco/dados.json'
 with open(path_json, 'r', encoding='utf-8') as arquivo:
     dados_json = json.load(arquivo)
@@ -71,97 +58,57 @@ query_etapaPedido = Dados_Regra_Negocio(**{
     "nome_tabela": "etapapedido",
     "nome_coluna": "etapaPedido"
 })
-
-
-class Dados_Gerais:
-    def __init__(self, descricao, nome_tabela, dados):
-        self.descricao = descricao
-        self.nome_tabela = nome_tabela
-        self.dados = dados
-        self.query_construida = f"""\n\n--{self.descricao}"""
-
-    def criar_query(self):
-        colunas = ''
-        valores = ''
-        for chave, valor in self.dados.items():
-            colunas += f'"{chave}",'
-            valores += f"{valor},"
-        colunas = colunas[:-1]
-        valores = valores[:-1]
-
-        self.query_construida += f"""\nINSERT INTO "public"."ifoodApp_{self.nome_tabela}" ({colunas}) VALUES ({valores});"""
-        return self.query_construida
-
-
-query_categoria = Dados_Gerais(**{
-    "descricao": "GERA CATEGORIA",
-    "nome_tabela": "categoria",
-    "dados": {
-        'nomeCategoria': "'Nome_categoria_' || i ",
-        'imagem': f'{imagemCategoria}'
-    }
-})
-query_estabelecimento = Dados_Gerais(**{
-    "descricao": "GERA ESTABELECIMENTO",
-    "nome_tabela": "estabelecimento",
-    "dados": {
-        'nomeEstab': "'Estabelecimento_' || i",
-        'telefoneEstab': "telefone_gerado",
-        'cnpj': "cnpj_gerado",
-        'emailEstab': "'estabelecimento_' || i || '@restaurante.com.br'",
-        'imagemEstab': f'{imagemEstab}',
-        'imagemBanner': f'{imagemBanner}',
-        'categoriaId_id': "i"
-    }
-})
-query_produto = Dados_Gerais(**{
-    "descricao": "GERA PRODUTO",
-    "nome_tabela": "produto",
-    "dados": {
-    'nomeProd': "'Nome_produto_' || i",
-    'disponibilidade': "'true'",
-    'preco': "100",
-    'imagemProd': f'{imagemProduto}',
-    'alcoolico': "'false'",
-    'descricao': "'Descricao_' || i",
-    'categoriaId_id': "i",
-    'estabelecimentoId_id': "i"
-}
-
-})
-
 finalQuery = f"""
 DO $$
 DECLARE
-    i integer := 1;
-    cnpj_gerado char(14);
-    telefone_gerado char(10);
 BEGIN
     {query_tipoUsuario.criar_query()}
     {query_tipoFormaPag.criar_query()}
     {query_etapaPedido.criar_query()}
-    FOR i IN 1..50 LOOP
-        -- GERAR ESTABELECIMENTOS
-        -- __Gera um CNPJ único
-        cnpj_gerado := LPAD((ROUND(RANDOM() * 99999999999999))::text, 14, '0');
-        WHILE EXISTS (SELECT 1 FROM "ifoodApp_estabelecimento" WHERE "cnpj" = cnpj_gerado) LOOP
-            cnpj_gerado := LPAD((ROUND(RANDOM() * 99999999999999))::text, 14, '0');
-        END LOOP;
-        -- __Gera um telefone único
-        telefone_gerado := LPAD((ROUND(RANDOM() * 9999999999))::text, 10, '0');
-        WHILE EXISTS (SELECT 1 FROM "ifoodApp_estabelecimento" WHERE "telefoneEstab" = telefone_gerado) LOOP
-            telefone_gerado := LPAD((ROUND(RANDOM() * 9999999999))::text, 10, '0');
-        END LOOP;
-        {query_categoria.criar_query()}
-        {query_estabelecimento.criar_query()}
-        {query_produto.criar_query()}
-
-    END LOOP;
 END $$;
 """
 # Executar a consulta SQL usando parâmetros de consulta
-# print(f"\n\n{finalQuery}\n\n")
+# querys = [query_estabelecimentos]
+# for query in querys:
 cur.execute(finalQuery)
+
+for indice, categorias in enumerate(dados_json['categorias'], start=1):
+    with open(categorias['imgCategoria'].replace('./assets/', './ifoodApp/management/commands/databanco/assets/'), 'rb') as f:
+        imagemCategoria = f.read()
+    imagemCategoria = Binary(imagemCategoria)
+
+    query_categorias = f"""\n
+    INSERT INTO "public"."ifoodApp_categoria" ("nomeCategoria","imagem") VALUES ('{categorias['nomeCategoria']}',{imagemCategoria});
+    \n"""
+    cur.execute(query_categorias)
+
+for indice, estabelecimento in enumerate(dados_json['estabelecimentos'], start=1):
+    with open(estabelecimento['imagemEstab'].replace('./assets/', './ifoodApp/management/commands/databanco/assets/'), 'rb') as f:
+        imagemEstab = f.read()
+    imagemEstab = Binary(imagemEstab)
+
+    with open(estabelecimento['imagemBanner'].replace('./assets/', './ifoodApp/management/commands/databanco/assets/'), 'rb') as f:
+        imagemBanner = f.read()
+    imagemBanner = Binary(imagemBanner)
+
+    query_estabelecimentos = f"""\n
+    INSERT INTO "ifoodApp_estabelecimento" ("nomeEstab", "telefoneEstab", "cnpj", "emailEstab", "imagemEstab","imagemBanner","categoriaId_id")
+        VALUES ('{estabelecimento['nomeEstab']}', {indice}, {indice}, 'estabelecimento_' || {indice} || '@restaurante.com.br', {imagemEstab},{imagemBanner}, (select "categoriaId" from "public"."ifoodApp_categoria" WHERE "nomeCategoria" = '{estabelecimento['nomeCategoria']}'));
+    \n"""
+    cur.execute(query_estabelecimentos)
+
+for indice, produto in enumerate(dados_json['produtos'], start=1):
+    with open(produto['imagemProduto'].replace('./assets/', './ifoodApp/management/commands/databanco/assets/'), 'rb') as f:
+        imagemProduto = f.read()
+    imagemProduto = Binary(imagemProduto)
+    query_produtos = f"""\n
+    INSERT INTO "public"."ifoodApp_produto"("nomeProd", "disponibilidade", "preco", "imagemProd","alcoolico", "descricao", "categoriaId_id", "estabelecimentoId_id") VALUES
+        ( '{produto['nomeProduto']}', 'true', '{produto['preco']}', {imagemProduto},'false', '{produto['descricao']}',  (select "categoriaId" from "public"."ifoodApp_categoria" WHERE "nomeCategoria" = '{produto['nomeCategoria']}'),(select "estabelecimentoId" from "public"."ifoodApp_estabelecimento" WHERE "nomeEstab" = '{produto['nomeEstab']}'));
+    \n"""
+    cur.execute(query_produtos)
+
+
+
 
 # Commitar as alterações
 conn.commit()
