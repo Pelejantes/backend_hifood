@@ -84,6 +84,8 @@ def editar_endereco(request, pk):
 
 def deletar_endereco(request, pk):
     try:
+        enderecoEntrega = EnderecoEntrega.objects.get(enderecoId=pk)
+        enderecoEntrega.delete()
         endereco = Endereco.objects.get(id=pk)
         endereco.delete()
         return Response({"mensagem": f"Endereço {pk} deletado com sucesso!"}, status=200)
