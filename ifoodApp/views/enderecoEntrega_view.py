@@ -16,10 +16,10 @@ def exibir_enderecosUsuario_view(request, pk):
     return enderecoEntrega_controller.exibir_enderecosUsuario(request, pk)
 
 
-@api_view(["GET"])
-@permission_classes([AllowAny])
-def exibir_enderecoEntrega_view(request, pk):
-    return enderecoEntrega_controller.exibir_enderecoEntrega(request, pk)
+# @api_view(["GET"])
+# @permission_classes([AllowAny])
+# def exibir_enderecoEntrega_view(request, pk):
+#     return enderecoEntrega_controller.exibir_enderecoEntrega(request, pk)
 
 
 @api_view(["POST"])
@@ -28,10 +28,10 @@ def criar_enderecoUsuario_view(request, pk):
     return enderecoEntrega_controller.criar_enderecoUsuario(request, pk)
 
 
-@api_view(["POST"])
-@permission_classes([AllowAny])
-def criar_enderecoEntrega_view(request):
-    return enderecoEntrega_controller.criar_enderecoEntrega(request)
+# @api_view(["POST"])
+# @permission_classes([AllowAny])
+# def criar_enderecoEntrega_view(request):
+#     return enderecoEntrega_controller.criar_enderecoEntrega(request)
 
 
 @api_view(["PUT"])
