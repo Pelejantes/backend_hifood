@@ -13,17 +13,6 @@ def exibir_enderecos(request):
     return Response(serializer.data)
 
 
-def exibir_enderecosUsuario(request, pk):
-    # pk == usuarioId
-    enderecos = []
-    enderecoEntregaModel = EnderecoEntrega.objects.filter(usuarioId=pk)
-    for enderecoEntrega in enderecoEntregaModel:
-        enderecoId = enderecoEntrega.enderecoId.enderecoId
-        enderecoModel = Endereco.objects.get(enderecoId=enderecoId)
-        endereco = Endereco_Serializer(enderecoModel).data
-        enderecos.append(endereco)
-    return Response(enderecos)
-
 
 def exibir_endereco(request, pk):
     try:
@@ -34,28 +23,6 @@ def exibir_endereco(request, pk):
         # Retorna uma resposta de erro com status 404
         return Response({"mensagem": f"Endereço {pk} não encontrado"}, status=404)
 
-
-def criar_enderecoUsuario(request, pk):
-    # pk == id_usuario
-    enderecoSerializer = Endereco_Serializer(data=request.data)
-    if serializersValidos([enderecoSerializer]):
-        endereco = enderecoSerializer.save()
-        enderecoEntrega = {
-            'usuarioId': pk,
-            'enderecoId': endereco.__dict__['enderecoId']
-        }
-        enderecoEntregaSerializer = EnderecoEntrega_Serializer(
-            data=enderecoEntrega)
-        if serializersValidos([enderecoEntregaSerializer]):
-            enderecoEntregaSerializer.save()
-            return Response({"mensagem": f"Endereço do usuario id_{pk} criado com sucesso!", "enderecoId": endereco.__dict__['enderecoId']}, status=200)
-        else:
-            error_messages = listarErros([enderecoEntregaSerializer])
-            return Response({"mensagem": "Não foi possível criar o endereço.", "errors": error_messages}, status=400)
-
-    else:
-        error_messages = listarErros([enderecoSerializer])
-        return Response({"mensagem": "Não foi possível criar o endereço.", "errors": error_messages}, status=400)
 
 
 def criar_endereco(request):
@@ -84,9 +51,7 @@ def editar_endereco(request, pk):
 
 def deletar_endereco(request, pk):
     try:
-        enderecoEntrega = EnderecoEntrega.objects.get(enderecoId=pk)
-        enderecoEntrega.delete()
-        endereco = Endereco.objects.get(id=pk)
+        endereco = Endereco.objects.get(enderecoId=pk)
         endereco.delete()
         return Response({"mensagem": f"Endereço {pk} deletado com sucesso!"}, status=200)
     except Endereco.DoesNotExist:

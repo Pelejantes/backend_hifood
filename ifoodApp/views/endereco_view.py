@@ -16,18 +16,6 @@ def exibir_endereco_view(request, pk):
     return endereco_controller.exibir_endereco(request, pk)
 
 
-@api_view(["GET"])
-@permission_classes([AllowAny])
-def exibir_enderecosUsuario_view(request, pk):
-    return endereco_controller.exibir_enderecosUsuario(request, pk)
-
-
-@api_view(["POST"])
-@permission_classes([AllowAny])
-def criar_enderecoUsuario_view(request, pk):
-    return endereco_controller.criar_enderecoUsuario(request, pk)
-
-
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def criar_endereco_view(request):
