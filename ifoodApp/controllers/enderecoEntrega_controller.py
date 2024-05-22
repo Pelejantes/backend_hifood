@@ -60,7 +60,7 @@ def editar_enderecoEntrega(request, pk):
 
 def deletar_enderecoEntrega(request, pk):
     try:
-        enderecoEntrega = EnderecoEntrega.objects.get(id=pk)
+        enderecoEntrega = EnderecoEntrega.objects.get(enderecoEntregaId=pk)
         enderecoEntrega.delete()
         return Response({"mensagem": f"enderecoEntrega {pk} deletado com sucesso!"}, status=200)
     except EnderecoEntrega.DoesNotExist:
