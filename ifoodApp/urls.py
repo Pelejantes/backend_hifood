@@ -56,6 +56,8 @@ urlpatterns = [
     path("formaPagamento", formaPagamento_view.exibir_formasPagamento_view),
     path("formaPagamento/ler/<str:pk>",
          formaPagamento_view.exibir_formaPagamento_view),
+    path("formaPagamentoPorNome",
+         formaPagamento_view.exibir_formaPagamentoPorNome_view),
     # Endereco - Privado individualmente alunos e professores
     path("tipoUsuario", tipoUsuario_view.exibir_tipoUsuarios_view),
     path("tipoUsuario/ler/<str:pk>", tipoUsuario_view.exibir_tipoUsuario_view),
