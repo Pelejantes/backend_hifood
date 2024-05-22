@@ -62,7 +62,7 @@ class Pedido(models.Model):
 
 class ItemPedido(models.Model):
     itemPedidoId = models.AutoField(primary_key=True)
-    produtold = models.ForeignKey('Produto', on_delete=models.CASCADE)
+    produtoId = models.ForeignKey('Produto', on_delete=models.CASCADE)
     observacao = models.CharField(max_length=255, null=True)
     qtdItens = models.SmallIntegerField(default=1)
     pedidoId = models.ForeignKey(
