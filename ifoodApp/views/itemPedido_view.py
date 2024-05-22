@@ -16,7 +16,7 @@ def exibir_itemPedido_view(request, pk):
 @api_view(["POST"])
 @permission_classes([Logado])
 def criar_itemPedido_view(request):
-   return itemPedido_controller.criar_itemPedido(request)
+   return itemPedido_controller.criar_itensPedido(request)
 
 # @api_view(["PUT"])
 # @permission_classes([RU_Usuario])
