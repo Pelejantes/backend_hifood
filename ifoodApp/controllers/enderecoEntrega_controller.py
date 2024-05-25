@@ -58,8 +58,8 @@ def criar_enderecoUsuario(request, pk):
         enderecoEntregaSerializer = EnderecoEntrega_Serializer(
             data=enderecoEntrega)
         if serializersValidos([enderecoEntregaSerializer]):
-            enderecoEntregaSerializer.save()
-            return Response({"mensagem": f"Endereço do usuario id_{pk} criado com sucesso!", "enderecoId": endereco.__dict__['enderecoId']}, status=200)
+            enderecoEntrega = enderecoEntregaSerializer.save()
+            return Response({"mensagem": f"Endereço do usuario id_{pk} criado com sucesso!", "enderecoEntregaId": enderecoEntrega.__dict__['enderecoEntregaId']}, status=200)
         else:
             error_messages = listarErros([enderecoEntregaSerializer])
             return Response({"mensagem": "Não foi possível criar o endereço.", "errors": error_messages}, status=400)
