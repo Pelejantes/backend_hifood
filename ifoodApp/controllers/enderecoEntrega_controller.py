@@ -22,9 +22,11 @@ def exibir_enderecosUsuario(request, pk):
     enderecos = []
     enderecoEntregaModel = EnderecoEntrega.objects.filter(usuarioId=pk)
     for enderecoEntrega in enderecoEntregaModel:
+        enderecoEntregaId = enderecoEntrega.enderecoEntregaId
         enderecoId = enderecoEntrega.enderecoId.enderecoId
         enderecoModel = Endereco.objects.get(enderecoId=enderecoId)
         endereco = Endereco_Serializer(enderecoModel).data
+        endereco['enderecoEntregaId'] = enderecoEntregaId
         enderecos.append(endereco)
     return Response(enderecos)
 
