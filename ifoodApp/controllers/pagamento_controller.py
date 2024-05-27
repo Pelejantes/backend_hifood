@@ -31,7 +31,7 @@ def efetuarPagamento(request):
         etapaPedidoId = EtapaPedido.objects.get(
             etapaPedido='Preparando Pedido').etapaPedidoId
         etapaPedido = EtapaPedido.objects.get(etapaPedidoId=etapaPedidoId)
-        pedido.etapaPedidold = etapaPedido
+        pedido.etapaPedidoId = etapaPedido
         pedido.save()
     # Simula resposta pagamento "Pagamento realizado com sucesso"
     return Response({"mensagem": f"Pagamento realizado com {nomeFormaPagamento}, bem sucedido!"}, status=200)
