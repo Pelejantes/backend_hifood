@@ -49,7 +49,7 @@ class Pedido(models.Model):
         'Usuario', on_delete=models.CASCADE, null=False)
     formaPagld = models.ForeignKey(
         'FormaPag', on_delete=models.CASCADE, null=False)
-    etapaPedidold = models.ForeignKey(
+    etapaPedidoId = models.ForeignKey(
         'EtapaPedido', on_delete=models.CASCADE, default=1)
     cupomld = models.ForeignKey('Cupom', on_delete=models.CASCADE, null=True, default=None)
     statusAtivo = models.BooleanField(default=True)
