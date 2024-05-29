@@ -11,12 +11,12 @@ def exibir_formasPagamento_view(request):
 
 
 @api_view(["GET"])
-@permission_classes([RU_Usuario])
+# @permission_classes([RU_Usuario])
 def exibir_formaPagamento_view(request, pk):
     return formaPagamento_controller.exibir_formaPagamento(request, pk)
 
 
 @api_view(["POST"])
-@permission_classes([RU_Usuario])
+# @permission_classes([RU_Usuario])
 def exibir_formaPagamentoPorNome_view(request):
     return formaPagamento_controller.exibir_formaPagamentoPorNome(request)
