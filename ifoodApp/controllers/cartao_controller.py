@@ -10,7 +10,7 @@ def exibir_cartoes(request):
     return Response(serializer.data)
 
 
-def exibir_cartoesUsuario(request,pk):
+def exibir_cartoesUsuario(request, pk):
     cartoes = Cartao.objects.filter(usuarioId=pk)
     serializer = Cartao_Serializer(cartoes, many=True)
     return Response(serializer.data)
@@ -40,11 +40,17 @@ def criar_cartao(request):
 
 def editar_cartao(request, pk):
     try:
+        data = request.data
+        data['usuarioId'] = request.usuario.usuarioId
         cartao = Cartao.objects.get(cartaoId=pk)
-        serializer = Cartao_Serializer(instance=cartao, data=request.data)
+        if cartao.usuarioId.usuarioId != data['usuarioId']:
+            return Response({"mensagem": f"Usuario {data['usuarioId']} não tem permissão para alterar esse cartão, pois ele não foi associado á sua conta."}, status=404)
+        serializer = Cartao_Serializer(instance=cartao, data=data)
         if serializer.is_valid():
             serializer.save()
-        return Response({"mensagem": f"Cartao {pk} atualizado com sucesso.", f"reserva{pk}": serializer.data})
+            return Response({"mensagem": f"Cartao {pk} atualizado com sucesso."})
+        else:
+            return Response({"mensagem": f"Não foi possível editar o cartão {pk}."})
 
     except Cartao.DoesNotExist:
         # Retorna uma resposta de erro com status 404
