@@ -33,7 +33,7 @@ def editar_tipoUsuario(request, pk):
         serializer = TipoUsuario_Serializer(instance=tipoUsuario, data=request.data)
         if serializer.is_valid():
             serializer.save()
-        return Response({"mensagem": f"Tipo de Usuario {pk} atualizado com sucesso.", f"reserva{pk}": serializer.data})
+        return Response({"mensagem": f"Tipo de Usuario {pk} atualizado com sucesso." })
 
     except TipoUsuario.DoesNotExist:
         # Retorna uma resposta de erro com status 404

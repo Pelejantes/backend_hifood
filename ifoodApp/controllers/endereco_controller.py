@@ -41,7 +41,7 @@ def editar_endereco(request, pk):
         serializer = Endereco_Serializer(instance=endereco, data=request.data)
         if serializer.is_valid():
             serializer.save()
-        return Response({"mensagem": f"Endereço {pk} atualizado com sucesso.", f"reserva{pk}": serializer.data})
+        return Response({"mensagem": f"Endereço {pk} atualizado com sucesso." })
 
     except Endereco.DoesNotExist:
         # Retorna uma resposta de erro com status 404

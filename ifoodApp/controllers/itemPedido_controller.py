@@ -92,7 +92,7 @@ def criar_itensPedido(request):
 #             instance=itemPedido, data=request.data)
 #         if serializer.is_valid():
 #             serializer.save()
-#         return Response({"mensagem": f"ItemPedido {pk} atualizado com sucesso.", f"reserva{pk}": serializer.data})
+#         return Response({"mensagem": f"ItemPedido {pk} atualizado com sucesso." })
 
 #     except ItemPedido.DoesNotExist:
 #         # Retorna uma resposta de erro com status 404

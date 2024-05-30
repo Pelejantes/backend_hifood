@@ -11,6 +11,8 @@ __localcode
 *.pyc
 __pycache__
 db.sqlite3
+/migrations/*
+!/migrations/__init__.py
 
 # Backup files #
 *.bak

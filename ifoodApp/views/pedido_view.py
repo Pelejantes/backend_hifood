@@ -3,27 +3,58 @@ from ..permissions import Admin, Comprador, Entregador, Estabelecimento, RU_Usua
 from rest_framework.permissions import AllowAny
 from ..controllers import pedido_controller
 
+
 @api_view(["GET"])
 @permission_classes([Admin])
 def exibir_pedidos_view(request):
-   return pedido_controller.exibir_pedidos(request)
+    return pedido_controller.exibir_pedidos(request)
+
 
 @api_view(["GET"])
 @permission_classes([AllowAny])
 def exibir_pedido_view(request, pk):
-   return pedido_controller.exibir_pedido(request,pk)
+    return pedido_controller.exibir_pedido(request, pk)
+
 
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def criar_pedido_view(request):
-   return pedido_controller.criar_pedido(request)
+    return pedido_controller.criar_pedido(request)
+
 
 @api_view(["PUT"])
 @permission_classes([AllowAny])
 def editar_pedido_view(request, pk):
-   return pedido_controller.editar_pedido(request,pk)
+    return pedido_controller.editar_pedido(request, pk)
+
 
 @api_view(["DELETE"])
 @permission_classes([AllowAny])
 def deletar_pedido_view(request, pk):
-   return pedido_controller.deletar_pedido(request,pk)
+    return pedido_controller.deletar_pedido(request, pk)
+
+# Por ID do Usuario
+
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def exibir_pedidosUsuario_view(request):
+    return pedido_controller.exibir_pedidosUsuario(request)
+
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def exibir_ultimoPedido_view(request):
+    return pedido_controller.exibir_ultimoPedido(request)
+
+
+@api_view(["PUT"])
+@permission_classes([AllowAny])
+def editar_ultimoPedido_view(request):
+    return pedido_controller.editar_ultimoPedido(request)
+
+
+@api_view(["DELETE"])
+@permission_classes([AllowAny])
+def deletar_ultimoPedido_view(request):
+    return pedido_controller.deletar_ultimoPedido(request)
