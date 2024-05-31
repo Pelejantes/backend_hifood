@@ -10,8 +10,8 @@ def efetuarPagamento(request):
 
     # pedidoId = data['pedidoId']
 
-    if (Pedido.objects.last()):
-        pedido = Pedido.objects.last()
+    if (Pedido.objects.all().last()):
+        pedido = Pedido.objects.all().last()
     else:
         return Response({"mensagem": f"Não foi possível realizar ação, nenhum pedido inexistente!"}, status=404)
     if not pedido.statusAtivo :
@@ -19,7 +19,7 @@ def efetuarPagamento(request):
     if pedido.etapaPedidoId.etapaPedidoId != 1:
         return Response({"mensagem": f"Não foi possível realizar ação, pagamento já efetuado anteriormente!"}, status=404)
     # puxa dados de pagamento
-    formaPagId = pedido.formaPagld.formaPagId
+    formaPagId = pedido.formaPagId.formaPagId
     if (FormaPag.objects.filter(formaPagId=formaPagId).exists()):
         nomeFormaPagamento = FormaPag.objects.get(
             formaPagId=formaPagId).nomeFormaPag.lower()
