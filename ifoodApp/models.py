@@ -18,7 +18,7 @@ class Notificacao(models.Model):
     cupomId = models.ForeignKey('Cupom', on_delete=models.CASCADE)
     titulo = models.CharField(max_length=50)
     descricao = models.CharField(max_length=255)
-    dataRecebimento = models.DateField()
+    dataRecebimento = models.DateTimeField()
 
     def __str__(self):
         return f"Notificação {self.notificacaoId}"
@@ -35,7 +35,7 @@ class Cupom(models.Model):
     regraCupomId = models.ForeignKey('RegraCupom', on_delete=models.CASCADE)
     categoriaId = models.ForeignKey('Categoria', on_delete=models.CASCADE)
     valorDesconto = models.FloatField()
-    dataValidade = models.DateField()
+    dataValidade = models.DateTimeField()
     limiteUso = models.SmallIntegerField()
     valorMinimo = models.FloatField()
 
@@ -53,7 +53,7 @@ class Pedido(models.Model):
         'EtapaPedido', on_delete=models.CASCADE, default=1)
     cupomId = models.ForeignKey('Cupom', on_delete=models.CASCADE, null=True, default=None)
     statusAtivo = models.BooleanField(default=True)
-    dataPedido = models.DateField(default=datetime.now())
+    dataPedido = models.DateTimeField(default=datetime.now())
     gorjeta = models.SmallIntegerField(null=True)
 
     def __str__(self):
@@ -136,7 +136,7 @@ class Usuario(models.Model):
     contaBancariaId = models.ForeignKey(
         'ContaBancaria', on_delete=models.CASCADE, null=True, default=None)
     statusAtivo = models.BooleanField(default=False)
-    dataCriacao = models.DateField(default=datetime.now)
+    dataCriacao = models.DateTimeField(default=datetime.now)
     tipoUsuarioId = models.ForeignKey(
         'TipoUsuario', on_delete=models.CASCADE, default=2)
     codVerifId = models.ForeignKey(
@@ -251,7 +251,7 @@ class Avaliacao(models.Model):
     usuarioId = models.ForeignKey('Usuario', on_delete=models.CASCADE)
     qtdEstrelas = models.PositiveSmallIntegerField()
     descricao = models.CharField(max_length=255)
-    dataAvaliacao = models.DateField()
+    dataAvaliacao = models.DateTimeField()
 
     def __str__(self):
         return f'Avaliação ID: {self.avaliacaoId}, Estrelas: {self.qtdEstrelas}, Descrição: {self.descricao}'
