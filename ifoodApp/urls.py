@@ -108,4 +108,6 @@ urlpatterns = [
     path('codVerif', codVerif_view.enviar_codigo_view),
     # Login
     path('login', login_view.login_user_view),
+    # Validar Token
+    path('validarToken', login_view.validar_token_view),
 ]

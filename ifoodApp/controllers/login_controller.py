@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from ..models import Usuario, CodVerif
 from ..serializers import Usuario_Serializer, CodVerif_Serializer
-from utils.utils_jwt import gerar_token_jwt
+from utils.utils_jwt import gerar_token_jwt, extrair_toker_jwt, decode_token_jwt
 from utils.func_gerais import gerar_code
 from datetime import datetime, timezone
 
@@ -26,7 +26,7 @@ def login_user(request):
         return Response({"mensagem": "Campo de telefone é obrigatório"}, status=status.HTTP_406_NOT_ACCEPTABLE)
     if not ('codVerif' in request.data):
         return Response({"mensagem": "Campo de codVerif é obrigatório"}, status=status.HTTP_406_NOT_ACCEPTABLE)
-    
+
     try:
         usuario = Usuario.objects.get(telefoneUsu=telefoneUsu)
     except Usuario.DoesNotExist:
@@ -40,7 +40,7 @@ def login_user(request):
 
         horario_expiracao = codVerif_model.data_hora_expiracao
         horario_atual = (datetime.now()).replace(tzinfo=timezone.utc)
-        
+
         if horario_atual > horario_expiracao:
             return Response(
                 {"mensagem": f"Código expirou, solicite um novo."}, status=status.HTTP_401_UNAUTHORIZED,
@@ -60,3 +60,23 @@ def login_user(request):
         return Response(
             {"mensagem": f"Usuário {usuario.usuarioId} não possui código ativo, solite um novo."}, status=status.HTTP_401_UNAUTHORIZED,
         )
+
+
+def validar_token_user(request):
+    authorization_header = request.META.get("HTTP_AUTHORIZATION")
+    if authorization_header:
+        token = extrair_toker_jwt(authorization_header)
+        if token:
+            if decode_token_jwt(token):
+                return Response({"mensagem": "Token válido"}, status=status.HTTP_200_OK)
+            else:
+                return Response(
+                    {"mensagem": "Erro ao decodificar o token, faça login novamente."},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+        else:
+            return Response(
+                {"mensagem": "Erro ao decodificar o token, faça login novamente."}, status=status.HTTP_404_NOT_FOUND)
+    else:
+        return Response(
+            {"mensagem": "Authorization ausente no header."}, status=status.HTTP_404_NOT_FOUND)
