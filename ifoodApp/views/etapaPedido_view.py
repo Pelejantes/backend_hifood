@@ -5,7 +5,7 @@ from ..controllers import etapaPedido_controller
 
 
 @api_view(["GET"])
-@permission_classes([Admin])
+@permission_classes([AllowAny])
 def exibir_etapasPedido_view(request):
     return etapaPedido_controller.exibir_etapasPedido(request)
 
