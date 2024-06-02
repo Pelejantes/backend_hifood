@@ -30,7 +30,7 @@ def criar_itensPedido(request):
     # Obtém o último pedido no banco de dados.
     dataPedido = {
         'usuarioId': request.usuario.__dict__['usuarioId'],
-        'formaPagld': data['formaPagld']
+        'formaPagId': data['formaPagId']
     }
     if ultimoPedido == None:
         # Se não houver pedidos, cria um novo.
