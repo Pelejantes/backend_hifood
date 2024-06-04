@@ -48,7 +48,7 @@ def ativar_usuario_view(request, pk):
 
 
 @api_view(["PUT"])
-@permission_classes([RU_Usuario])
+@permission_classes([AllowAny])
 def editar_usuario_view(request, pk):
     return usuario_controller.editar_usuario(request, pk)
 

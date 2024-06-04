@@ -115,7 +115,7 @@ def ativar_usuario(request, pk):
         return Response({"mensagem": f"Usuário {pk} não encontrado"}, status=404)
 
 
-def editar_usuario(request, pk):
+def editar_usuarioCompleto(request, pk):
     try:
         if not 'usuario' in request.data:
             return Response({"mensagem": "Não foi possível criar o usuário.", "errors": ["Campo 'usuario' ausente."]}, status=400)
@@ -140,6 +140,18 @@ def editar_usuario(request, pk):
         # Retorna uma resposta de erro com status 404
         error_messages = listarErros([usuario_Serializer])
         return Response({"mensagem": f"Usuário {pk} não encontrado", "errors": error_messages}, status=404)
+
+
+def editar_usuario(request, pk):
+    try:
+        usuario = Usuario.objects.get(usuarioId=pk)
+        serializer = Usuario_Serializer(instance=usuario, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        return Response({"mensagem": f"Usuário {pk} atualizado com sucesso.", f"reserva{pk}": serializer.data})
+
+    except Usuario.DoesNotExist:
+        return Response({"message": f"Usuário {pk} não encontrado"}, status=404)
 
 
 def deletar_usuario(request, pk):
