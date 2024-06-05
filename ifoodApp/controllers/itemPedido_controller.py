@@ -33,7 +33,7 @@ def criar_itensPedido(request):
         'usuarioId': request.usuario.__dict__['usuarioId'],
         'formaPagId': data['formaPagId']
     }
-    if (not ultimoPedido.statusAtivo) or (ultimoPedido == None):
+    if (not 'statusAtivo' in f"{ultimoPedido}") or (ultimoPedido == None):
         # Se o último pedido não está ativo, cria um novo.
         pedido_serializer = Pedido_Serializer(data=dataPedido)
         # Cria um serializador para os dados do pedido.
@@ -52,7 +52,6 @@ def criar_itensPedido(request):
         else:
             error_messages = listarErros([pedido_serializer])
             return Response({"mensagem": "Não foi possível criar o itemPedido.", "errors": error_messages}, status=400)
-
     pedidoId = ultimoPedido.__dict__['pedidoId']
     if not data['itensPedido']:
         return Response({"mensagem": "Não foi possível criar o itemPedido.", "errors": ['Não foi passado nenhum item.']}, status=400)
