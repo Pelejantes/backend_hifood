@@ -46,7 +46,7 @@ def criar_itensPedido(request):
             return Response({"mensagem": "Não foi possível criar o itemPedido.", "errors": error_messages}, status=400)
     if not ultimoPedido.__dict__['statusAtivo']:
         # Se o último pedido não está ativo, cria um novo.
-        pedido_serializer = Pedido_Serializer(dataPedido)
+        pedido_serializer = Pedido_Serializer(data=dataPedido)
         # Cria um serializador para os dados do pedido.
         if serializersValidos([pedido_serializer]):
             # Se o serializador é válido, salva o pedido.
@@ -63,7 +63,6 @@ def criar_itensPedido(request):
         itensPedido = data['itensPedido']
     itensPedidosBemSucedidos = []
     itensPedidosMalSucedidos = []
-    print(f"\itensPedido\n{itensPedido}\n\n")
     for itemPedido in itensPedido:
         itemPedido['pedidoId'] = pedidoId
         # Adiciona o ID do pedido aos dados.
