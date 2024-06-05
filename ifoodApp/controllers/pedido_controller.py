@@ -1,7 +1,12 @@
 from rest_framework.response import Response
-from ..models import Pedido
+from ..models import Pedido, EtapaPedido
 from ..serializers import Pedido_Serializer
 from utils.func_gerais import listarErros, serializersValidos
+from twilio.rest import Client
+import os
+from dotenv import load_dotenv
+dotenv_path = "../../dotenv_files/.env"
+load_dotenv(dotenv_path)
 
 
 def exibir_pedidos(request):
@@ -78,12 +83,36 @@ def exibir_ultimoPedido(request):
 
 def editar_ultimoPedido(request):
     try:
+        economizar_recursos = bool(int(os.getenv('ECONOMIZAR_RECURSOS', True)))
+        # Puxa telefone do request
+        if request.usuario:
+            telefoneUsu = request.usuario.telefoneUsu
+        else:
+            return Response({"mensagem": "Campo de telefone é obrigatório"}, status=404)
         data = request.data
         data['usuarioId'] = request.usuario.usuarioId
         pedido = Pedido.objects.filter(usuarioId=data['usuarioId']).last()
+        ultimaEtapaRegistrada = pedido.etapaPedidoId.etapaPedidoId
         serializer = Pedido_Serializer(instance=pedido, data=data)
         if serializer.is_valid():
             serializer.save()
+            # serializer.data.etapaPedidoId
+            etapaPedido = EtapaPedido.objects.get(
+                etapaPedidoId=serializer.data['etapaPedidoId'])
+            # Fazer req para a API de Msg via Whatsapp
+            nomeEtapaPedido = etapaPedido.etapaPedido
+            if(ultimaEtapaRegistrada != serializer.data['etapaPedidoId']):
+                try:
+                    if (economizar_recursos == False):
+                        account_sid = os.getenv('ACCOUNT_SID')
+                        auth_token = os.getenv('AUTH_TOKEN')
+                        client = Client(account_sid, auth_token)
+                        client.messages.create(
+                            from_=f"whatsapp:+{os.getenv('TEL_FROM')}",
+                            body=f"Status do pedido H!Food:  *{nomeEtapaPedido}*",
+                            to=f"whatsapp:+{telefoneUsu}")
+                except AssertionError:
+                    return Response({"mensagem": f"Não foi possível enviar mensagem ao usuario {data['usuarioId']}."}, status=404)
             return Response({"mensagem": f"Ultimo pedido do usuario {data['usuarioId']} atualizado com sucesso."})
         else:
             error_messages = listarErros([serializer])
