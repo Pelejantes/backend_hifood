@@ -25,8 +25,9 @@ def criar_itensPedido(request):
     # Verifica se o último pedido está ativo, se não, cria um novo pedido.
     # Em seguida, cria um novo item no pedido e retorna o ID do item.
     data = request.data or {}
+    data['usuarioId'] = request.usuario.usuarioId
     # Inicializa data como os dados da requisição, ou um dicionário vazio se não houver dados.
-    ultimoPedido = Pedido.objects.last()
+    ultimoPedido = Pedido.objects.filter(usuarioId=data['usuarioId']).last()
     # Obtém o último pedido no banco de dados.
     dataPedido = {
         'usuarioId': request.usuario.__dict__['usuarioId'],
