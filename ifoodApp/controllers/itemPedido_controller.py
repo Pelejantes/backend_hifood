@@ -33,19 +33,7 @@ def criar_itensPedido(request):
         'usuarioId': request.usuario.__dict__['usuarioId'],
         'formaPagId': data['formaPagId']
     }
-    if ultimoPedido == None:
-        # Se não houver pedidos, cria um novo.
-        # Inicializa os dados do pedido com o ID do usuário.
-        pedido_serializer = Pedido_Serializer(data=dataPedido)
-        # Cria um serializador para os dados do pedido.
-        if pedido_serializer.is_valid():
-            # Se o serializador é válido, salva o pedido.
-            ultimoPedido = pedido_serializer.save()
-        else:
-            # Se o serializador não é válido, retorna uma mensagem de erro.
-            error_messages = listarErros([pedido_serializer])
-            return Response({"mensagem": "Não foi possível criar o itemPedido.", "errors": error_messages}, status=400)
-    if not ultimoPedido.__dict__['statusAtivo']:
+    if (not ultimoPedido.statusAtivo) or (ultimoPedido == None):
         # Se o último pedido não está ativo, cria um novo.
         pedido_serializer = Pedido_Serializer(data=dataPedido)
         # Cria um serializador para os dados do pedido.
@@ -54,6 +42,14 @@ def criar_itensPedido(request):
             ultimoPedido = pedido_serializer.save()
         else:
             # Se o serializador não é válido, retorna uma mensagem de erro.
+            error_messages = listarErros([pedido_serializer])
+            return Response({"mensagem": "Não foi possível criar o itemPedido.", "errors": error_messages}, status=400)
+    else:
+        pedido_serializer = Pedido_Serializer(
+            instance=ultimoPedido, data=dataPedido)
+        if pedido_serializer.is_valid():
+            pedido_serializer.save()
+        else:
             error_messages = listarErros([pedido_serializer])
             return Response({"mensagem": "Não foi possível criar o itemPedido.", "errors": error_messages}, status=400)
 
