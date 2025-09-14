@@ -21,6 +21,8 @@ services:
       - "8000:8000"
     env_file:
       - ./dotenv_files/.env
+    volumes:
+      - ./django.sh:/app/django.sh:z
     depends_on:
       - db
     networks:

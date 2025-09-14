@@ -1,6 +1,13 @@
 #!/bin/sh
 set -e
-sleep 5
+echo "Waiting for database..."
+
+# Aguarda o banco de dados estar pronto
+while ! pg_isready -h $PG_HOST -p $PG_PORT -U $PG_USER -d $PG_DB; do
+  sleep 2
+done
+
+echo "Database is up - continuing..."
 # Criando Migrações
 echo "Creating Migrations..."
 python manage.py makemigrations ifoodApp
